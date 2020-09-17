@@ -16,6 +16,7 @@ unit-test:
   artifacts:
     paths: 
       - 'unit-tests.xml'
+      - !.git
   tags:
     - unity
 
@@ -31,3 +32,4 @@ build-webgl:
   artifacts:
     paths:
       - 'Parlay/WebGL-Dist/'
+      - !.git
