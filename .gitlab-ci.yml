@@ -2,21 +2,36 @@ stages:
   - test
   - build
 
-unit-test:
+edit-unit-test:
   script: 
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -batchmode \
     -projectPath=. \
     -runTests -testPlatform editmode \
     -logFile \
-    -testResults ./unit-tests.xml"
-    - echo foo > unit-tests.xml
+    -testResults ./edit-unit-tests.xml"
     - "ls -a ."
     - "ls -a Parlay"
   stage: test
   artifacts:
     paths: 
-      - 'unit-tests.xml'
+      - '$(pwd)/unit-tests.xml'
+  tags:
+    - unity
+
+play-unit-test:
+  script: 
+    - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
+    -batchmode \
+    -projectPath=. \
+    -runTests -testPlatform playmode \
+    -logFile \
+    -testResults ./play-unit-tests.xml"
+    - "ls -a $(pwd)"
+  stage: test
+  artifacts:
+    paths: 
+      - '$(pwd)/play-unit-tests.xml'
   tags:
     - unity
 
@@ -31,4 +46,4 @@ build-webgl:
     - unity
   artifacts:
     paths:
-      - 'Parlay/WebGL-Dist/'
+      - '$(pwd)/WebGL-Dist/'
