@@ -1,8 +1,9 @@
 stages:
   - test
+  - play-test
   - build
 
-edit-unit-test:
+unit-test:
   script: 
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -batchmode \
@@ -10,18 +11,6 @@ edit-unit-test:
     -runTests -testPlatform editmode \
     -logFile \
     -testResults ./edit-unit-tests.xml"
-    - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
-    -batchmode \
-    -projectPath=. \
-    -runTests -testPlatform playmode \
-    -logFile \
-    -testResults ./play-unit-tests.xml"
-  stage: test
-  tags:
-    - unity
-
-play-unit-test:
-  script: 
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -batchmode \
     -projectPath=. \
