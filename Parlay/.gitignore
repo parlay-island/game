@@ -72,7 +72,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # # Unit test logging
-unit-tests.xml
+*unit-tests.xml
 
 # # Unity build
 WebGL-Dist/

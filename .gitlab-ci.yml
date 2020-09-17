@@ -10,8 +10,7 @@ edit-unit-test:
     -runTests -testPlatform editmode \
     -logFile \
     -testResults ./edit-unit-tests.xml"
-    - "ls -a ."
-    - "ls -a Parlay"
+    - "ls -a $(pwd)/Parlay"
   stage: test
   artifacts:
     paths: 
@@ -27,11 +26,11 @@ play-unit-test:
     -runTests -testPlatform playmode \
     -logFile \
     -testResults ./play-unit-tests.xml"
-    - "ls -a $(pwd)"
+    - "ls -a $(pwd)/Parlay"
   stage: test
   artifacts:
     paths: 
-      - '$(pwd)/play-unit-tests.xml'
+      - '$(pwd)/Parlay/play-unit-tests.xml'
   tags:
     - unity
 
@@ -39,11 +38,10 @@ build-webgl:
   script: 
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -quit -batchmode -executeMethod WebGLBuilder.build -buildTarget WebGL -projectPath=."
-    - "ls -a ."
-    - "ls -a Parlay"
+    - "ls -a $(pwd)/Parlay"
   stage: build
   tags:
     - unity
   artifacts:
     paths:
-      - '$(pwd)/WebGL-Dist/'
+      - '$(pwd)/Parlay/WebGL-Dist/'
