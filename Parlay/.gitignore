@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # Unit test logging
 unit-tests.xml
+
+# Unity build
+WebGL-Dist/

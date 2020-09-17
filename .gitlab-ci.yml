@@ -12,13 +12,16 @@ unit-test:
   stage: test
   artifacts:
     paths: 
-      - ./unit-tests.xml
+      - Parlay/unit-tests.xml
   tags:
     - unity
 
 build-webgl:
   script: "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
-    -quit -batchmode -executeMethod WebGLBuilder.build"
+    -quit -batchmode -executeMethod WebGLBuilder.build -buildTarget WebGL -projectPath=."
   stage: build
   tags:
     - unity
+  artifacts:
+    paths:
+      - Parlay/WebGL-Dist
