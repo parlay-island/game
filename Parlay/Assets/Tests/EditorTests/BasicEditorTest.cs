@@ -12,7 +12,7 @@ namespace Tests
         [Test]
         public void BasicEditorTestSimplePasses()
         {
-            // Use the Assert class to test conditions
+            Assert.fail();
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use

@@ -10,11 +10,13 @@ edit-unit-test:
     -runTests -testPlatform editmode \
     -logFile \
     -testResults ./edit-unit-tests.xml"
-    - "ls -a $(pwd)/Parlay"
+    - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
+    -batchmode \
+    -projectPath=. \
+    -runTests -testPlatform playmode \
+    -logFile \
+    -testResults ./play-unit-tests.xml"
   stage: test
-  artifacts:
-    paths: 
-      - '$(pwd)/unit-tests.xml'
   tags:
     - unity
 
@@ -26,11 +28,7 @@ play-unit-test:
     -runTests -testPlatform playmode \
     -logFile \
     -testResults ./play-unit-tests.xml"
-    - "ls -a $(pwd)/Parlay"
   stage: test
-  artifacts:
-    paths: 
-      - '$(pwd)/Parlay/play-unit-tests.xml'
   tags:
     - unity
 
@@ -42,6 +40,3 @@ build-webgl:
   stage: build
   tags:
     - unity
-  artifacts:
-    paths:
-      - '$(pwd)/Parlay/WebGL-Dist/'
