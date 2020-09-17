@@ -10,6 +10,7 @@ unit-test:
     -runTests -testPlatform editmode \
     -logFile \
     -testResults ./unit-tests.xml"
+    - echo foo > unit-tests.xml
     - "ls -a ."
     - "ls -a Parlay"
   stage: test
