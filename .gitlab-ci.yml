@@ -1,5 +1,6 @@
 stages:
   - test
+  - build
 
 unit-test:
   script: "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
@@ -9,5 +10,14 @@ unit-test:
     -logFile \
     -testResults ./unit-tests.xml"
   stage: test
+  artifacts:
+    - ./unit-tests.xml
+  tags:
+    - unity
+
+build-webgl:
+  script: "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
+    -quit -batchmode -executeMethod WebGLBuilder.build"
+  stage: build
   tags:
     - unity
