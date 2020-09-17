@@ -12,7 +12,7 @@ unit-test:
   stage: test
   artifacts:
     paths: 
-      - unit-tests.xml
+      - ./unit-tests.xml
   tags:
     - unity
 
@@ -24,4 +24,4 @@ build-webgl:
     - unity
   artifacts:
     paths:
-      - WebGL-Dist
+      - WebGL-Dist/
