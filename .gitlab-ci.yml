@@ -3,12 +3,14 @@ stages:
   - build
 
 unit-test:
-  script: "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
+  script: 
+    - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -batchmode \
     -projectPath=. \
     -runTests -testPlatform editmode \
     -logFile \
     -testResults ./unit-tests.xml"
+    - "ls -a ."
   stage: test
   artifacts:
     paths: 
@@ -17,8 +19,10 @@ unit-test:
     - unity
 
 build-webgl:
-  script: "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
+  script: 
+    - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -quit -batchmode -executeMethod WebGLBuilder.build -buildTarget WebGL -projectPath=."
+    - "ls -a ."
   stage: build
   tags:
     - unity
