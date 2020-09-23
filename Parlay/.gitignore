@@ -76,7 +76,3 @@ crashlytics-build.properties
 
 # # Unity build
 WebGL-Dist/
-
-# Test-generated scenes
-/[Aa]ssets/InitTestScene*.unity
-/[Aa]ssets/InitTestScene*.unity.meta
