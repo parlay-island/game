@@ -8,11 +8,16 @@ public class Timer : MonoBehaviour
 	public Slider timerSlider;
     public Text timerText;
     public Text timeLabel;
-    public float gameTime = 10f;
 
-    public void initTimer() {
-        timerSlider.maxValue = gameTime;
-        timerSlider.value = gameTime;
+    private float totalTime;
+    private float currTime;
+
+    public void initTimer(float time) {
+        totalTime = time;
+        currTime = time;
+        
+        timerSlider.maxValue = totalTime;
+        timerSlider.value = totalTime;
     }
 
     public void hideTimer() {
@@ -20,17 +25,18 @@ public class Timer : MonoBehaviour
         timeLabel.gameObject.SetActive(false);
     }
 
-    public float updateTime() {
-    	float time = gameTime - Time.time;
-    	int minutes = Mathf.FloorToInt(time / 60);
-    	int seconds = Mathf.FloorToInt (time - minutes * 60) + 1;
+    public bool isTimeUp() {
+        return currTime == 0;
+    }
 
+    public void updateTime() {
+    	currTime = Mathf.Max(0f, totalTime - Time.time);
+    	int minutes = Mathf.FloorToInt(currTime / 60);
+    	int seconds = currTime == 0 ? 0 : Mathf.FloorToInt (currTime - minutes * 60) + 1;
     	string textTime = string.Format("{0:0}:{1:00}", minutes, seconds);
-    	if (time > 0) {
-            timerText.text = textTime;
-    		timerSlider.value = time;
-    	} 
     	
-    	return time;
+        
+        timerText.text = textTime;
+        timerSlider.value = currTime;
     }
 }

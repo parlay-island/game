@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private GameObject gameOverImage;
-    private Text gameOverText;
-	private Timer timerManager;
+
+    public GameObject gameOverImage;
+    public Text gameOverText;
+	public Timer timerManager;
+    public float gameTime;
 
 	public static GameManager instance = null;
     
@@ -21,31 +23,29 @@ public class GameManager : MonoBehaviour
     	}
 
     	DontDestroyOnLoad(gameObject);
-        timerManager = GetComponent<Timer>();
     	initGame();
     }
 
     private void initGame() {
-        gameOverImage = GameObject.Find("GameOverImage");
-        gameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
         gameOverImage.SetActive(false);
-
-        timerManager.initTimer();
+        gameOverText.gameObject.SetActive(false);
+        timerManager.initTimer(gameTime);
     }
 
     private void gameOver() {
         gameOverImage.SetActive(true);
+        gameOverText.gameObject.SetActive(true);
         timerManager.hideTimer();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float currTime = timerManager.updateTime();
-        if (currTime <= 0) {
+        if (timerManager.isTimeUp()) {
             gameOver();
             return;
+        } else {
+            timerManager.updateTime();
         }
-        
     }
 }
