@@ -5,18 +5,15 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-	private Slider timerSlider;
-    private Text timerText;
-    private Text timeLabel;
-    private float gameTime = 10f;
     private GameObject gameOverImage;
     private Text gameOverText;
-	
+	private Timer timerManager;
+
 	public static GameManager instance = null;
-    // Start is called before the first frame update
+    
     void Awake()
     {
-    	// make sure GameManager is a singleton (only created once)
+    	// make sure GameManager is a singleton
     	if (instance==null) {
     		instance = this; 
     	} else if (instance != this) {
@@ -24,8 +21,8 @@ public class GameManager : MonoBehaviour
     	}
 
     	DontDestroyOnLoad(gameObject);
+        timerManager = GetComponent<Timer>();
     	initGame();
-        
     }
 
     private void initGame() {
@@ -33,44 +30,22 @@ public class GameManager : MonoBehaviour
         gameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
         gameOverImage.SetActive(false);
 
-        initTimer();
-    	
-    }
-
-    private void initTimer() {
-        timerSlider = GameObject.Find("Timer").GetComponent<Slider>();
-        timerText = GameObject.Find("TimerText").GetComponent<Text>();
-        timeLabel = GameObject.Find("TimeLabel").GetComponent<Text>();
-
-
-        timerSlider.maxValue = gameTime;
-        timerSlider.value = gameTime;
+        timerManager.initTimer();
     }
 
     private void gameOver() {
-    	// show game over screen
         gameOverImage.SetActive(true);
-        timerSlider.gameObject.SetActive(false);
-        timeLabel.gameObject.SetActive(false);
+        timerManager.hideTimer();
     }
 
     // Update is called once per frame
     void Update()
     {
-    	float time = gameTime - Time.time;
-    	int minutes = Mathf.FloorToInt(time / 60);
-    	int seconds = Mathf.FloorToInt (time - minutes * 60);
-
-    	string textTime = string.Format("{0:0}:{1:00}", minutes, seconds);
-    	if (time <= 0) {
+        float currTime = timerManager.updateTime();
+        if (currTime <= 0) {
             gameOver();
-    		return;
-    	} 
-    	else {
-    		timerText.text = textTime;
-    		timerSlider.value = time;
-
-    	}
+            return;
+        }
         
     }
 }
