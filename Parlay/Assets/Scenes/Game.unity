@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 2131572224}
+  gameTime: 10
 --- !u!1 &841888359
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,11 +701,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5514747539825256183, guid: ad2d7c5a6d17e42c7b3d2ff45a955cea, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -522
+      value: -520
       objectReference: {fileID: 0}
     - target: {fileID: 5514747539825256183, guid: ad2d7c5a6d17e42c7b3d2ff45a955cea, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 295.8
+      value: 259.83997
       objectReference: {fileID: 0}
     - target: {fileID: 5514747539825256183, guid: ad2d7c5a6d17e42c7b3d2ff45a955cea, type: 3}
       propertyPath: m_SizeDelta.x
@@ -755,6 +756,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6450739626420251362, guid: b710166a133174b5bb567b30cbc21026, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.2000122
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450739626420251362, guid: b710166a133174b5bb567b30cbc21026, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 4.317932
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450739626822550977, guid: b710166a133174b5bb567b30cbc21026, type: 3}
+      propertyPath: m_Value
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6450739626822550978, guid: b710166a133174b5bb567b30cbc21026, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -801,11 +814,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6450739626822550978, guid: b710166a133174b5bb567b30cbc21026, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6450739626822550978, guid: b710166a133174b5bb567b30cbc21026, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 295.8
+      value: 259.84
       objectReference: {fileID: 0}
     - target: {fileID: 6450739626822550978, guid: b710166a133174b5bb567b30cbc21026, type: 3}
       propertyPath: m_SizeDelta.x

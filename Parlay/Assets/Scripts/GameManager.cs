@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverImage;
     public Text gameOverText;
 	public Timer timerManager;
-    public float gameTime;
+    // public float gameTime;
 
 	public static GameManager instance = null;
     
@@ -23,13 +23,18 @@ public class GameManager : MonoBehaviour
     	}
 
     	DontDestroyOnLoad(gameObject);
-    	initGame();
+    	// initGame();
     }
 
-    private void initGame() {
+    private void initGame(float gameTime) {
         gameOverImage.SetActive(false);
         gameOverText.gameObject.SetActive(false);
+
         timerManager.initTimer(gameTime);
+    }
+
+    public void setGameTime(float time) {
+        initGame(time);
     }
 
     private void gameOver() {

@@ -11,11 +11,19 @@ public class Timer : MonoBehaviour
 
     private float totalTime;
     private float currTime;
+    private float timeElapsed;
 
     public void initTimer(float time) {
         totalTime = time;
         currTime = time;
+        timeElapsed = 0f;
         
+        activateTimer();
+    }
+
+    private void activateTimer() {
+        timerSlider.gameObject.SetActive(true);
+        timeLabel.gameObject.SetActive(true);
         timerSlider.maxValue = totalTime;
         timerSlider.value = totalTime;
     }
@@ -29,12 +37,17 @@ public class Timer : MonoBehaviour
         return currTime == 0;
     }
 
+    public float getCurrTime() {
+        return currTime;
+    }
+
     public void updateTime() {
-    	currTime = Mathf.Max(0f, totalTime - Time.time);
+        timeElapsed += Time.deltaTime;
+    	currTime = Mathf.Max(0f, totalTime - timeElapsed);
+
     	int minutes = Mathf.FloorToInt(currTime / 60);
     	int seconds = currTime == 0 ? 0 : Mathf.FloorToInt (currTime - minutes * 60) + 1;
     	string textTime = string.Format("{0:0}:{1:00}", minutes, seconds);
-    	
         
         timerText.text = textTime;
         timerSlider.value = currTime;
