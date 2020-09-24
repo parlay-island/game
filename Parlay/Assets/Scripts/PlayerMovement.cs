@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+* The PlayerMovement script takes the user's input and uses it to
+* appropriately call the CharacterController2D and set the variables
+* the control the animator transitions
+* This code was inspired from a Brackey's tutorial
+* https://www.youtube.com/watch?v=dwcT-Dch0bA
+*/
+
+
 public class PlayerMovement : MonoBehaviour {
 
 	public CharacterController2D controller;
@@ -12,13 +21,12 @@ public class PlayerMovement : MonoBehaviour {
 	float horizontalMove = 0f;
 	bool jump = false;
 
-	// Update is called once per frame
 	void Update () {
 
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-		if (Input.GetButtonDown("Jump"))
+		if (Input.GetButtonDown("Jump") && controller.CanJump())
 		{
 			jump = true;
 			animator.SetBool("IsJumping", true);
@@ -30,10 +38,9 @@ public class PlayerMovement : MonoBehaviour {
 	{
 		animator.SetBool("IsJumping", false);
 	}
-	
+
 	void FixedUpdate ()
 	{
-		// Move our character
 		controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
 		jump = false;
 	}

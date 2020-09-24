@@ -7,6 +7,14 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+/**
+* This class tests the player prefab (which contains the characterController
+* and playerMovement scripts)
+* Unity does not have the functionality to simulate a keypress
+* Therefore this class is testing that the animator and the CharacterController2D
+* respond appropriately with the input that would be given to them if
+* the keys were pressed 
+*/
 
 namespace Tests
 {
@@ -38,7 +46,7 @@ namespace Tests
         }
 
         [UnityTest]
-        public IEnumerator testPlayerMovesLeftPosition()
+        public IEnumerator TestPlayerMovesLeftPosition()
         {
             float initialXPos = testPlayer.transform.position.x;
             characterController.Move(distanceTraveledLeft, false);
@@ -47,7 +55,7 @@ namespace Tests
         }
 
         [UnityTest]
-        public IEnumerator testPlayerMovesLeftRotation()
+        public IEnumerator TestPlayerMovesLeftRotation()
         {
             float initalRotation = testPlayer.transform.localScale.x;
             characterController.Move(distanceTraveledLeft, false);
@@ -56,7 +64,7 @@ namespace Tests
         }
 
         [UnityTest]
-        public IEnumerator testPlayerMovesRightPosition()
+        public IEnumerator TestPlayerMovesRightPosition()
         {
             float initialXPos = testPlayer.transform.position.x;
             characterController.Move(distanceTraveledLeft * directionReversal, false);
@@ -65,7 +73,7 @@ namespace Tests
         }
 
         [UnityTest]
-        public IEnumerator testPlayerMovesRightRotation()
+        public IEnumerator TestPlayerMovesRightRotation()
         {
             float initalRotation = testPlayer.transform.localScale.x;
             characterController.Move(distanceTraveledLeft * directionReversal, false);
@@ -74,7 +82,7 @@ namespace Tests
         }
 
         [UnityTest]
-        public IEnumerator testPlayerRunsAnimation()
+        public IEnumerator TestPlayerRunsAnimation()
         {
             animator.SetFloat("Speed", Mathf.Abs(runSpeed));
             animator.Update(1);
