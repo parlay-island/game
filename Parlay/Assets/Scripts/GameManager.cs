@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverImage;
     public Text gameOverText;
 	public Timer timerManager;
-    // public float gameTime;
 
 	public static GameManager instance = null;
     
@@ -23,7 +22,6 @@ public class GameManager : MonoBehaviour
     	}
 
     	DontDestroyOnLoad(gameObject);
-    	// initGame();
     }
 
     private void initGame(float gameTime) {

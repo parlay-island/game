@@ -25,20 +25,6 @@ namespace Tests
             GameObject.Destroy(testObject);
         }
 
-        
-        // [UnityTest]
-        // public IEnumerator GameManagerInitSetup()
-        // {
-        //     // check that game over image and text are NOT showing
-        //     Assert.IsFalse(gameManager.gameOverImage.activeSelf);
-        //     Assert.IsFalse(gameManager.gameOverText.gameObject.activeSelf);
-
-        //     // check that timer is showing
-        //     Assert.IsTrue(gameManager.timerManager.timerSlider.enabled);
-
-        //     yield return null;
-        // }
-
         [UnityTest]
         public IEnumerator TimerCountdownIntegration() {
             // check that game over image and text are NOT showing
