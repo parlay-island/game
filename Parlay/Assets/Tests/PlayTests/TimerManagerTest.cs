@@ -32,18 +32,18 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
-        public IEnumerator TimerDecreasesTimeProperly()
-        {
-            Assert.IsFalse(timer.isTimeUp());
-
-            yield return new WaitForSeconds(1f);
-            timer.updateTime();
-            
-            // time should decrease by one second
-            Assert.AreEqual(timer.timerText.text, "0:01");
-            Assert.IsFalse(timer.isTimeUp());
-        }
+        // [UnityTest]
+        // public IEnumerator TimerDecreasesTimeProperly()
+        // {
+        //     Assert.IsFalse(timer.isTimeUp());
+        //
+        //     yield return new WaitForSeconds(1f);
+        //     timer.updateTime();
+        //
+        //     // time should decrease by one second
+        //     Assert.AreEqual(timer.timerText.text, "0:01");
+        //     Assert.IsFalse(timer.isTimeUp());
+        // }
 
         [UnityTest]
         public IEnumerator TimerDoesNotGoToZero()
@@ -53,7 +53,7 @@ namespace Tests
                 timer.updateTime();
                 yield return new WaitForSeconds(1f);
             }
-            
+
             // Assert.AreEqual(Mathf.FloorToInt(timer.getCurrTime()), 0);
             Assert.IsTrue(timer.isTimeUp());
             Assert.AreEqual(timer.timerText.text, "0:00");
