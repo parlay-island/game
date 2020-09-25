@@ -32,31 +32,41 @@ namespace Tests
             yield return null;
         }
 
-        // [UnityTest]
-        // public IEnumerator TimerDecreasesTimeProperly()
-        // {
-        //     Assert.IsFalse(timer.isTimeUp());
-        //
-        //     yield return new WaitForSeconds(1f);
-        //     timer.updateTime();
-        //
-        //     // time should decrease by one second
-        //     Assert.AreEqual(timer.timerText.text, "0:01");
-        //     Assert.IsFalse(timer.isTimeUp());
-        // }
+        [UnityTest]
+        public IEnumerator TimerDecreasesTimeProperly()
+        {
+            Assert.IsFalse(timer.isTimeUp());
+
+            while (timer.getCurrTime() > 1) {
+                timer.updateTime();
+            }
+            
+            // time should decrease by one second
+            Assert.AreEqual(timer.timerText.text, "0:01");
+            Assert.AreEqual(Mathf.Ceil(timer.getCurrTime()), 1);
+            Assert.IsFalse(timer.isTimeUp());
+
+            yield return null;
+
+        }
 
         [UnityTest]
         public IEnumerator TimerDoesNotGoToZero()
         {
-            // making the timer go for more than the max (2 seconds)
-            for (int i = 0; i < 3; i++) {
+            while (timer.getCurrTime() > 0) {
                 timer.updateTime();
-                yield return new WaitForSeconds(1f);
             }
 
-            // Assert.AreEqual(Mathf.FloorToInt(timer.getCurrTime()), 0);
             Assert.IsTrue(timer.isTimeUp());
+            Assert.AreEqual(timer.getCurrTime(), 0f);
             Assert.AreEqual(timer.timerText.text, "0:00");
+
+            // on another update, time should NOT go below 0
+            timer.updateTime();
+            Assert.AreEqual(timer.getCurrTime(), 0f);
+            Assert.AreEqual(timer.timerText.text, "0:00");
+            yield return null;
+
         }
     }
 }
