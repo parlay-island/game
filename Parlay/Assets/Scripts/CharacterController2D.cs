@@ -12,8 +12,7 @@ public class CharacterController2D : MonoBehaviour
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;
 	[SerializeField] private bool m_AirControl = false;
 	[SerializeField] private LayerMask m_WhatIsGround;
-	[SerializeField] private Transform m_GroundCheck;
-	[SerializeField] private Collider2D m_Collider;
+	[SerializeField] private BoxCollider2D m_FootCollider;
 
 	private bool m_IsGrounded;
 	private Rigidbody2D m_Rigidbody2D;
@@ -37,29 +36,25 @@ public class CharacterController2D : MonoBehaviour
 	{
 		bool wasGrounded = m_IsGrounded;
 		m_IsGrounded = false;
-    BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+		Vector2 colliderSize = new Vector2(m_FootCollider.bounds.size.x, m_FootCollider.bounds.size.y + 0.2f);
+		Collider2D[] colliders = Physics2D.OverlapBoxAll(m_FootCollider.bounds.center, m_FootCollider.bounds.size, 0f, m_WhatIsGround);
 
-		Collider2D[] colliders = Physics2D.OverlapBoxAll(m_GroundCheck.position, boxCollider.size, 0, m_WhatIsGround);
 		for (int i = 0; i < colliders.Length; i++)
 		{
 			if (colliders[i].gameObject != gameObject)
 			{
 				m_IsGrounded = true;
-				if (!wasGrounded)
+				if (!wasGrounded && m_Rigidbody2D.velocity.y < 0)
 					OnLandEvent.Invoke();
 			}
 		}
 	}
-
 
 	public void Move(float move, bool jump)
 	{
 
 		if (m_IsGrounded || m_AirControl)
 		{
-				if (m_Collider != null)
-					m_Collider.enabled = true;
-
 			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
 			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
