@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverImage;
     public Text gameOverText;
 	public Timer timerManager;
-
-	public static GameManager instance = null;
     
+    public static GameManager instance = null;
+
     void Awake()
     {
     	// make sure GameManager is a singleton

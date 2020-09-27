@@ -40,14 +40,26 @@ public class Timer : MonoBehaviour
     public float getCurrTime() {
         return currTime;
     }
+    
+    
 
     public void updateTime() {
-        timeElapsed += Time.deltaTime;
-    	currTime = Mathf.Max(0f, totalTime - timeElapsed);
+        ChangeTimeInUI(-Time.deltaTime);
+    }
 
-    	int minutes = Mathf.FloorToInt(currTime / 60);
-    	int seconds = currTime == 0 ? 0 : Mathf.FloorToInt (currTime - minutes * 60) + 1;
-    	string textTime = string.Format("{0:0}:{1:00}", minutes, seconds);
+    public void AddTime(float timeBonus)
+    {
+        ChangeTimeInUI(timeBonus);
+    }
+
+    private void ChangeTimeInUI(float timeChange)
+    {
+        timeElapsed -= timeChange;
+        currTime = Mathf.Max(0f, totalTime - timeElapsed);
+
+        int minutes = Mathf.FloorToInt(currTime / 60);
+        int seconds = currTime == 0 ? 0 : Mathf.FloorToInt (currTime - minutes * 60) + 1;
+        string textTime = string.Format("{0:0}:{1:00}", minutes, seconds);
         
         timerText.text = textTime;
         timerSlider.value = currTime;
