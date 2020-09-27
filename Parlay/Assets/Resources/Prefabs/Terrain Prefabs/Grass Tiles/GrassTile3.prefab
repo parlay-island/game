@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4560966118176681934}
   - component: {fileID: 4560966118176681933}
   - component: {fileID: 4560966118176681932}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GrassTile3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
