@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9138185071058096135}
   m_Layer: 0
   m_Name: Question
-  m_TagString: Untagged
+  m_TagString: Question
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,4 +142,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe0d79cbf8dc4bf48e5b8efc6fceecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionUI: {fileID: 0}
+  questionUI: {fileID: 8857682501309285010, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}

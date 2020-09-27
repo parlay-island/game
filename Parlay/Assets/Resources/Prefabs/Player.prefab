@@ -147,7 +147,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   m_FootCollider: {fileID: 1096177018601708861}
-  m_Rigidbody2D: {fileID: 7329300552794944232}
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -175,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bd851b5465049b3861e5383827fbba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  qManager: {fileID: 7111293579745112631, guid: 496cb7156d2cf43238d21c52f5d0c9fe, type: 3}
   controller: {fileID: 7664669365354199629}
   animator: {fileID: 11736548562022933}
   runSpeed: 40

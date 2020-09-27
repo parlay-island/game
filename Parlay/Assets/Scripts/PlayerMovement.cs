@@ -13,7 +13,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-	public CharacterController2D controller;
+    [SerializeField] public GameObject questionUI;
+    public CharacterController2D controller;
 	public Animator animator;
 
 	public float runSpeed = 40f;
@@ -25,13 +26,23 @@ public class PlayerMovement : MonoBehaviour {
 
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-		if (Input.GetButtonDown("Jump") && controller.CanJump())
-		{
-			jump = true;
-			animator.SetBool("IsJumping", true);
-		}
-
+        if (Input.GetButtonDown("Jump") && controller.CanJump())
+        {
+            jump = true;
+            animator.SetBool("IsJumping", true);
+        }
 	}
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log("hit question");
+        if (col.gameObject.tag == "Question")
+        {
+            Debug.Log("hit question");
+            questionUI.SetActive(true);
+            Destroy(col.gameObject);
+        }
+    }
 
     public void OnLanding()
     {

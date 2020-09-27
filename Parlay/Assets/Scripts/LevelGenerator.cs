@@ -25,8 +25,8 @@ public class LevelGenerator : MonoBehaviour
             SpawnChunck();
         }
 
-        //Generate Player
-        Instantiate(player, new Vector3(-6, 1), Quaternion.identity);
+        //Move Player
+        player.MovePosition(new Vector2(-6, 1));
     }
 
     private void Update()
