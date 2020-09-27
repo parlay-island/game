@@ -11,6 +11,7 @@ namespace Tests
         private GameObject testObject;
         private LevelGenerator levelGenerator;
         private GameObject playerObj;
+        private GameObject chunckObj;
 
         [SetUp]
         public void Setup()
@@ -25,12 +26,16 @@ namespace Tests
         {
             GameObject.Destroy(testObject);
             GameObject.Destroy(playerObj);
+            if(chunckObj != null)
+            {
+              GameObject.Destroy(chunckObj);
+            }
         }
 
         [UnityTest]
         public IEnumerator levelGeneration()
         {
-            GameObject chunckObj = GameObject.FindGameObjectWithTag("Chunck");
+            chunckObj = GameObject.FindGameObjectWithTag("Chunck");
 
             //Check if starting chuncks were generated on load
             Assert.IsTrue(chunckObj != null);
