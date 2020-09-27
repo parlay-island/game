@@ -10,12 +10,13 @@ namespace Tests
     {
         private GameObject testObject;
         private LevelGenerator levelGenerator;
-        private GameObject playerObject;
+        private GameObject playerObj;
 
         [SetUp]
         public void Setup()
         {
             testObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/LevelGenerator"));
+            playerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
             levelGenerator = testObject.GetComponent<LevelGenerator>();
         }
 
@@ -23,14 +24,13 @@ namespace Tests
         public void Teardown()
         {
             GameObject.Destroy(testObject);
-            GameObject.Destroy(playerObject);
+            GameObject.Destroy(playerObj);
         }
 
         [UnityTest]
         public IEnumerator levelGeneration()
         {
             GameObject chunckObj = GameObject.FindGameObjectWithTag("Chunck");
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
             //Check if starting chuncks were generated on load
             Assert.IsTrue(chunckObj != null);
