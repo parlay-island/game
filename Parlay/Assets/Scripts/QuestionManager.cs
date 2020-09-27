@@ -28,7 +28,7 @@ public class QuestionManager : MonoBehaviour
 
     private void SetCurrentQuestion()
     {
-        int randomQuestionIndex = Random.Range(0, unansweredQuestions.Count);
+        int randomQuestionIndex = Random.Range(0, unansweredQuestions.Count - 1);
         currentQuestion = unansweredQuestions[randomQuestionIndex];
 
         questionText.text = currentQuestion.questionText;
