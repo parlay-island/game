@@ -15,7 +15,7 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private BoxCollider2D m_FootCollider;
 
 	private bool m_IsGrounded;
-	[SerializeField] private Rigidbody2D m_Rigidbody2D;
+	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;
 	private Vector3 m_Velocity = Vector3.zero;
 
@@ -26,7 +26,9 @@ public class CharacterController2D : MonoBehaviour
 
 	private void Awake()
 	{
-		if (OnLandEvent == null)
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+        if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
 	}
 
@@ -47,11 +49,6 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 	}
-
-    public Vector3 GetPosition()
-    {
-        return m_Rigidbody2D.position;
-    }
 
 	public void Move(float move, bool jump)
 	{
