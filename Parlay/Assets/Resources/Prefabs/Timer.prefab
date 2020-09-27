@@ -202,7 +202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6450739626822550978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -282,6 +282,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6450739626822550978}
     m_Modifications:
+    - target: {fileID: 5002066539427939721, guid: 8fe4e43a5ff024f82af4ab33e4fc6b8f, type: 3}
+      propertyPath: m_Text
+      value: 0:00
+      objectReference: {fileID: 0}
     - target: {fileID: 5002066539427939722, guid: 8fe4e43a5ff024f82af4ab33e4fc6b8f, type: 3}
       propertyPath: m_Name
       value: TimerText
