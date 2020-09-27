@@ -31,8 +31,9 @@ public class LevelGenerator : MonoBehaviour
 
     private void Update()
     {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         //Check to see whether player is near enough edge of chunck to spawn another chunck
-        if (Vector3.Distance(player.position, lastEndPosition) < PLAYER_DISTANCE_CHUNCK_SPAWN)
+        if (Vector3.Distance(playerObj.transform.position, lastEndPosition) < PLAYER_DISTANCE_CHUNCK_SPAWN)
         {
             //Spawn another chunck
             SpawnChunck();
