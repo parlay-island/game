@@ -8,19 +8,20 @@ public class QuestionManager : MonoBehaviour
     public List<Question> questions;
     public GameObject questionUI;
     public Timer timer;
-    private static List<Question> unansweredQuestions;
+    private static List<Question> _unansweredQuestions;
 
-    private Question currentQuestion;
+    private Question _currentQuestion;
 
+    [SerializeField] private WebRetriever webRetriever;
     [SerializeField] private int timeReward;
     [SerializeField] private Text questionText;
     [SerializeField] private List<Text> choiceTexts;
 
     public void Start()
     {
-        if (unansweredQuestions == null || unansweredQuestions.Count == 0)
+        if (_unansweredQuestions == null || _unansweredQuestions.Count == 0)
         {
-            unansweredQuestions = questions.ToList();
+            _unansweredQuestions = webRetriever.GetQuestions();
         }
 
         SetCurrentQuestion();
@@ -28,22 +29,22 @@ public class QuestionManager : MonoBehaviour
 
     private void SetCurrentQuestion()
     {
-        int randomQuestionIndex = Random.Range(0, unansweredQuestions.Count - 1);
-        currentQuestion = unansweredQuestions[randomQuestionIndex];
+        int randomQuestionIndex = Random.Range(0, _unansweredQuestions.Count - 1);
+        _currentQuestion = _unansweredQuestions[randomQuestionIndex];
 
-        questionText.text = currentQuestion.questionText;
+        questionText.text = _currentQuestion.questionText;
 
         for (int i = 0; i < choiceTexts.Count; i++)
         {
-            choiceTexts[i].text = currentQuestion.choices[i];
+            choiceTexts[i].text = _currentQuestion.choices[i];
         }
 
-        unansweredQuestions.RemoveAt(randomQuestionIndex);
+        _unansweredQuestions.RemoveAt(randomQuestionIndex);
     }
 
     public void UserSelect(int userChoice)
     {
-        if (userChoice == currentQuestion.correctChoice)
+        if (userChoice == _currentQuestion.correctChoice)
         {
             timer.AddTime(timeReward);
         }
