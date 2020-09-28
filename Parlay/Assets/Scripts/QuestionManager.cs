@@ -17,11 +17,11 @@ public class QuestionManager : MonoBehaviour
     [SerializeField] private Text questionText;
     [SerializeField] private List<Text> choiceTexts;
 
-    public void Start()
+    public async void Start()
     {
         if (_unansweredQuestions == null || _unansweredQuestions.Count == 0)
         {
-            _unansweredQuestions = webRetriever.GetQuestions();
+            _unansweredQuestions = await webRetriever.GetQuestions();
         }
 
         SetCurrentQuestion();
