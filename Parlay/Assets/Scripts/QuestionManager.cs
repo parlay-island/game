@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class QuestionManager : MonoBehaviour
 {
-    public List<Question> questions;
+    public List<QuestionModel> questions;
     public GameObject questionUI;
     public Timer timer;
-    private static List<Question> _unansweredQuestions;
+    private static List<QuestionModel> _unansweredQuestions;
 
-    private Question _currentQuestion;
+    private QuestionModel _currentQuestion;
 
     [SerializeField] private WebRetriever webRetriever;
     [SerializeField] private int timeReward;
@@ -32,11 +32,11 @@ public class QuestionManager : MonoBehaviour
         int randomQuestionIndex = Random.Range(0, _unansweredQuestions.Count - 1);
         _currentQuestion = _unansweredQuestions[randomQuestionIndex];
 
-        questionText.text = _currentQuestion.questionText;
+        questionText.text = _currentQuestion.body;
 
         for (int i = 0; i < choiceTexts.Count; i++)
         {
-            choiceTexts[i].text = _currentQuestion.choices[i];
+            choiceTexts[i].text = _currentQuestion.choices[i].body;
         }
 
         _unansweredQuestions.RemoveAt(randomQuestionIndex);
@@ -44,7 +44,7 @@ public class QuestionManager : MonoBehaviour
 
     public void UserSelect(int userChoice)
     {
-        if (userChoice == _currentQuestion.correctChoice)
+        if (_currentQuestion.answers.Contains(userChoice))
         {
             timer.AddTime(timeReward);
         }

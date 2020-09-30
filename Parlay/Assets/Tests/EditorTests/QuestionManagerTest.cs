@@ -26,10 +26,14 @@ namespace Tests
                 .GetComponent<QuestionManager>();
             timer = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"))
                 .GetComponent<Timer>();
-            questionManager.questions = new List<Question>
+            questionManager.questions = new List<QuestionModel>
             {
-                new Question(QuestionText, new List<string> {RightChoice, WrongChoice},
-                    RightChoiceIndex)
+                new QuestionModel(QuestionText, new List<ChoiceModel>
+                    {
+                        new ChoiceModel(RightChoice), 
+                        new ChoiceModel(WrongChoice)
+                    },
+                    new List<int> { RightChoiceIndex })
             };
             questionManager.timer = timer;
             questionManager.questionUI = uiGameObject;
