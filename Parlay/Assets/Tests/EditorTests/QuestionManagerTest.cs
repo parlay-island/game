@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,24 +18,32 @@ namespace Tests
         private GameObject uiGameObject;
         private QuestionManager questionManager;
         private Timer timer;
+        
+        public class MockWebRetriever : AbstractWebRetriever
+        {
+            public override Task<List<QuestionModel>> GetQuestions()
+            {
+                return new Task<List<QuestionModel>>(() => new List<QuestionModel>
+                {
+                    new QuestionModel(QuestionText, new List<ChoiceModel>
+                        {
+                            new ChoiceModel(RightChoice), 
+                            new ChoiceModel(WrongChoice)
+                        },
+                        new List<int> { RightChoiceIndex })
+                });
+            }
+        }
 
         [SetUp]
         public void SetUp()
         {
             uiGameObject = new GameObject();
-            questionManager = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/QuestionManager"))
+            questionManager = Object.Instantiate(Resources.Load<GameObject>("Prefabs/QuestionManager"))
                 .GetComponent<QuestionManager>();
-            timer = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"))
+            timer = Object.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"))
                 .GetComponent<Timer>();
-            questionManager.questions = new List<QuestionModel>
-            {
-                new QuestionModel(QuestionText, new List<ChoiceModel>
-                    {
-                        new ChoiceModel(RightChoice), 
-                        new ChoiceModel(WrongChoice)
-                    },
-                    new List<int> { RightChoiceIndex })
-            };
+            questionManager.webRetriever = AddComponent<MockWebRetriever>();
             questionManager.timer = timer;
             questionManager.questionUI = uiGameObject;
             questionManager.SetTimeReward(TimeReward);
@@ -44,10 +53,11 @@ namespace Tests
                 AddComponent<Text>(),
                 AddComponent<Text>()
             });
-            questionManager.Start();
+            questionManager.Start()
+                .Wait();
         }
 
-        private T AddComponent<T>() where T : Component
+        private static T AddComponent<T>() where T : Component
         {
             return new GameObject().AddComponent<T>();
         }

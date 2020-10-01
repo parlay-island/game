@@ -228,6 +228,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   apiBaseUrl: https://80066165-a2ae-4dcd-9ffa-f7a164492c69.mock.pstmn.io
+--- !u!1001 &1195904469
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2989845809856833958, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_Name
+      value: ErrorMessageUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833958, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 343.91827
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 271.94104
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3120.0864
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989845809856833961, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
 --- !u!1 &1586767098
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +408,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 350.47272
+  orthographic size: 468.68008
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
