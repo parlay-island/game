@@ -1,17 +1,41 @@
 ﻿
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
-[System.Serializable]
-public class Question
+[JsonObject]
+public class QuestionList
 {
-    public string questionText;
-    public List<string> choices;
-    public int correctChoice;
+    [JsonProperty("questions")] public List<QuestionModel> questions;
+}
 
-    public Question(string questionText, List<string> choices, int correctChoice)
+[JsonObject]
+public class QuestionModel
+{
+    [JsonProperty("id")] public int id;
+    [JsonProperty("body")] public string body;
+    [JsonProperty("tags")] public List<string> tags;
+    [JsonProperty("timesAnswered")] public int timesAnswered;
+    [JsonProperty("timesCorrect")] public int timesCorrect;
+    [JsonProperty("choices")] public List<ChoiceModel> choices;
+    [JsonProperty("answer")] public List<int> answers;
+
+    public QuestionModel(string body, List<ChoiceModel> choices, List<int> answers)
     {
-        this.questionText = questionText;
+        this.body = body;
         this.choices = choices;
-        this.correctChoice = correctChoice;
+        this.answers = answers;
+    }
+}
+
+[JsonObject]
+public class ChoiceModel
+{
+    [JsonProperty("id")] public int id;
+    [JsonProperty("body")] public string body;
+    [JsonProperty("timesChosen")] public int timesChosen;
+
+    public ChoiceModel(string body)
+    {
+        this.body = body;
     }
 }
