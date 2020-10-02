@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: webRetriever
       value: 
       objectReference: {fileID: 591944091}
+    - target: {fileID: 2929841261381478094, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+      propertyPath: errorDisplaySource
+      value: 
+      objectReference: {fileID: 571283185}
     - target: {fileID: 3406867444432409334, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.390251
@@ -184,6 +188,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+--- !u!114 &571283185 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8878849883676834197, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+  m_PrefabInstance: {fileID: 1195904469}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b302b5943845b181b007c3fee172c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &591944089
 GameObject:
   m_ObjectHideFlags: 0

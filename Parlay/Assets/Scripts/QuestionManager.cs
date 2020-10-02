@@ -20,27 +20,19 @@ public class QuestionManager : MonoBehaviour
     [SerializeField] public List<Text> choiceTexts;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
 
-    public async Task<Boolean> Start()
+    public async void Start()
     {
         try
         {
-            if (_unansweredQuestions == null || _unansweredQuestions.Count == 0)
-            {
-                var getQuestionsOrTimeout = GetQuestionsOrTimeoutBy(5000);
-                _unansweredQuestions = await getQuestionsOrTimeout;
-            }
-
-            SetCurrentQuestion();
-            return true;
+            await RetrieveQuestionsIfNotAlreadySet();
         }
         catch (AggregateException aggregateException)
         {
-            Debug.LogError("An aggregate exception was caught that may include multiple exceptions");
+            Debug.LogWarningFormat("An aggregate exception was caught that may include multiple exceptions");
             foreach (var exception in aggregateException.InnerExceptions)
             {
                 LogSingleError(exception);
             }
-            return false;
         }
         
         catch (Exception exception)
@@ -48,13 +40,23 @@ public class QuestionManager : MonoBehaviour
             errorDisplaySource.DisplayNewError("Cannot load questions", "An error occurred while loading " 
                             + "questions. Please try again later.");
             LogSingleError(exception);
-            return false;
         }
+    }
+
+    private async Task RetrieveQuestionsIfNotAlreadySet()
+    {
+        if (_unansweredQuestions == null || _unansweredQuestions.Count == 0)
+        {
+            var getQuestionsOrTimeout = GetQuestionsOrTimeoutBy(5000);
+            _unansweredQuestions = await getQuestionsOrTimeout;
+        }
+
+        SetCurrentQuestion();
     }
 
     private static void LogSingleError(Exception exception)
     {
-        Debug.LogErrorFormat("There was an error when loading questions [{0}]", exception);
+        Debug.LogWarningFormat("There was an error when loading questions [{0}]", exception);
     }
 
     private async Task<List<QuestionModel>> GetQuestionsOrTimeoutBy(int timeout)

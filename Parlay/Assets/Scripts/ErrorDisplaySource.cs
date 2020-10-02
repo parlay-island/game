@@ -1,12 +1,11 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ErrorDisplaySource : MonoBehaviour
 {
-      [SerializeField] private Text errorTitle;
-      [SerializeField] private Text errorMessage;
-      [SerializeField] private GameObject errorMessageObject;
+      [SerializeField] public Text errorTitle;
+      [SerializeField] public Text errorMessage;
+      [SerializeField] public GameObject errorMessageObject;
       
       public void DisplayNewError(string title, string message)
       {
