@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverImage;
     public Text gameOverText;
 	public Timer timerManager;
+    public GameObject player;
+    public Text distanceLabel;
+    public Text distanceText;
     
     public static GameManager instance = null;
 
@@ -28,6 +31,7 @@ public class GameManager : MonoBehaviour
         gameOverImage.SetActive(false);
         gameOverText.gameObject.SetActive(false);
 
+
         timerManager.initTimer(gameTime);
     }
 
@@ -38,6 +42,9 @@ public class GameManager : MonoBehaviour
     private void gameOver() {
         gameOverImage.SetActive(true);
         gameOverText.gameObject.SetActive(true);
+        distanceLabel.gameObject.SetActive(false);
+        distanceText.gameObject.SetActive(false);
+
         timerManager.hideTimer();
     }
 
@@ -49,6 +56,9 @@ public class GameManager : MonoBehaviour
             return;
         } else {
             timerManager.updateTime();
+
+            float playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled();
+            distanceText.text = playerDistance.ToString("0.00");
         }
     }
 }
