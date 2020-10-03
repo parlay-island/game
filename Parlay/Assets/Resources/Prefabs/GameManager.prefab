@@ -46,4 +46,7 @@ MonoBehaviour:
   gameOverImage: {fileID: 5351319288582708990, guid: d27a0571cdd654ce7b068746d14ae93d, type: 3}
   gameOverText: {fileID: 8993365865649531358, guid: 8158732f962164fd09c31a50a35fb744, type: 3}
   timerManager: {fileID: 8007271838127522720, guid: 9f2cb90b73b7542b3bd99c4d4a4fb2fc, type: 3}
-  gameTime: 5
+  player: {fileID: 11736548562022930, guid: 22e8a5012d19d41ccbb6e54b318cc5d8, type: 3}
+  ground: {fileID: 3460104482575868950, guid: c5bcf444a9efc469190a93198e0a36d2, type: 3}
+  distanceText: {fileID: 1272553073332157503, guid: 7a40385cece9d4cc288561e9067b93f8, type: 3}
+  finalDistanceText: {fileID: 8076362293196602333, guid: 31336dec9897048ecbc9c89682dbe640, type: 3}
