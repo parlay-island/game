@@ -79,3 +79,8 @@ crashlytics-build.properties
 
 # # Unity build
 WebGL-Dist/
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
