@@ -98,7 +98,6 @@ public class QuestionManager : MonoBehaviour
         {
             timer.AddTime(timeReward);
         }
-            
         questionUI.SetActive(false);
     }
 
