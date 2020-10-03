@@ -26,7 +26,9 @@ namespace Tests
         }
 
         [UnityTest]
-        public IEnumerator TimerCountdownIntegration() {
+        public IEnumerator TestTimerCountdownIntegration() {
+            gameManager.setGameTime(2f);
+
             // check that game over image and text are NOT showing
             Assert.IsFalse(gameManager.gameOverImage.activeSelf);
             Assert.IsFalse(gameManager.gameOverText.gameObject.activeSelf);
@@ -34,7 +36,6 @@ namespace Tests
             // check that timer is showing
             Assert.IsTrue(gameManager.timerManager.timerSlider.enabled);
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:02"); 
-
 
             // check that game time decreases properly
             yield return new WaitForSeconds(1f);
@@ -52,7 +53,7 @@ namespace Tests
             // check that time doesn't go below 0
             yield return new WaitForSeconds(1f); 
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
-
         }
+        
     }
 }

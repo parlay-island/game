@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 	void Update () {
-
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
         if (Input.GetButtonDown("Jump") && controller.CanJump())
@@ -37,11 +36,8 @@ public class PlayerMovement : MonoBehaviour {
             jump = true;
             animator.SetBool("IsJumping", true);
         }
-
         
         distanceTravelled += (transform.position.x - lastPosition);
-        // Debug.Log(distanceTravelled);
-        // GameManager.instance.playerDistance = distanceTravelled;
         lastPosition = transform.position.x;
 	}
 
