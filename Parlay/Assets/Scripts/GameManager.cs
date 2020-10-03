@@ -9,8 +9,14 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverImage;
     public Text gameOverText;
 	public Timer timerManager;
+    public GameObject player;
+    public GameObject ground;
+    public Text distanceText;
+    public Text finalDistanceText;
 
     public static GameManager instance = null;
+
+    private float playerDistance;
 
     void Awake()
     {
@@ -26,8 +32,10 @@ public class GameManager : MonoBehaviour
     private void initGame(float gameTime) {
         gameOverImage.SetActive(false);
         gameOverText.gameObject.SetActive(false);
+        finalDistanceText.gameObject.SetActive(false);
 
         timerManager.initTimer(gameTime);
+        distanceText.gameObject.SetActive(true);
     }
 
     public void setGameTime(float time) {
@@ -37,6 +45,10 @@ public class GameManager : MonoBehaviour
     private void gameOver() {
         gameOverImage.SetActive(true);
         gameOverText.gameObject.SetActive(true);
+        finalDistanceText.gameObject.SetActive(true);
+        finalDistanceText.text = "You have travelled " + playerDistance.ToString("0.00") + "m";
+
+        distanceText.gameObject.SetActive(false);
         timerManager.hideTimer();
     }
 
@@ -48,6 +60,9 @@ public class GameManager : MonoBehaviour
             return;
         } else {
             timerManager.updateTime();
+
+            playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled();
+            distanceText.text = "Distance: " + playerDistance.ToString("0.00");
         }
     }
 
