@@ -24,7 +24,6 @@ public class Enemy : MonoBehaviour
     {
       Vector2 lineCastPos = myTrans.position - myTrans.right * myWidth;
       Vector2 transRight = new Vector2(myTrans.right.x, myTrans.right.y);
-      Debug.DrawLine(lineCastPos, lineCastPos - transRight * .1f, Color.red);
       bool isGrounded = Physics2D.Linecast(lineCastPos, lineCastPos + Vector2.down, enemyMask);
       bool isBlocked = Physics2D.Linecast(lineCastPos, lineCastPos - transRight * .1f, enemyMask);
 
