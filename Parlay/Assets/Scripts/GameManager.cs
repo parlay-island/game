@@ -9,18 +9,17 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverImage;
     public Text gameOverText;
 	public Timer timerManager;
-    
+
     public static GameManager instance = null;
 
     void Awake()
     {
     	// make sure GameManager is a singleton
     	if (instance==null) {
-    		instance = this; 
+    		instance = this;
     	} else if (instance != this) {
     		Destroy(gameObject);
     	}
-
     	DontDestroyOnLoad(gameObject);
     }
 
@@ -50,5 +49,10 @@ public class GameManager : MonoBehaviour
         } else {
             timerManager.updateTime();
         }
+    }
+
+    public void DeductTimeByEnemy(Enemy enemy)
+    {
+      timerManager.AddTime(enemy.GetTimeReduction());
     }
 }

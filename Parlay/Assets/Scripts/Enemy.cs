@@ -5,23 +5,28 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Range(-30f, -1f)][SerializeField] private float m_TimeReduction = -2f;
-  	[SerializeField] private Timer m_Timer;
-
-    void Update () {
-    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+      Vector2 normal = collision.contacts[0].normal;
+		  Vector2 topSide = new Vector2 (0f, -1f);
+		  bool isTopHit = normal == topSide;
       if(collision.gameObject.tag == "Player")
       {
-        hitPlayer();
+        if(!isTopHit)
+          GameManager.instance.DeductTimeByEnemy(this);
+        else
+        {
+          GameObject.Destroy(gameObject.GetComponent<BoxCollider2D>());
+          GameObject.Destroy(gameObject, 1f);
+        }
+
       }
     }
 
-    private void hitPlayer()
+    public float GetTimeReduction()
     {
-      m_Timer.AddTime(m_TimeReduction);
-      Debug.Log(m_Timer.getCurrTime());
+      return m_TimeReduction;
     }
 
 }
