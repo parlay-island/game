@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
         {
           speed = 0;
           myBody.constraints = RigidbodyConstraints2D.None;
-          GameObject.Destroy(gameObject.GetComponent<BoxCollider2D>());
+          Object.Destroy(gameObject.GetComponent<BoxCollider2D>());
           GameObject.Destroy(gameObject, 1f);
         }
 

@@ -9,6 +9,7 @@ namespace Tests
   public class EnemyTest
   {
       private GameObject testEnemy;
+      private GameObject enemy2;
       private GameObject player;
       private GameManager gameManager;
       private GameObject gameManagerObj;
@@ -38,16 +39,28 @@ namespace Tests
         GameObject.Destroy(level);
         if(testEnemy != null)
           GameObject.Destroy(testEnemy);
+        if(enemy2 != null)
+          GameObject.Destroy(enemy2);
         GameObject.Destroy(gameManagerObj);
+      }
+
+      private Vector2 GetEnemyColliderPos()
+      {
+        return testEnemy.transform.position - testEnemy.transform.right * testEnemy.GetComponent<SpriteRenderer>().bounds.extents.x;
+      }
+
+      private void CollidePlayerWithEnemy()
+      {
+        Vector2 enemyPos = GetEnemyColliderPos();
+        characterController.Move(enemyPos.x, false);
       }
 
       [UnityTest]
       public IEnumerator TestEnemyPlayerCollision()
       {
-        Vector2 enemyPos = testEnemy.transform.position - testEnemy.transform.right * testEnemy.GetComponent<SpriteRenderer>().bounds.extents.x;
+        CollidePlayerWithEnemy();
         float initialTime = gameManager.timerManager.getCurrTime();
-        characterController.Move(enemyPos.x, false);
-        float waitTime = 1f;
+        float waitTime = 2f;
         yield return new WaitForSeconds(waitTime);
         Assert.Less(Mathf.Ceil(gameManager.timerManager.getCurrTime()), Mathf.Ceil(initialTime - waitTime));
         Assert.True(testEnemy != null);
@@ -65,33 +78,56 @@ namespace Tests
         yield return null;
       }
 
-      /**
-      *   Feature: when an enemy collides with another enemy nothing happens
-      *   Purpose: To ensure that if 2 enemies happen to hit each other it will not affect the player’s gameplay or cause unintended consequences
-      *   Preconditions: the scene has multiple enemies
-      *   Steps: move an enemy into another enemy
-      *   Postconditions: the enemies continue moving and the time does not change
-      */
       [UnityTest]
-      public IEnumerator TestEnemyCollision()
+      public IEnumerator TestEnemyCollisionWithEnemyHasNoEffect()
       {
-        yield return null;
+        characterController.Move(-50f, false);
+        float waitTime = 0.2f;
+        yield return new WaitForSeconds(waitTime);
+        float initialTime = gameManager.timerManager.getCurrTime();
+        Rigidbody2D body1 = testEnemy.GetComponent<Rigidbody2D>();
+        enemy2 = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
+        Vector3 currRotation = testEnemy.transform.eulerAngles;
+        currRotation.y += 180;
+        enemy2.transform.eulerAngles = currRotation;
+        Rigidbody2D body2 = enemy2.GetComponent<Rigidbody2D>();
+        body2.velocity = -body1.velocity;
+        body2.MovePosition(GetEnemyColliderPos());
+        Vector2 initialVelocityEnemy1 = body1.velocity;
+        Vector2 initialVelocityEnemy2 = body2.velocity;
+        yield return new WaitForSeconds(waitTime);
+        Assert.AreEqual(body1.velocity, initialVelocityEnemy1);
+        Assert.AreEqual(body2.velocity, initialVelocityEnemy2);
+        Assert.GreaterOrEqual(Mathf.Ceil(gameManager.timerManager.getCurrTime()), Mathf.Ceil(initialTime - waitTime));
       }
 
-      /**
-      *   Feature: enemies freely move without any input from the user
-      *   Purpose: So that the enemies are not in a static position and can create more difficulty for the player (ex: if an enemy is where a question is located). Ensuring that the enemies are moving as time goes on
-      *   Preconditions: An enemy is on the scene
-      *   Steps: Wait for certain amount of time to pass
-      *   Postconditions: the enemy’s x position has changed
-      */
       [UnityTest]
       public IEnumerator TestEnemyInitialFreeMovement()
       {
-        // float initialEnemyXPos = testEnemy.transform.position.x;
-        // yield return new WaitForSeconds(1f);
-        // Assert.Greater(testEnemy.transform.position.x, initialEnemyXPos);
-        yield return null;
+        float initialEnemyXPos = testEnemy.transform.position.x;
+        yield return new WaitForSeconds(1f);
+        Assert.Greater(testEnemy.transform.position.x, initialEnemyXPos);
+      }
+
+      [UnityTest]
+      public IEnumerator TestEnemyDirectionChangeWhenEncounterObstacle()
+      {
+        CollidePlayerWithEnemy();
+        float initialXVelocity = testEnemy.GetComponent<Rigidbody2D>().velocity.x;
+        yield return new WaitForSeconds(1f);
+        Assert.True(testEnemy.GetComponent<Rigidbody2D>().velocity.x == -initialXVelocity);
+      }
+
+      [UnityTest]
+      public IEnumerator TestEnemyDirectionChangeWhenReachEnd()
+      {
+        characterController.Move(-200f, false);
+        yield return new WaitForSeconds(0.1f);
+        Rigidbody2D rigidbody = testEnemy.GetComponent<Rigidbody2D>();
+        float initialXVelocity = rigidbody.velocity.x;
+        rigidbody.MovePosition(new Vector2(-150f, rigidbody.position.y));
+        yield return new WaitForSeconds(0.5f);
+        Assert.True(testEnemy.GetComponent<Rigidbody2D>().velocity.x == -initialXVelocity);
       }
 
 
