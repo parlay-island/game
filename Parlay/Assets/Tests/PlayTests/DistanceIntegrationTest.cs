@@ -45,7 +45,6 @@ namespace Tests
         {
             GameObject.Destroy(testObject);
             GameObject.Destroy(testPlayer);
-            GameObject.Destroy(testGround);
         }
 
         [UnityTest]
@@ -55,18 +54,18 @@ namespace Tests
 
             // test that distance tracking label displays the correct distance when player moves left
             characterController.Move(distanceTraveled * directionReversal, false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
             Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
 
             // test that distance tracking label displays the correct distance when player moves right
             characterController.Move(distanceTraveled, false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
             Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
 
             // test that distance tracking label displays the correct distance when player jumps
             rigidbody.gravityScale = 3;
             characterController.Move(0f, true);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
             Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
         }
 

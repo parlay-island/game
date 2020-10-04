@@ -30,7 +30,6 @@ namespace Tests
       [TearDown]
       public void Teardown()
       {
-        GameObject.Destroy(characterController);
         GameObject.Destroy(player);
         foreach(GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
         {
@@ -40,7 +39,6 @@ namespace Tests
         if(testEnemy != null)
           GameObject.Destroy(testEnemy);
         GameObject.Destroy(gameManagerObj);
-        GameObject.Destroy(gameManager);
       }
 
       [UnityTest]
@@ -51,7 +49,7 @@ namespace Tests
         characterController.Move(enemyPos.x, false);
         float waitTime = 1f;
         yield return new WaitForSeconds(waitTime);
-        Assert.Less(gameManager.timerManager.getCurrTime(), initialTime - waitTime);
+        Assert.Less(Mathf.Ceil(gameManager.timerManager.getCurrTime()), Mathf.Ceil(initialTime - waitTime));
         Assert.True(testEnemy != null);
       }
 
@@ -60,10 +58,10 @@ namespace Tests
       {
         float initialTime = gameManager.timerManager.getCurrTime();
         characterController.Move(testEnemy.transform.position.x, true);
-        float waitTime = 2f;
+        float waitTime = 5f;
         yield return new WaitForSeconds(waitTime);
         Assert.True(testEnemy == null);
-        Assert.GreaterOrEqual(gameManager.timerManager.getCurrTime(), initialTime - waitTime);
+        Assert.GreaterOrEqual(Mathf.Ceil(gameManager.timerManager.getCurrTime()), Mathf.Ceil(initialTime - waitTime));
         yield return null;
       }
 
@@ -88,8 +86,11 @@ namespace Tests
       *   Postconditions: the enemy’s x position has changed
       */
       [UnityTest]
-      public IEnumerator TestEnemyMovement()
+      public IEnumerator TestEnemyInitialFreeMovement()
       {
+        // float initialEnemyXPos = testEnemy.transform.position.x;
+        // yield return new WaitForSeconds(1f);
+        // Assert.Greater(testEnemy.transform.position.x, initialEnemyXPos);
         yield return null;
       }
 
