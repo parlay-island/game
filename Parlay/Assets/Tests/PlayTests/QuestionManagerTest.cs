@@ -6,6 +6,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
+using System.Net.Http;
 using Object = UnityEngine.Object;
 
 namespace Tests
@@ -38,6 +39,10 @@ namespace Tests
                         new List<int> { RightChoiceIndex })
                 });
             }
+
+            public override Task<HttpResponseMessage> PostEndResult(ResultModel result, int playerID) {
+                return Task.Run(() => new HttpResponseMessage());
+            }
         }
 
         public class TimeoutWebRetriever : AbstractWebRetriever
@@ -45,6 +50,10 @@ namespace Tests
             public override Task<List<QuestionModel>> GetQuestions()
             {
                 throw new TimeoutException();
+            }
+
+            public override Task<HttpResponseMessage> PostEndResult(ResultModel result, int playerID) {
+                return Task.Run(() => new HttpResponseMessage());
             }
         }
 

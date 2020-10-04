@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Tests
 {
@@ -11,12 +16,43 @@ namespace Tests
         private GameObject testObject;
         private GameManager gameManager;
 
+        public class MockWebRetriever : AbstractWebRetriever {
+            public override Task<List<QuestionModel>> GetQuestions() {
+                return Task.Run(() => new List<QuestionModel>());
+            }
+
+            public override Task<HttpResponseMessage> PostEndResult(ResultModel result, int playerID) {
+                HttpContent content = new StringContent("distance:0.00,level:1");
+
+                return Task.Run(() => 
+                    new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = content });
+            }
+        }
+
+        public class TimeoutWebRetriever : AbstractWebRetriever
+        {
+            public override Task<List<QuestionModel>> GetQuestions()
+            {
+                throw new TimeoutException();
+            }
+
+            public override Task<HttpResponseMessage> PostEndResult(ResultModel result, int playerID) {
+                throw new TimeoutException();
+            }
+        }
+
         [SetUp]
         public void Setup()
         {
+           initializeGameManager(); 
+        }
+
+        private void initializeGameManager() {
             testObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             gameManager = testObject.GetComponent<GameManager>();
             gameManager.setGameTime(2f);
+            
+            gameManager.webRetriever = new GameObject().AddComponent<MockWebRetriever>();
         }
 
         [TearDown]
@@ -27,7 +63,7 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestTimerCountdownIntegration() {
-            gameManager.setGameTime(2f);
+            initializeGameManager();
 
             // check that game over image and text are NOT showing
             Assert.IsFalse(gameManager.gameOverImage.activeSelf);
@@ -53,6 +89,34 @@ namespace Tests
             // check that time doesn't go below 0
             yield return new WaitForSeconds(1f); 
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
+        }
+
+        [UnityTest]
+        public IEnumerator TestPostRequestForEndResultsWithoutTimeout() {
+            initializeGameManager();
+
+            Assert.That(() => gameManager.gameOver(), Throws.Nothing);
+
+            yield return new WaitForSeconds(0.1f);
+            // player did not move at all for this test --> distance should be 0.00
+            Assert.That(gameManager.getPostEndResultContent().Contains("0.00"));
+            Assert.That(gameManager.getPostEndResultContent().Contains(gameManager.getLevel().ToString()));
+        }
+
+        [UnityTest]
+        public IEnumerator TestPostRequestForEndResultsWithTimeout() {
+            gameManager.webRetriever = new GameObject().AddComponent<TimeoutWebRetriever>();
+
+            // making sure that exception is thrown
+            try {
+                gameManager.gameOver();
+
+                // should not get here because exception should be thrown first
+                Assert.Fail();
+            } catch (Exception e) {
+                Debug.Log(e);
+            }
+            yield return null;
         }
         
     }
