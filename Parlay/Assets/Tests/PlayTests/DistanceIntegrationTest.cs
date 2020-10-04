@@ -52,12 +52,12 @@ namespace Tests
             // test that distance tracking label is showing 
             Assert.IsFalse(gameManager.finalDistanceText.gameObject.activeSelf);
 
-            // test that distance tracking label displays the correct distance when player moves left
+            // test that distance tracking label displays the correct distance when player moves right
             characterController.Move(distanceTraveled * directionReversal * 2, false);
             yield return new WaitForSeconds(0.3f);
             Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
 
-            // test that distance tracking label displays the correct distance when player moves right
+            // test that distance tracking label displays the correct distance when player moves left
             characterController.Move(distanceTraveled * 2, false);
             yield return new WaitForSeconds(0.3f);
             Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));

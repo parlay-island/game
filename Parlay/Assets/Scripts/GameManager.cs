@@ -20,12 +20,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] public AbstractWebRetriever webRetriever;
     
     public static GameManager instance = null;
+    public GameEndRequestHelper gameEndRequestHelper;
 
-    private float playerDistance;
+    public float playerDistance = 0f;
     // hardcoded for now for the purpose of mocking game end result
     // TODO: make this value based on login information & mode selection
+    public int level = 1;
     private int playerID = 1;
-    private int level = 1;
     private string postEndResultContent; 
 
     void Awake()
@@ -41,12 +42,17 @@ public class GameManager : MonoBehaviour
     }
 
     private void initGame(float gameTime) {
-        gameOverImage.SetActive(false);
-        gameOverText.gameObject.SetActive(false);
-        finalDistanceText.gameObject.SetActive(false);
+        hideGameEndElements();
 
         timerManager.initTimer(gameTime);
         distanceText.gameObject.SetActive(true);
+        gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+    }
+
+    private void hideGameEndElements() {
+        gameOverImage.SetActive(false);
+        gameOverText.gameObject.SetActive(false);
+        finalDistanceText.gameObject.SetActive(false);
     }
 
     public void setGameTime(float time) {
@@ -57,11 +63,7 @@ public class GameManager : MonoBehaviour
         showGameOverUIElements();
         hideUIElementsWhenGameOver();
         
-        postGameEndResults();
-    }
-
-    public string getPostEndResultContent() {
-        return postEndResultContent;
+        sendPostRequestWithGameEndResults();
     }
 
     public int getLevel() {
@@ -80,46 +82,8 @@ public class GameManager : MonoBehaviour
         timerManager.hideTimer();
     }
 
-    private async void postGameEndResults() {
-        try {
-            var postResultResponsePromise = postEndResultOrTimeoutBy(5000);
-            var postResultResponse = await postResultResponsePromise;
-            handlePostEndResultResponse(postResultResponse);
-        }
-        catch (Exception exception) {
-            Debug.Log(exception);
-            Debug.LogWarningFormat("There was an error when making a post request for end results for player" + playerID.ToString());
-        }
-    }
-
-    private void handlePostEndResultResponse(HttpResponseMessage postResultResponse) {
-        if (postResultResponse.IsSuccessStatusCode) {
-            Debug.Log(postResultResponse.StatusCode);
-
-            if (postResultResponse.Content != null) {
-                postEndResultContent = postResultResponse.Content.ReadAsStringAsync().Result;
-                Debug.Log(postEndResultContent);
-            }
-            
-        } else {
-            Debug.LogFormat("ERROR");
-            Debug.Log(postResultResponse.StatusCode);
-        }
-    }
-
-    private async Task<HttpResponseMessage> postEndResultOrTimeoutBy(int timeout) {
-        ResultModel endResult = new ResultModel(playerDistance, level);
-        var attemptPostEndResult = webRetriever.PostEndResult(endResult, playerID);
-         using (var timeoutCancellationTokenSource = new CancellationTokenSource())
-        {
-            if (await Task.WhenAny(attemptPostEndResult, 
-                Task.Delay(timeout, timeoutCancellationTokenSource.Token)) == attemptPostEndResult)
-            {
-                timeoutCancellationTokenSource.Cancel();
-                return await attemptPostEndResult;
-            }
-            throw new TimeoutException($"Post end results request was not made in {timeout} seconds");
-        }
+    private async void sendPostRequestWithGameEndResults() {
+        gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID);
     }
 
     // Update is called once per frame
