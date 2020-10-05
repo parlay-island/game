@@ -26,6 +26,10 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
+            initializeGameManagerAndPlayer();
+        }
+
+        private void initializeGameManagerAndPlayer() {
             testObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             testPlayer = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
 
@@ -57,20 +61,22 @@ namespace Tests
             characterController.Move(distanceTraveled * directionReversal * 2, false);
             yield return new WaitForSeconds(0.3f);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
-            // Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
 
             // test that distance tracking label displays the correct distance when player moves left
             characterController.Move(distanceTraveled * 2, false);
             yield return new WaitForSeconds(0.3f);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
-            // Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
 
             // test that distance tracking label displays the correct distance when player jumps
             rigidbody.gravityScale = 3;
             characterController.Move(0f, true);
             yield return new WaitForSeconds(0.3f);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
-            // Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
+
+            // test that the final distance is reported
+            yield return new WaitForSeconds(3f);
+            Assert.IsTrue(gameManager.finalDistanceText.gameObject.activeSelf);
+            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(true) < 0.1);
         }
 
         private float findDifferenceBetweenActualAndDisplayedDifference(bool isFinalDistance) {
@@ -79,7 +85,6 @@ namespace Tests
             if (isFinalDistance) {
                 displayedPlayerDistance = getFloatDistanceFromFinalDistanceText(gameManager.finalDistanceText.text);
             }
-
             return Mathf.Abs(displayedPlayerDistance - actualPlayerDistance);
         }
 
@@ -93,14 +98,6 @@ namespace Tests
             string[] parts = finalDistanceText.Split(' ');
             float distance = float.Parse(parts[3]);
             return distance;
-        }
-
-        [UnityTest]
-        public IEnumerator TestFinalDistanceDisplayWhenGameIsOver() {
-            // test that the final distance is reported
-            yield return new WaitForSeconds(3f);
-            Assert.IsTrue(gameManager.finalDistanceText.gameObject.activeSelf);
-            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(true) < 0.1);
         }
     }
 }
