@@ -168,4 +168,5 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 311
+  animator: {fileID: 2511919260576770238}
   speed: 2

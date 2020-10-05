@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [Range(-30f, -1f)][SerializeField] private float m_TimeReduction = -2f;
     [SerializeField] private LayerMask enemyMask;
+    public Animator animator;
     public float speed = 5;
     private Rigidbody2D myBody;
     private Transform myTrans;
@@ -22,6 +23,7 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
+
       Vector2 lineCastPos = myTrans.position - myTrans.right * myWidth;
       Vector2 transRight = new Vector2(myTrans.right.x, myTrans.right.y);
       bool isGrounded = Physics2D.Linecast(lineCastPos, lineCastPos + Vector2.down, enemyMask);
@@ -46,7 +48,11 @@ public class Enemy : MonoBehaviour
       if(collision.gameObject.tag == "Player")
       {
         if(!isTopHit)
+        {
+          animator.SetBool("hitPlayer", true);
           GameManager.instance.DeductTimeByEnemy(this);
+          animator.SetBool("hitPlayer", false);
+        }
         else
         {
           speed = 0;
@@ -54,7 +60,6 @@ public class Enemy : MonoBehaviour
           Object.Destroy(gameObject.GetComponent<BoxCollider2D>());
           GameObject.Destroy(gameObject, 1f);
         }
-
       }
     }
 

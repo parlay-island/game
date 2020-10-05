@@ -121,13 +121,13 @@ namespace Tests
       [UnityTest]
       public IEnumerator TestEnemyDirectionChangeWhenReachEnd()
       {
-        characterController.Move(-200f, false);
+        characterController.Move(-2000f, false);
         yield return new WaitForSeconds(0.1f);
         Rigidbody2D rigidbody = testEnemy.GetComponent<Rigidbody2D>();
         float initialXVelocity = rigidbody.velocity.x;
-        rigidbody.MovePosition(new Vector2(-150f, rigidbody.position.y));
-        yield return new WaitForSeconds(0.5f);
-        Assert.True(testEnemy.GetComponent<Rigidbody2D>().velocity.x == -initialXVelocity);
+        testEnemy.transform.position = new Vector3(-1500f, testEnemy.transform.position.y, 0); 
+        yield return new WaitForSeconds(0.7f);
+        Assert.True(rigidbody.velocity.x == -initialXVelocity);
       }
 
 
