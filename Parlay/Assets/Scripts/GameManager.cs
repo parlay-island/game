@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         gameOverImage.SetActive(true);
         gameOverText.gameObject.SetActive(true);
         finalDistanceText.gameObject.SetActive(true);
-        finalDistanceText.text = "You have travelled " + playerDistance.ToString("0.00") + "m";
+        finalDistanceText.text = "You have travelled " + playerDistance.ToString("0.00") + " m";
     }
 
     private void hideUIElementsWhenGameOver() {

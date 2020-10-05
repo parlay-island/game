@@ -19,6 +19,7 @@ namespace Tests
         private Rigidbody2D rigidbody;
 
         private const int directionReversal = -1;
+        private const float deltaDistance = 0.1f;
         private float runSpeed;
         private float distanceTraveled;
 
@@ -55,18 +56,43 @@ namespace Tests
             // test that distance tracking label displays the correct distance when player moves right
             characterController.Move(distanceTraveled * directionReversal * 2, false);
             yield return new WaitForSeconds(0.3f);
-            Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
+            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
+            // Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
 
             // test that distance tracking label displays the correct distance when player moves left
             characterController.Move(distanceTraveled * 2, false);
             yield return new WaitForSeconds(0.3f);
-            Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
+            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
+            // Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
 
             // test that distance tracking label displays the correct distance when player jumps
             rigidbody.gravityScale = 3;
             characterController.Move(0f, true);
             yield return new WaitForSeconds(0.3f);
-            Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
+            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
+            // Assert.AreEqual(gameManager.distanceText.text, "Distance: " + playerMovement.getDistanceTravelled().ToString("F2"));
+        }
+
+        private float findDifferenceBetweenActualAndDisplayedDifference(bool isFinalDistance) {
+            float actualPlayerDistance = playerMovement.getDistanceTravelled();
+            float displayedPlayerDistance = getFloatDistanceFromDistanceText(gameManager.distanceText.text);
+            if (isFinalDistance) {
+                displayedPlayerDistance = getFloatDistanceFromFinalDistanceText(gameManager.finalDistanceText.text);
+            }
+
+            return Mathf.Abs(displayedPlayerDistance - actualPlayerDistance);
+        }
+
+        private float getFloatDistanceFromDistanceText(string text) {
+            string[] parts = text.Split(':');
+            float distance = float.Parse(parts[1].Trim());
+            return distance;
+        }
+
+        private float getFloatDistanceFromFinalDistanceText(string finalDistanceText) {
+            string[] parts = finalDistanceText.Split(' ');
+            float distance = float.Parse(parts[3]);
+            return distance;
         }
 
         [UnityTest]
@@ -74,7 +100,7 @@ namespace Tests
             // test that the final distance is reported
             yield return new WaitForSeconds(3f);
             Assert.IsTrue(gameManager.finalDistanceText.gameObject.activeSelf);
-            Assert.AreEqual(gameManager.finalDistanceText.text, "You have travelled " + playerMovement.getDistanceTravelled().ToString("F2") + "m");
+            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(true) < 0.1);
         }
     }
 }
