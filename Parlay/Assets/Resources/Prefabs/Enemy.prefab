@@ -170,3 +170,18 @@ MonoBehaviour:
     m_Bits: 311
   animator: {fileID: 2511919260576770238}
   speed: 2
+  OnPlayerHitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2988870147975425417, guid: 22e8a5012d19d41ccbb6e54b318cc5d8, type: 3}
+        m_TargetAssemblyTypeName: PlayerMovement, GameAssembly
+        m_MethodName: IsHit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

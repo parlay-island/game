@@ -125,7 +125,7 @@ namespace Tests
         yield return new WaitForSeconds(0.1f);
         Rigidbody2D rigidbody = testEnemy.GetComponent<Rigidbody2D>();
         float initialXVelocity = rigidbody.velocity.x;
-        testEnemy.transform.position = new Vector3(-1500f, testEnemy.transform.position.y, 0); 
+        testEnemy.transform.position = new Vector3(-1500f, testEnemy.transform.position.y, 0);
         yield return new WaitForSeconds(0.7f);
         Assert.True(rigidbody.velocity.x == -initialXVelocity);
       }

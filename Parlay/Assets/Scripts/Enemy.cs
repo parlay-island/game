@@ -49,9 +49,9 @@ public class Enemy : MonoBehaviour
       {
         if(!isTopHit)
         {
-          animator.SetBool("hitPlayer", true);
+          animator.SetTrigger("EnemyAttack");
+          GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().IsHit();
           GameManager.instance.DeductTimeByEnemy(this);
-          animator.SetBool("hitPlayer", false);
         }
         else
         {
