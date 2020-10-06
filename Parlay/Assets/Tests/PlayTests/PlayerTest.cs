@@ -1,9 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -50,7 +46,7 @@ namespace Tests
             GameObject.Destroy(testPlayer);
             if (testGround != null)
             {
-              GameObject.Destroy(testGround.GetComponent<BoxCollider2D>());
+              Object.Destroy(testGround.GetComponent<BoxCollider2D>());
               GameObject.Destroy(testGround);
             }
         }
@@ -169,7 +165,7 @@ namespace Tests
 
             characterController.Move(distanceTraveledLeft * directionReversal, false);
             yield return new WaitForSeconds(0.1f);
-            
+
             Assert.Greater(playerMovement.getDistanceTravelled(), initialXPos);
         }
 
@@ -195,11 +191,11 @@ namespace Tests
             float initialYPos = testPlayer.transform.localPosition.y;
             float distanceBeforeJumping = playerMovement.getDistanceTravelled();
             Assert.AreEqual(distanceBeforeJumping, 0f);
-            
+
             characterController.Move(0f, true);
             yield return new WaitForSeconds(0.1f);
             float distanceAfterJumping = playerMovement.getDistanceTravelled();
-            
+
             // distance should not increase when jumping
             Assert.AreEqual(distanceAfterJumping, 0f);
         }

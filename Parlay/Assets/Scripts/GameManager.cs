@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Text distanceText;
     [SerializeField] public Text finalDistanceText;
     [SerializeField] public AbstractWebRetriever webRetriever;
-    
+
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
 
@@ -27,17 +27,16 @@ public class GameManager : MonoBehaviour
     // TODO: make this value based on login information & mode selection
     public int level = 1;
     private int playerID = 1;
-    private string postEndResultContent; 
+    private string postEndResultContent;
 
     void Awake()
     {
     	// make sure GameManager is a singleton
     	if (instance==null) {
-    		instance = this; 
+    		instance = this;
     	} else if (instance != this) {
     		Destroy(gameObject);
     	}
-
     	DontDestroyOnLoad(gameObject);
     }
 
@@ -62,7 +61,7 @@ public class GameManager : MonoBehaviour
     public void gameOver() {
         showGameOverUIElements();
         hideUIElementsWhenGameOver();
-        
+
         sendPostRequestWithGameEndResults();
     }
 
@@ -99,5 +98,10 @@ public class GameManager : MonoBehaviour
             playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled();
             distanceText.text = "Distance: " + playerDistance.ToString("0.00");
         }
+    }
+
+    public void DeductTimeByEnemy(Enemy enemy)
+    {
+      timerManager.AddTime(enemy.GetTimeReduction());
     }
 }

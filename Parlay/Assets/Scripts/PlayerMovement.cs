@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
             jump = true;
             animator.SetBool("IsJumping", true);
         }
-        
+
         distanceTravelled += (transform.position.x - lastPosition);
         lastPosition = transform.position.x;
 	}
@@ -59,6 +59,11 @@ public class PlayerMovement : MonoBehaviour {
     public void OnLanding()
     {
         animator.SetBool("IsJumping", false);
+    }
+
+    public void IsHit()
+    {
+      animator.SetTrigger("IsHit");
     }
 
 	void FixedUpdate ()
