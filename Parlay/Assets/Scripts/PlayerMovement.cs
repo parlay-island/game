@@ -29,15 +29,17 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 	void Update () {
-		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+    bool movementAllowed = !questionUI.activeSelf;
+    float moveSpeed = movementAllowed  ? runSpeed : 0f;
+		horizontalMove = Input.GetAxisRaw("Horizontal") * moveSpeed;
 		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-        if (Input.GetButtonDown("Jump") && controller.CanJump())
+        if (Input.GetButtonDown("Jump") && controller.CanJump() && movementAllowed)
         {
             jump = true;
             animator.SetBool("IsJumping", true);
         }
 
-        distanceTravelled += (transform.position.x - lastPosition);
+        distanceTravelled += movementAllowed ? (transform.position.x - lastPosition) : 0;
         lastPosition = transform.position.x;
 	}
 
