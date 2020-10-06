@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [Range(-30f, -1f)][SerializeField] private float m_TimeReduction = -2f;
     [SerializeField] private LayerMask enemyMask;
+    public GameObject questionUI;
     public Animator animator;
     public float speed = 5;
     private Rigidbody2D myBody;
@@ -23,12 +24,12 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-
+      bool movementAllowed = !questionUI.activeSelf;
       Vector2 lineCastPos = myTrans.position - myTrans.right * myWidth;
       Vector2 transRight = new Vector2(myTrans.right.x, myTrans.right.y);
       bool isGrounded = Physics2D.Linecast(lineCastPos, lineCastPos + Vector2.down, enemyMask);
       bool isBlocked = Physics2D.Linecast(lineCastPos, lineCastPos - transRight * .1f, enemyMask);
-
+      float moveSpeed = movementAllowed ? speed : 0f;
       if(!isGrounded || isBlocked)
       {
         Vector3 currRotation = myTrans.eulerAngles;
@@ -36,7 +37,7 @@ public class Enemy : MonoBehaviour
         myTrans.eulerAngles = currRotation;
       }
       Vector2 myVel = myBody.velocity;
-      myVel.x = -myTrans.right.x * speed;
+      myVel.x = -myTrans.right.x * moveSpeed;
       myBody.velocity = myVel;
     }
 

@@ -43,16 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba0434f2808b43eab5c9533e0120e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questions:
-  - questionText: What is opportunity cost?
-    choices:
-    - wrong
-    - wrong
-    - right
-    - wrong
-    correctChoice: 3
-  questionUI: {fileID: 0}
-  timer: {fileID: 0}
+  questionUI: {fileID: 8857682501309285010, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+  timer: {fileID: 8007271838127522720, guid: 9f2cb90b73b7542b3bd99c4d4a4fb2fc, type: 3}
+  webRetriever: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
   timeReward: 4
   questionText: {fileID: 0}
   choiceTexts:
@@ -60,3 +53,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  errorDisplaySource: {fileID: 0}

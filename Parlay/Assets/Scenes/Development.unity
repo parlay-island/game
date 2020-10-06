@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 841789997644677668, guid: b32d729ac9714412787c33cdbcd97e33, type: 3}
+      propertyPath: questionUI
+      value: 
+      objectReference: {fileID: 451491375}
     - target: {fileID: 2918024975771926296, guid: b32d729ac9714412787c33cdbcd97e33, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
