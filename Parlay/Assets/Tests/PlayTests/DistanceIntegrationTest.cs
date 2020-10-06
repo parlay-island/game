@@ -14,7 +14,7 @@ namespace Tests
 
         private GameManager gameManager;
         private GameObject player;
-        private CharacterController2D characterController; 
+        private CharacterController2D characterController;
         private PlayerMovement playerMovement;
         private Rigidbody2D rigidbody;
 
@@ -54,7 +54,7 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestDistanceTrackingWhileGameIsNotOver() {
-            // test that distance tracking label is showing 
+            // test that distance tracking label is showing
             Assert.IsFalse(gameManager.finalDistanceText.gameObject.activeSelf);
 
             // test that distance tracking label displays the correct distance when player moves right

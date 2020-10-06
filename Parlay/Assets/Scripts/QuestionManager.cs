@@ -34,10 +34,10 @@ public class QuestionManager : MonoBehaviour
                 LogSingleError(exception);
             }
         }
-        
+
         catch (Exception exception)
         {
-            errorDisplaySource.DisplayNewError("Cannot load questions", "An error occurred while loading " 
+            errorDisplaySource.DisplayNewError("Cannot load questions", "An error occurred while loading "
                             + "questions. Please try again later.");
             LogSingleError(exception);
         }
@@ -65,7 +65,7 @@ public class QuestionManager : MonoBehaviour
         var apiRequestedQuestionTask = webRetriever.GetQuestions();
         using (var timeoutCancellationTokenSource = new CancellationTokenSource())
         {
-            if (await Task.WhenAny(apiRequestedQuestionTask, 
+            if (await Task.WhenAny(apiRequestedQuestionTask,
                 Task.Delay(timeout, timeoutCancellationTokenSource.Token)) == apiRequestedQuestionTask)
             {
                 timeoutCancellationTokenSource.Cancel();
@@ -98,7 +98,7 @@ public class QuestionManager : MonoBehaviour
         {
             timer.AddTime(timeReward);
         }
-            
+
         questionUI.SetActive(false);
     }
 
@@ -106,12 +106,12 @@ public class QuestionManager : MonoBehaviour
     {
         this.timeReward = timeReward;
     }
-    
+
     public void SetQuestionText(Text questionText)
     {
         this.questionText = questionText;
     }
-    
+
     public void SetChoiceTexts(List<Text> choiceTexts)
     {
         this.choiceTexts = choiceTexts;

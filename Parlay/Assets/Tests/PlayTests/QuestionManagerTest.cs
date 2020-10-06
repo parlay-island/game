@@ -24,7 +24,7 @@ namespace Tests
         private List<GameObject> _questionManagerGameObjectList;
         private QuestionManager _questionManager;
         private Timer _timer;
-        
+
         public class MockWebRetriever : AbstractWebRetriever
         {
             public override Task<List<QuestionModel>> GetQuestions()
@@ -33,7 +33,7 @@ namespace Tests
                 {
                     new QuestionModel(QuestionText, new List<ChoiceModel>
                         {
-                            new ChoiceModel(RightChoice), 
+                            new ChoiceModel(RightChoice),
                             new ChoiceModel(WrongChoice)
                         },
                         new List<int> { RightChoiceIndex })
@@ -134,7 +134,7 @@ namespace Tests
             var errorMessageBefore = _questionManager.errorDisplaySource.errorMessage.text;
             _questionManager.webRetriever = AddComponent<TimeoutWebRetriever>();
             _questionManager.Start();
-            Assert.AreNotEqual(errorMessageBefore, 
+            Assert.AreNotEqual(errorMessageBefore,
                 _questionManager.errorDisplaySource.errorMessage.text);
             yield return null;
         }

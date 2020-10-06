@@ -26,9 +26,9 @@ namespace Tests
         {
             GameObject.Destroy(testObject);
             GameObject.Destroy(playerObj);
-            if(chunckObj != null)
+            foreach(GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
             {
-              GameObject.Destroy(chunckObj);
+              GameObject.Destroy(chunk);
             }
         }
 
