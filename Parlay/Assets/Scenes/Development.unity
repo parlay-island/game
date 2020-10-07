@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 914355866}
-  gameTime: 10
+  gameTime: 30
 --- !u!114 &680348972 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}

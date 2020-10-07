@@ -5,7 +5,7 @@ using UnityEngine;
 public class Loader : MonoBehaviour
 {
 	public GameObject gameManager;
-	public float gameTime = 10f;
+	public float gameTime = 30f;
 
     // Start is called before the first frame update
     void Awake()
