@@ -878,3 +878,60 @@ PrefabInstance:
       objectReference: {fileID: 451491375}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22e8a5012d19d41ccbb6e54b318cc5d8, type: 3}
+--- !u!1001 &7319842226617323562
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693215814175539296, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6105918762529920868, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
+      propertyPath: m_Name
+      value: DirtTile7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b68259cb6029840218aa2b89dd807a71, type: 3}
