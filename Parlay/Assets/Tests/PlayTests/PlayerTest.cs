@@ -1,9 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -25,6 +21,7 @@ namespace Tests
         private Animator animator;
         private GameObject testGround;
         private Rigidbody2D rigidbody;
+        private PlayerMovement playerMovement;
 
         private const int directionReversal = -1;
         private float distanceTraveledLeft;
@@ -35,7 +32,7 @@ namespace Tests
         {
             testPlayer = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
             characterController = testPlayer.GetComponent<CharacterController2D>();
-            PlayerMovement playerMovement = testPlayer.GetComponent<PlayerMovement>();
+            playerMovement = testPlayer.GetComponent<PlayerMovement>();
             runSpeed = playerMovement.runSpeed;
             animator = testPlayer.GetComponent<Animator>();
             distanceTraveledLeft = Time.fixedDeltaTime * -1 * runSpeed;
@@ -49,7 +46,7 @@ namespace Tests
             GameObject.Destroy(testPlayer);
             if (testGround != null)
             {
-              GameObject.Destroy(testGround.GetComponent<BoxCollider2D>());
+              Object.Destroy(testGround.GetComponent<BoxCollider2D>());
               GameObject.Destroy(testGround);
             }
         }
@@ -158,6 +155,49 @@ namespace Tests
           animator.Update(1);
           Assert.AreEqual("PlayerJump", animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
           yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator TestDistanceIncreasesWhenPlayerMovesRight()
+        {
+            float initialXPos = testPlayer.transform.position.x;
+            Assert.AreEqual(playerMovement.getDistanceTravelled(), 0f);
+
+            characterController.Move(distanceTraveledLeft * directionReversal, false);
+            yield return new WaitForSeconds(0.1f);
+
+            Assert.Greater(playerMovement.getDistanceTravelled(), initialXPos);
+        }
+
+        [UnityTest]
+        public IEnumerator TestDistanceDecreasesWhenPlayerMovesLeft()
+        {
+            float initialXPos = testPlayer.transform.position.x;
+            Assert.AreEqual(playerMovement.getDistanceTravelled(), 0f);
+
+            characterController.Move(distanceTraveledLeft, false);
+            yield return new WaitForSeconds(0.1f);
+
+            Assert.Less(playerMovement.getDistanceTravelled(), initialXPos);
+        }
+
+        [UnityTest]
+        public IEnumerator TestDistanceDoesNotChangeWhenPlayerJumps()
+        {
+            CreateGround();
+
+            yield return new WaitForSeconds(0.2f);
+            rigidbody.gravityScale = 3;
+            float initialYPos = testPlayer.transform.localPosition.y;
+            float distanceBeforeJumping = playerMovement.getDistanceTravelled();
+            Assert.AreEqual(distanceBeforeJumping, 0f);
+
+            characterController.Move(0f, true);
+            yield return new WaitForSeconds(0.1f);
+            float distanceAfterJumping = playerMovement.getDistanceTravelled();
+
+            // distance should not increase when jumping
+            Assert.AreEqual(distanceAfterJumping, 0f);
         }
 
     }

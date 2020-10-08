@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bd851b5465049b3861e5383827fbba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  qManager: {fileID: 7111293579745112631, guid: 496cb7156d2cf43238d21c52f5d0c9fe, type: 3}
+  questionUI: {fileID: 8857682501309285010, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
   controller: {fileID: 7664669365354199629}
   animator: {fileID: 11736548562022933}
   runSpeed: 40
@@ -203,7 +203,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 3.579623, y: 1.0096455}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.01
 --- !u!70 &7365047319580963236
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

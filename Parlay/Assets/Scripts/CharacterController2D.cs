@@ -37,7 +37,7 @@ public class CharacterController2D : MonoBehaviour
 		bool wasGrounded = m_IsGrounded;
 		m_IsGrounded = false;
 		Vector2 colliderSize = new Vector2(m_FootCollider.bounds.size.x, m_FootCollider.bounds.size.y + 0.2f);
-		Collider2D[] colliders = Physics2D.OverlapBoxAll(m_FootCollider.bounds.center, m_FootCollider.bounds.size, 0f, m_WhatIsGround);
+		Collider2D[] colliders = Physics2D.OverlapBoxAll(m_FootCollider.bounds.center, colliderSize, 0f, m_WhatIsGround);
 
 		for (int i = 0; i < colliders.Length; i++)
 		{
