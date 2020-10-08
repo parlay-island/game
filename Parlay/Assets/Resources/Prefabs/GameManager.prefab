@@ -51,3 +51,7 @@ MonoBehaviour:
   distanceText: {fileID: 1272553073332157503, guid: 7a40385cece9d4cc288561e9067b93f8, type: 3}
   finalDistanceText: {fileID: 8076362293196602333, guid: 31336dec9897048ecbc9c89682dbe640, type: 3}
   webRetriever: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
+  enemySpawner: {fileID: 4633131918059886910, guid: b4a0c7bfd52c140c485a92e0cdc47a44, type: 3}
+  questionUI: {fileID: 8857682501309285010, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+  playerDistance: 0
+  level: 1

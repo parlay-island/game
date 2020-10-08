@@ -203,7 +203,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 3.579623, y: 1.0096455}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.01
 --- !u!70 &7365047319580963236
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

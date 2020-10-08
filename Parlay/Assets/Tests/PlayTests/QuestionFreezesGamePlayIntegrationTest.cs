@@ -14,7 +14,8 @@ namespace Tests
     private PlayerMovement playerMovement;
     private GameObject level;
     private GameObject gameManagerObj;
-
+    private GameManager gameManager;
+    private GameObject enemySpawner;
 
     [SetUp]
     public void Setup()
@@ -25,17 +26,26 @@ namespace Tests
         playerMovement = testPlayer.GetComponent<PlayerMovement>();
         level = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/LevelGenerator"));
         testEnemy = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
-        gameManagerObj.GetComponent<GameManager>().setGameTime(10f);
+        gameManager = gameManagerObj.GetComponent<GameManager>();
+        enemySpawner = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/EnemySpawner"));
+        gameManager.setGameTime(10f);
+        enemySpawner.gameObject.SetActive(true);
     }
 
     [TearDown]
     public void Teardown()
     {
         playerMovement.questionUI.SetActive(false);
-        testEnemy.GetComponent<Enemy>().questionUI.SetActive(false);
+        gameManager.questionUI.SetActive(false);
+        enemySpawner.gameObject.SetActive(true);
         GameObject.Destroy(gameManagerObj);
         GameObject.Destroy(testPlayer);
         GameObject.Destroy(testEnemy);
+        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+          GameObject.Destroy(enemy);
+        }
+        GameObject.Destroy(enemySpawner);
         foreach(GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
         {
           GameObject.Destroy(chunk);
@@ -47,13 +57,22 @@ namespace Tests
     public IEnumerator TestMovementAllowedWhenQuestionNotShown()
     {
       playerMovement.questionUI.SetActive(false);
-      testEnemy.GetComponent<Enemy>().questionUI.SetActive(false);
+      gameManager.questionUI.SetActive(false);
       float initialEnemyXPos = testEnemy.transform.position.x;
       float initialDistance = playerMovement.getDistanceTravelled();
       characterController.Move(0.5f, false);
       yield return new WaitForSeconds(1f);
       Assert.Greater(testEnemy.transform.position.x, initialEnemyXPos);
       Assert.Greater(playerMovement.getDistanceTravelled(), initialDistance);
+    }
+
+    [UnityTest]
+    public IEnumerator TestEnemiesSpawningWhenQuestionNotShown()
+    {
+      gameManager.questionUI.SetActive(false);
+      int initialNumberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+      yield return new WaitForSeconds(4.25f);
+      Assert.Greater(GameObject.FindGameObjectsWithTag("Enemy").Length, initialNumberOfEnemies);
     }
 
     [UnityTest]
@@ -69,10 +88,19 @@ namespace Tests
     [UnityTest]
     public IEnumerator TestEnemyMovementFreezesWhenQuestionShown()
     {
-      testEnemy.GetComponent<Enemy>().questionUI.SetActive(true);
+      gameManager.questionUI.SetActive(true);
       float initialEnemyXPos = testEnemy.transform.position.x;
       yield return new WaitForSeconds(0.5f);
       Assert.AreEqual(testEnemy.transform.position.x, initialEnemyXPos);
+    }
+
+    [UnityTest]
+    public IEnumerator TestEnemySpawningFreezesWhenQuestionShown()
+    {
+      gameManager.questionUI.SetActive(true);
+      int initialNumberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+      yield return new WaitForSeconds(4.25f);
+      Assert.AreEqual(GameObject.FindGameObjectsWithTag("Enemy").Length, initialNumberOfEnemies);
     }
 
 

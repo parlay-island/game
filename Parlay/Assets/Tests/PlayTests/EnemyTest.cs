@@ -110,10 +110,12 @@ namespace Tests
       [UnityTest]
       public IEnumerator TestEnemyDirectionChangeWhenEncounterObstacle()
       {
-        float initialXVelocity = testEnemy.GetComponent<Rigidbody2D>().velocity.x;
+        Rigidbody2D rigidbody = testEnemy.GetComponent<Rigidbody2D>();
+        float initialXVelocity = rigidbody.velocity.x;
         CollidePlayerWithEnemy();
         yield return new WaitForSeconds(1f);
-        Assert.True(testEnemy.GetComponent<Rigidbody2D>().velocity.x == -initialXVelocity);
+        Assert.True(initialXVelocity < 0);
+        Assert.True(rigidbody.velocity.x > 0);
       }
 
       [UnityTest]
@@ -124,23 +126,8 @@ namespace Tests
         float initialXVelocity = rigidbody.velocity.x;
         testEnemy.transform.position = new Vector3(-1500f, testEnemy.transform.position.y, 0);
         yield return new WaitForFixedUpdate();
-        Assert.True(rigidbody.velocity.x == -initialXVelocity);
-      }
-
-
-
-
-      /**
-      *   Feature: as the level map continues to generate, new enemies will spawn
-      *   Purpose: So that as the player continues throughout the game they will continue to encounter enemies to maintain and increase difficulty. Ensuring that a specific number of enemies are present in each chunk.
-      *   Preconditions: The player is in the scene with one chunk of the map generated
-      *   Steps: The player moves far enough to create a new chunk of map
-      *   Postconditions: In the new chunk of map there are at least a constant number of enemies determined in the code (maybe 2 enemies per chunk)
-      */
-      [UnityTest]
-      public IEnumerator TestEnemySpawning()
-      {
-        yield return null;
+        Assert.True(initialXVelocity < 0);
+        Assert.True(rigidbody.velocity.x > 0);
       }
 
   }
