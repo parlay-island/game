@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Text distanceText;
     [SerializeField] public Text finalDistanceText;
     [SerializeField] public AbstractWebRetriever webRetriever;
+    [SerializeField] public GameObject enemySpawner;
+    [SerializeField] public GameObject questionUI;
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     private void initGame(float gameTime) {
         hideGameEndElements();
-
+        enemySpawner.gameObject.SetActive(true);
         timerManager.initTimer(gameTime);
         distanceText.gameObject.SetActive(true);
         gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void hideUIElementsWhenGameOver() {
+        enemySpawner.gameObject.SetActive(false);
         distanceText.gameObject.SetActive(false);
         timerManager.hideTimer();
     }
@@ -94,7 +97,6 @@ public class GameManager : MonoBehaviour
             return;
         } else {
             timerManager.updateTime();
-
             playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled();
             distanceText.text = "Distance: " + playerDistance.ToString("0.00");
         }
@@ -103,5 +105,10 @@ public class GameManager : MonoBehaviour
     public void DeductTimeByEnemy(Enemy enemy)
     {
       timerManager.AddTime(enemy.GetTimeReduction());
+    }
+
+    public bool IsQuestionShown()
+    {
+      return questionUI.activeSelf;
     }
 }

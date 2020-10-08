@@ -13,6 +13,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+    private const float PLAYER_RECOVERY_TIME = 1f;
+
     [SerializeField] public GameObject questionUI;
     public CharacterController2D controller;
 	public Animator animator;
@@ -23,12 +25,23 @@ public class PlayerMovement : MonoBehaviour {
 	bool jump = false;
     float distanceTravelled = 0;
     float lastPosition;
+    private float hitTimer;
+    private bool isHit;
 
     void Start() {
         lastPosition = transform.position.x;
+        isHit = false;
     }
 
 	void Update () {
+    if(isHit)
+    {
+      hitTimer -= Time.deltaTime;
+      if(hitTimer <= 0f)
+      {
+        isHit = false;
+      }
+    }
     bool movementAllowed = !questionUI.activeSelf;
     float moveSpeed = movementAllowed  ? runSpeed : 0f;
 		horizontalMove = Input.GetAxisRaw("Horizontal") * moveSpeed;
@@ -63,8 +76,15 @@ public class PlayerMovement : MonoBehaviour {
         animator.SetBool("IsJumping", false);
     }
 
+    public bool IsRecovering()
+    {
+      return isHit;
+    }
+
     public void IsHit()
     {
+      isHit = true;
+      hitTimer = PLAYER_RECOVERY_TIME;
       animator.SetTrigger("IsHit");
     }
 

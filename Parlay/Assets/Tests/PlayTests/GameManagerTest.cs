@@ -16,7 +16,7 @@ namespace Tests
         private GameObject testObject;
         private GameObject testPlayer;
         private GameManager gameManager;
-        private CharacterController2D characterController; 
+        private CharacterController2D characterController;
         private PlayerMovement playerMovement;
         private float distanceTraveled;
 
@@ -34,7 +34,7 @@ namespace Tests
                 }
                 HttpContent content = new StringContent(requestParamContent);
 
-                return Task.Run(() => 
+                return Task.Run(() =>
                     new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = content });
             }
         }
@@ -59,7 +59,7 @@ namespace Tests
         }
 
         private void initializeGameManagerAndPlayer() {
-            initializeGameManager(); 
+            initializeGameManager();
             initializePlayer();
         }
 
@@ -102,7 +102,7 @@ namespace Tests
 
             // check that timer is showing
             Assert.IsTrue(gameManager.timerManager.timerSlider.enabled);
-            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:02"); 
+            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:02");
 
             // check that game time decreases properly
             yield return new WaitForSeconds(1f);
@@ -118,7 +118,7 @@ namespace Tests
             Assert.IsTrue(gameManager.timerManager.isTimeUp());
 
             // check that time doesn't go below 0
-            yield return new WaitForSeconds(1f); 
+            yield return new WaitForSeconds(1f);
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
         }
 
@@ -148,9 +148,9 @@ namespace Tests
             yield return new WaitForSeconds(0.3f);
 
             Assert.That(() => gameManager.gameOver(), Throws.Nothing);
-            yield return new WaitForSeconds(0.1f); 
+            yield return new WaitForSeconds(0.1f);
 
-            // making sure the mocked post request was sent with the right values 
+            // making sure the mocked post request was sent with the right values
             string postEndResultContent = gameManager.gameEndRequestHelper.getPostEndResultContent();
             string[] parts = postEndResultContent.Split(',');
             float distance = float.Parse(parts[0].Split(':')[1]);
@@ -178,6 +178,5 @@ namespace Tests
             }
             yield return null;
         }
-        
     }
 }
