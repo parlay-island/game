@@ -46,4 +46,8 @@ MonoBehaviour:
   levelStart: {fileID: 2430970122154736673, guid: 57c0023157eec42b29a91200ba402305, type: 3}
   chunckList:
   - {fileID: 2430970122154736673, guid: 57c0023157eec42b29a91200ba402305, type: 3}
+  - {fileID: 8012896790359565456, guid: 063a57269a3e4413ebc3ec08ea265087, type: 3}
+  - {fileID: 5968922716073246162, guid: da8e57d2b49d14caf92b392a0c97ef6d, type: 3}
+  - {fileID: 1348672002552909613, guid: 8bc3972a5aa6242b2bac63ebf81f02e4, type: 3}
+  - {fileID: 8317363516971670141, guid: 25bc55bd98c7643fc8febce2ba6e6913, type: 3}
   player: {fileID: 7329300552794944232, guid: 22e8a5012d19d41ccbb6e54b318cc5d8, type: 3}
