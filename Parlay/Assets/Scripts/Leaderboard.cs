@@ -17,22 +17,22 @@ public class Leaderboard : MonoBehaviour
         entryTemplate.gameObject.SetActive(false);
 
         //This code populates the json data, no need to use it as it is already populated
-        //List<HighscoreEntry> highscoreEntryListPop = new List<HighscoreEntry>()
-        //{
-        //    new HighscoreEntry{score = 123123, name ="TOM"},
-        //    new HighscoreEntry{score = 123412, name ="DOG"},
-        //    new HighscoreEntry{score = 534546, name ="CAT"},
-        //    new HighscoreEntry{score = 465745, name ="BOB"},
-        //    new HighscoreEntry{score = 984353, name ="JOE"},
-        //    new HighscoreEntry{score = 534534, name ="ANT"},
-        //    new HighscoreEntry{score = 923452, name ="JEN"},
-        //    new HighscoreEntry{score = 642524, name ="BOT"},
-        //};
+        List<HighscoreEntry> highscoreEntryListPop = new List<HighscoreEntry>()
+        {
+           new HighscoreEntry{score = 123123, name ="TOM"},
+           new HighscoreEntry{score = 123412, name ="DOG"},
+           new HighscoreEntry{score = 534546, name ="CAT"},
+           new HighscoreEntry{score = 465745, name ="BOB"},
+           new HighscoreEntry{score = 984353, name ="JOE"},
+           new HighscoreEntry{score = 534534, name ="ANT"},
+           new HighscoreEntry{score = 923452, name ="JEN"},
+           new HighscoreEntry{score = 642524, name ="BOT"},
+        };
 
-        //Highscores tempHighscores = new Highscores { highscoreEntryList = highscoreEntryListPop };
-        //string json = JsonUtility.ToJson(tempHighscores);
-        //PlayerPrefs.SetString("highscoreTable", json);
-        //PlayerPrefs.Save();
+        Highscores tempHighscores = new Highscores { highscoreEntryList = highscoreEntryListPop };
+        string json = JsonUtility.ToJson(tempHighscores);
+        PlayerPrefs.SetString("highscoreTable", json);
+        PlayerPrefs.Save();
 
         Debug.Log(PlayerPrefs.GetString("highscoreTable"));
 

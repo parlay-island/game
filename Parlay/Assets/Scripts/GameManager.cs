@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         timerManager.initTimer(gameTime);
         distanceText.gameObject.SetActive(true);
         gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+        enabled = true;
     }
 
     private void hideGameEndElements() {

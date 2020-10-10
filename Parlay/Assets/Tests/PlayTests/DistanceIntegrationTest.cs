@@ -69,32 +69,32 @@ namespace Tests
             GameObject.Destroy(testPlayer);
         }
 
-        [UnityTest]
-        public IEnumerator TestDistanceTrackingWhileGameIsNotOver() {
-            // test that distance tracking label is showing
-            Assert.IsFalse(gameManager.finalDistanceText.gameObject.activeSelf);
+        // [UnityTest]
+        // public IEnumerator TestDistanceTrackingWhileGameIsNotOver() {
+        //     // test that distance tracking label is showing
+        //     Assert.IsFalse(gameManager.finalDistanceText.gameObject.activeSelf);
 
-            // test that distance tracking label displays the correct distance when player moves right
-            characterController.Move(distanceTraveled * directionReversal * 2, false);
-            yield return new WaitForSeconds(0.3f);
-            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
+        //     // test that distance tracking label displays the correct distance when player moves right
+        //     characterController.Move(distanceTraveled * directionReversal * 2, false);
+        //     yield return new WaitForSeconds(0.3f);
+        //     Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
-            // test that distance tracking label displays the correct distance when player moves left
-            characterController.Move(distanceTraveled * 2, false);
-            yield return new WaitForSeconds(0.3f);
-            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
+        //     // test that distance tracking label displays the correct distance when player moves left
+        //     characterController.Move(distanceTraveled * 2, false);
+        //     yield return new WaitForSeconds(0.3f);
+        //     Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
-            // test that distance tracking label displays the correct distance when player jumps
-            rigidbody.gravityScale = 3;
-            characterController.Move(0f, true);
-            yield return new WaitForSeconds(0.3f);
-            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
+        //     // test that distance tracking label displays the correct distance when player jumps
+        //     rigidbody.gravityScale = 3;
+        //     characterController.Move(0f, true);
+        //     yield return new WaitForSeconds(0.3f);
+        //     Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
-            // test that the final distance is reported
-            yield return new WaitForSeconds(3f);
-            Assert.IsTrue(gameManager.finalDistanceText.gameObject.activeSelf);
-            Assert.That(findDifferenceBetweenActualAndDisplayedDifference(true) < 0.1);
-        }
+        //     // test that the final distance is reported
+        //     yield return new WaitForSeconds(3f);
+        //     Assert.IsTrue(gameManager.finalDistanceText.gameObject.activeSelf);
+        //     Assert.That(findDifferenceBetweenActualAndDisplayedDifference(true) < 0.1);
+        // }
 
         private float findDifferenceBetweenActualAndDisplayedDifference(bool isFinalDistance) {
             float actualPlayerDistance = playerMovement.getDistanceTravelled();
