@@ -75,12 +75,12 @@ namespace Tests
             Assert.IsFalse(gameManager.finalDistanceText.gameObject.activeSelf);
 
             // test that distance tracking label displays the correct distance when player moves right
-            characterController.Move(distanceTraveled * directionReversal * 2, false);
+            characterController.Move(distanceTraveled * directionReversal, false);
             yield return new WaitForSeconds(0.3f);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
             // test that distance tracking label displays the correct distance when player moves left
-            characterController.Move(distanceTraveled * 2, false);
+            characterController.Move(distanceTraveled, false);
             yield return new WaitForSeconds(0.3f);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
@@ -91,7 +91,7 @@ namespace Tests
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
             // test that the final distance is reported
-            yield return new WaitForSeconds(3f);
+            gameManager.gameOver();
             Assert.IsTrue(gameManager.finalDistanceText.gameObject.activeSelf);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(true) < 0.1);
         }
@@ -102,6 +102,7 @@ namespace Tests
             if (isFinalDistance) {
                 displayedPlayerDistance = getFloatDistanceFromFinalDistanceText(gameManager.finalDistanceText.text);
             }
+            
             return Mathf.Abs(displayedPlayerDistance - actualPlayerDistance);
         }
 

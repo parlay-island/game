@@ -56,6 +56,7 @@ namespace Tests
         {
             initializeGameManager();
             initializeWebRetriever();
+            initializePlayer();
         }
 
         private void initializeGameManagerAndPlayer() {
@@ -94,7 +95,7 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestTimerCountdownIntegration() {
-            initializeGameManager();
+            // initializeGameManager();
 
             // check that game over image and text are NOT showing
             Assert.IsFalse(gameManager.gameOverImage.activeSelf);
@@ -105,16 +106,16 @@ namespace Tests
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:02");
 
             // check that game time decreases properly
-            yield return new WaitForSeconds(1f);
+            gameManager.timerManager.mockDecreaseTime(1f);
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:01");
             Assert.IsFalse(gameManager.timerManager.isTimeUp());
 
             // check that game over screen shows at end
-            yield return new WaitForSeconds(2f);
+            gameManager.timerManager.mockDecreaseTime(1f);
+            gameManager.gameOver();
             Assert.IsTrue(gameManager.gameOverImage.activeSelf);
             Assert.IsTrue(gameManager.gameOverText.gameObject.activeSelf);
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
-            // check that time has run out
             Assert.IsTrue(gameManager.timerManager.isTimeUp());
 
             // check that time doesn't go below 0
@@ -124,8 +125,8 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsWithoutTimeout() {
-            initializeGameManager();
-            initializeWebRetriever();
+            // initializeGameManager();
+            // initializeWebRetriever();
 
             // exception should not be thrown because there is no timeout
             Assert.That(() => gameManager.gameOver(), Throws.Nothing);
@@ -138,7 +139,7 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsAfterPlayerMovement() {
-            initializeGameManagerAndPlayer();
+            // initializeGameManagerAndPlayer();
 
             // mock the web retriever with distance greater than 0
             mockingIncreasedDistance = true;
@@ -161,7 +162,7 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsWithTimeout() {
-            initializeGameManager();
+            // initializeGameManager();
 
             TimeoutWebRetriever timeoutWebRetriever = new GameObject().AddComponent<TimeoutWebRetriever>();
             gameManager.webRetriever = timeoutWebRetriever;
