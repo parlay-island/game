@@ -13,7 +13,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    private const float PLAYER_RECOVERY_TIME = 1f;
+    private const float PLAYER_RECOVERY_TIME = 1.5f;
 
     [SerializeField] public GameObject questionUI;
     public CharacterController2D controller;
@@ -21,8 +21,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float runSpeed = 40f;
 
-	float horizontalMove = 0f;
-	bool jump = false;
+	  float horizontalMove = 0f;
+	  bool jump = false;
     float distanceTravelled = 0;
     float lastPosition;
     private float hitTimer;
@@ -62,10 +62,8 @@ public class PlayerMovement : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("hit question");
         if (col.gameObject.tag == "Question")
         {
-            Debug.Log("hit question");
             questionUI.SetActive(true);
             Destroy(col.gameObject);
         }

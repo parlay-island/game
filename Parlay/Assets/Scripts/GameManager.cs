@@ -3,16 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Net.Http;
 
 public class GameManager : MonoBehaviour
 {
 
     [SerializeField] public GameObject gameOverImage;
     [SerializeField] public Text gameOverText;
-	[SerializeField] public Timer timerManager;
+	  [SerializeField] public Timer timerManager;
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject ground;
     [SerializeField] public Text distanceText;
@@ -84,12 +81,11 @@ public class GameManager : MonoBehaviour
         timerManager.hideTimer();
     }
 
-    private async void sendPostRequestWithGameEndResults() {
+    private void sendPostRequestWithGameEndResults() {
         gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID);
     }
 
-    // Update is called once per frame
-    async void Update()
+    void Update()
     {
         if (timerManager.isTimeUp()) {
             gameOver();

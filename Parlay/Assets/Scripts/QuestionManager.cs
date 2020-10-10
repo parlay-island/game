@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -20,61 +18,31 @@ public class QuestionManager : MonoBehaviour
     [SerializeField] public List<Text> choiceTexts;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
 
-    public async void Start()
+    public void Start()
     {
         try
         {
-            await RetrieveQuestionsIfNotAlreadySet();
+            RetrieveQuestionsIfNotAlreadySet();
         }
-        catch (AggregateException aggregateException)
-        {
-            Debug.LogWarningFormat("An aggregate exception was caught that may include multiple exceptions");
-            foreach (var exception in aggregateException.InnerExceptions)
-            {
-                LogSingleError(exception);
-            }
-        }
-
         catch (Exception exception)
         {
             errorDisplaySource.DisplayNewError("Cannot load questions", "An error occurred while loading "
                             + "questions. Please try again later.");
-            LogSingleError(exception);
         }
     }
 
-    private async Task RetrieveQuestionsIfNotAlreadySet()
+    private void RetrieveQuestionsIfNotAlreadySet()
     {
         if (_unansweredQuestions == null || _unansweredQuestions.Count == 0)
         {
-            var getQuestionsOrTimeout = GetQuestionsOrTimeoutBy(5000);
-            _unansweredQuestions = await getQuestionsOrTimeout;
+            _unansweredQuestions = webRetriever.GetQuestions();
+            if(_unansweredQuestions.Count == 0)
+            {
+              throw new Exception();
+            }
         }
 
         SetCurrentQuestion();
-    }
-
-    private static void LogSingleError(Exception exception)
-    {
-        Debug.LogWarningFormat("There was an error when loading questions [{0}]", exception);
-    }
-
-    private async Task<List<QuestionModel>> GetQuestionsOrTimeoutBy(int timeout)
-    {
-        Debug.LogFormat("Getting questions or timing out in {0} milliseconds", timeout);
-        var apiRequestedQuestionTask = webRetriever.GetQuestions();
-        using (var timeoutCancellationTokenSource = new CancellationTokenSource())
-        {
-            if (await Task.WhenAny(apiRequestedQuestionTask,
-                Task.Delay(timeout, timeoutCancellationTokenSource.Token)) == apiRequestedQuestionTask)
-            {
-                timeoutCancellationTokenSource.Cancel();
-                if (apiRequestedQuestionTask.Exception != null) throw apiRequestedQuestionTask.Exception;
-                return await apiRequestedQuestionTask;
-            }
-
-            throw new TimeoutException($"Questions were not retrieved within {timeout} seconds");
-        }
     }
 
     private void SetCurrentQuestion()

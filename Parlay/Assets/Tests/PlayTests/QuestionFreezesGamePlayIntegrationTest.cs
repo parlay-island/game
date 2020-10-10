@@ -30,13 +30,14 @@ namespace Tests
         enemySpawner = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/EnemySpawner"));
         gameManager.setGameTime(10f);
         enemySpawner.gameObject.SetActive(true);
+        gameManager.questionUI.gameObject.SetActive(true);
     }
 
     [TearDown]
     public void Teardown()
     {
-        playerMovement.questionUI.SetActive(false);
-        gameManager.questionUI.SetActive(false);
+        playerMovement.questionUI.gameObject.SetActive(false);
+        gameManager.questionUI.gameObject.SetActive(false);
         enemySpawner.gameObject.SetActive(true);
         GameObject.Destroy(gameManagerObj);
         GameObject.Destroy(testPlayer);
