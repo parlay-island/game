@@ -27,6 +27,7 @@ public class WebRetriever : AbstractWebRetriever
     {
       UnityWebRequest webRequest = UnityWebRequest.Get(uri);
       webRequest.timeout = TIMEOUT;
+      webRequest.SetRequestHeader("Content-Type", "application/json");
       yield return webRequest.SendWebRequest();
       if (webRequest.isNetworkError || webRequest.isHttpError)
       {
