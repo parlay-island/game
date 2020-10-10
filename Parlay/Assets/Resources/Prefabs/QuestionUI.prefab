@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7687934135219020881
 RectTransform:
   m_ObjectHideFlags: 0
@@ -529,6 +529,10 @@ PrefabInstance:
     - target: {fileID: 7111293579745112630, guid: 496cb7156d2cf43238d21c52f5d0c9fe, type: 3}
       propertyPath: m_Name
       value: QuestionManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111293579745112630, guid: 496cb7156d2cf43238d21c52f5d0c9fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7111293579745112631, guid: 496cb7156d2cf43238d21c52f5d0c9fe, type: 3}
       propertyPath: choiceTexts.Array.data[0]

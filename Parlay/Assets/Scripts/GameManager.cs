@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public AbstractWebRetriever webRetriever;
     [SerializeField] public GameObject enemySpawner;
     [SerializeField] public GameObject questionUI;
+    [SerializeField] public GameObject leaderBoard;
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
     private void showGameOverUIElements() {
         gameOverImage.SetActive(true);
         gameOverText.gameObject.SetActive(true);
+        leaderBoard.gameObject.SetActive(true);
         finalDistanceText.gameObject.SetActive(true);
         finalDistanceText.text = "You have travelled " + playerDistance.ToString("0.00") + " m";
     }

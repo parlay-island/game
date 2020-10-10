@@ -53,5 +53,6 @@ MonoBehaviour:
   webRetriever: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
   enemySpawner: {fileID: 4633131918059886910, guid: b4a0c7bfd52c140c485a92e0cdc47a44, type: 3}
   questionUI: {fileID: 8857682501309285010, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+  leaderBoard: {fileID: 2086566508094765032, guid: e7d499f8f7b774bc3955f8ed3158840f, type: 3}
   playerDistance: 0
   level: 1
