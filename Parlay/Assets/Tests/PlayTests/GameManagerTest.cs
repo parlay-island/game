@@ -4,10 +4,6 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Tests
 {
@@ -23,31 +19,35 @@ namespace Tests
         private static bool mockingIncreasedDistance;
 
         public class MockWebRetriever : AbstractWebRetriever {
-            public override Task<List<QuestionModel>> GetQuestions() {
-                return Task.Run(() => new List<QuestionModel>());
+            public override List<QuestionModel> GetQuestions() {
+                return new List<QuestionModel>();
             }
 
-            public override Task<HttpResponseMessage> PostEndResult(ResultModel result, int playerID) {
-                string requestParamContent = "distance:0.00,level:1";
-                if (mockingIncreasedDistance) {
-                    requestParamContent = "distance:1.00,level:1";
-                }
-                HttpContent content = new StringContent(requestParamContent);
+            public override void PostEndResult(ResultModel result, int playerID) {
+            }
 
-                return Task.Run(() =>
-                    new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = content });
+            public override string GetMostRecentPostRequestResult() {
+              string requestParamContent = "distance:0.00,level:1";
+              if (mockingIncreasedDistance) {
+                  requestParamContent = "distance:1.00,level:1";
+              }
+              return requestParamContent;
             }
         }
 
         public class TimeoutWebRetriever : AbstractWebRetriever
         {
-            public override Task<List<QuestionModel>> GetQuestions()
+            public override List<QuestionModel> GetQuestions()
             {
                 throw new TimeoutException();
             }
 
-            public override Task<HttpResponseMessage> PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(ResultModel result, int playerID) {
                 throw new TimeoutException();
+            }
+
+            public override string GetMostRecentPostRequestResult() {
+              return "";
             }
         }
 
@@ -170,11 +170,10 @@ namespace Tests
             // making sure that exception is thrown
             try {
                 gameManager.gameOver();
-
                 // should not get here because exception should be thrown first
                 Assert.Fail();
             } catch (Exception e) {
-                Debug.Log(e);
+                // exception caught
             }
             yield return null;
         }

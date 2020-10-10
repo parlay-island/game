@@ -23,6 +23,21 @@ namespace Tests
         private float runSpeed;
         private float distanceTraveled;
 
+
+        public class MockWebRetriever : AbstractWebRetriever
+        {
+            public override List<QuestionModel> GetQuestions() {
+                return new List<QuestionModel>();
+            }
+
+            public override void PostEndResult(ResultModel result, int playerID) {
+            }
+
+            public override string GetMostRecentPostRequestResult() {
+              return "";
+            }
+        }
+
         [SetUp]
         public void Setup()
         {
@@ -34,6 +49,8 @@ namespace Tests
             testPlayer = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
 
             gameManager = testObject.GetComponent<GameManager>();
+            MockWebRetriever mockWebRetriever = new GameObject().AddComponent<MockWebRetriever>();
+            gameManager.webRetriever = mockWebRetriever;
             gameManager.setGameTime(2f);
             gameManager.player = testPlayer;
 

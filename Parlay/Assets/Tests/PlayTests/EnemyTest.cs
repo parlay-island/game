@@ -25,12 +25,20 @@ namespace Tests
         characterController = player.GetComponent<CharacterController2D>();
         testEnemy = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
         level = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/LevelGenerator"));
+        player.GetComponent<PlayerMovement>().questionUI.gameObject.SetActive(false);
+        gameManager.questionUI.gameObject.SetActive(false);
         gameManager.setGameTime(10f);
+        foreach(GameObject question in GameObject.FindGameObjectsWithTag("Question"))
+        {
+          GameObject.Destroy(question);
+        }
       }
 
       [TearDown]
       public void Teardown()
       {
+        player.GetComponent<PlayerMovement>().questionUI.gameObject.SetActive(false);
+        gameManager.questionUI.gameObject.SetActive(false);
         GameObject.Destroy(player);
         foreach(GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
         {

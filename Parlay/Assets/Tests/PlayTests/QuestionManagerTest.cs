@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
-using System.Net.Http;
 using Object = UnityEngine.Object;
 
 namespace Tests
@@ -27,9 +25,9 @@ namespace Tests
 
         public class MockWebRetriever : AbstractWebRetriever
         {
-            public override Task<List<QuestionModel>> GetQuestions()
+            public override List<QuestionModel> GetQuestions()
             {
-                return Task.Run(() => new List<QuestionModel>
+                return new List<QuestionModel>
                 {
                     new QuestionModel(QuestionText, new List<ChoiceModel>
                         {
@@ -37,23 +35,29 @@ namespace Tests
                             new ChoiceModel(WrongChoice)
                         },
                         new List<int> { RightChoiceIndex })
-                });
+                };
             }
 
-            public override Task<HttpResponseMessage> PostEndResult(ResultModel result, int playerID) {
-                return Task.Run(() => new HttpResponseMessage());
+            public override void PostEndResult(ResultModel result, int playerID) {
+            }
+
+            public override string GetMostRecentPostRequestResult() {
+              return "";
             }
         }
 
         public class TimeoutWebRetriever : AbstractWebRetriever
         {
-            public override Task<List<QuestionModel>> GetQuestions()
+            public override List<QuestionModel> GetQuestions()
             {
                 throw new TimeoutException();
             }
 
-            public override Task<HttpResponseMessage> PostEndResult(ResultModel result, int playerID) {
-                return Task.Run(() => new HttpResponseMessage());
+            public override void PostEndResult(ResultModel result, int playerID) {
+            }
+
+            public override string GetMostRecentPostRequestResult() {
+              return "";
             }
         }
 

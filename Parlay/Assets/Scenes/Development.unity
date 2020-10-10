@@ -781,6 +781,10 @@ PrefabInstance:
       propertyPath: webRetriever
       value: 
       objectReference: {fileID: 1274213125}
+    - target: {fileID: 2929841261381478094, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+      propertyPath: errorDisplaySource
+      value: 
+      objectReference: {fileID: 8878849883676834197, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
     - target: {fileID: 3406867444432409334, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.4307748

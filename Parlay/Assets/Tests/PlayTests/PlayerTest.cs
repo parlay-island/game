@@ -38,11 +38,13 @@ namespace Tests
             distanceTraveledLeft = Time.fixedDeltaTime * -1 * runSpeed;
             rigidbody = testPlayer.GetComponent<Rigidbody2D>();
             rigidbody.gravityScale = 0;
+            playerMovement.questionUI.gameObject.SetActive(false);
         }
 
         [TearDown]
         public void Teardown()
         {
+            playerMovement.questionUI.gameObject.SetActive(false);
             GameObject.Destroy(testPlayer);
             if (testGround != null)
             {

@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08102ffefd564f68bf1ad609feec861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiBaseUrl: https://80066165-a2ae-4dcd-9ffa-f7a164492c69.mock.pstmn.io
+  apiBaseUrl: http://parlay-island-backend.herokuapp.com
