@@ -67,14 +67,14 @@ namespace Tests
       Assert.Greater(playerMovement.getDistanceTravelled(), initialDistance);
     }
 
-    [UnityTest]
-    public IEnumerator TestEnemiesSpawningWhenQuestionNotShown()
-    {
-      gameManager.questionUI.SetActive(false);
-      int initialNumberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-      yield return new WaitForSeconds(4.25f);
-      Assert.Greater(GameObject.FindGameObjectsWithTag("Enemy").Length, initialNumberOfEnemies);
-    }
+    // [UnityTest]
+    // public IEnumerator TestEnemiesSpawningWhenQuestionNotShown()
+    // {
+    //   gameManager.questionUI.SetActive(false);
+    //   int initialNumberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+    //   yield return new WaitForSeconds(4.25f);
+    //   Assert.Greater(GameObject.FindGameObjectsWithTag("Enemy").Length, initialNumberOfEnemies);
+    // }
 
     [UnityTest]
     public IEnumerator TestPlayerMovementFreezesWhenQuestionShown()

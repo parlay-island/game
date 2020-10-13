@@ -25,9 +25,10 @@ namespace Tests
         characterController = player.GetComponent<CharacterController2D>();
         testEnemy = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
         level = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/LevelGenerator"));
+        gameManager.setGameTime(10f);
+
         player.GetComponent<PlayerMovement>().questionUI.gameObject.SetActive(false);
         gameManager.questionUI.gameObject.SetActive(false);
-        gameManager.setGameTime(10f);
         foreach(GameObject question in GameObject.FindGameObjectsWithTag("Question"))
         {
           GameObject.Destroy(question);

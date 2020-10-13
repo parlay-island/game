@@ -95,8 +95,6 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestTimerCountdownIntegration() {
-            // initializeGameManager();
-
             // check that game over image and text are NOT showing
             Assert.IsFalse(gameManager.gameOverImage.activeSelf);
             Assert.IsFalse(gameManager.gameOverText.gameObject.activeSelf);
@@ -125,9 +123,6 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsWithoutTimeout() {
-            // initializeGameManager();
-            // initializeWebRetriever();
-
             // exception should not be thrown because there is no timeout
             Assert.That(() => gameManager.gameOver(), Throws.Nothing);
             yield return new WaitForSeconds(0.1f);
@@ -139,8 +134,6 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsAfterPlayerMovement() {
-            // initializeGameManagerAndPlayer();
-
             // mock the web retriever with distance greater than 0
             mockingIncreasedDistance = true;
             initializeWebRetriever();
@@ -162,8 +155,6 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsWithTimeout() {
-            // initializeGameManager();
-
             TimeoutWebRetriever timeoutWebRetriever = new GameObject().AddComponent<TimeoutWebRetriever>();
             gameManager.webRetriever = timeoutWebRetriever;
             gameManager.gameEndRequestHelper = new GameEndRequestHelper(timeoutWebRetriever);
