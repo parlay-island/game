@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     private void initGame(float gameTime) {
         hideGameEndElements();
-        enemySpawner.gameObject.SetActive(true);
+        enemySpawner.SetActive(true);
         timerManager.initTimer(gameTime);
         distanceText.gameObject.SetActive(true);
         gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void hideUIElementsWhenGameOver() {
-        enemySpawner.gameObject.SetActive(false);
+        enemySpawner.SetActive(false);
         distanceText.gameObject.SetActive(false);
         timerManager.hideTimer();
     }
