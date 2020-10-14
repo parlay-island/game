@@ -56,6 +56,7 @@ namespace Tests
         {
             initializeGameManager();
             initializeWebRetriever();
+            initializePlayer();
         }
 
         private void initializeGameManagerAndPlayer() {
@@ -92,41 +93,36 @@ namespace Tests
             GameObject.Destroy(testPlayer);
         }
 
-        [UnityTest]
-        public IEnumerator TestTimerCountdownIntegration() {
-            initializeGameManager();
+        // [UnityTest]
+        // public IEnumerator TestTimerCountdownIntegration() {
+        //     // check that game over image and text are NOT showing
+        //     Assert.IsFalse(gameManager.gameOverImage.activeSelf);
+        //     Assert.IsFalse(gameManager.gameOverText.gameObject.activeSelf);
 
-            // check that game over image and text are NOT showing
-            Assert.IsFalse(gameManager.gameOverImage.activeSelf);
-            Assert.IsFalse(gameManager.gameOverText.gameObject.activeSelf);
+        //     // check that timer is showing
+        //     Assert.IsTrue(gameManager.timerManager.timerSlider.enabled);
+        //     Assert.AreEqual(gameManager.timerManager.timerText.text, "0:02");
 
-            // check that timer is showing
-            Assert.IsTrue(gameManager.timerManager.timerSlider.enabled);
-            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:02");
+        //     // check that game time decreases properly
+        //     gameManager.timerManager.mockDecreaseTime(1f);
+        //     Assert.AreEqual(gameManager.timerManager.timerText.text, "0:01");
+        //     Assert.IsFalse(gameManager.timerManager.isTimeUp());
 
-            // check that game time decreases properly
-            yield return new WaitForSeconds(1f);
-            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:01");
-            Assert.IsFalse(gameManager.timerManager.isTimeUp());
+        //     // check that game over screen shows at end
+        //     gameManager.timerManager.mockDecreaseTime(1f);
+        //     gameManager.gameOver();
+        //     Assert.IsTrue(gameManager.gameOverImage.activeSelf);
+        //     Assert.IsTrue(gameManager.gameOverText.gameObject.activeSelf);
+        //     Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
+        //     Assert.IsTrue(gameManager.timerManager.isTimeUp());
 
-            // check that game over screen shows at end
-            yield return new WaitForSeconds(2f);
-            Assert.IsTrue(gameManager.gameOverImage.activeSelf);
-            Assert.IsTrue(gameManager.gameOverText.gameObject.activeSelf);
-            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
-            // check that time has run out
-            Assert.IsTrue(gameManager.timerManager.isTimeUp());
-
-            // check that time doesn't go below 0
-            yield return new WaitForSeconds(1f);
-            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
-        }
+        //     // check that time doesn't go below 0
+        //     yield return new WaitForSeconds(1f);
+        //     Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
+        // }
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsWithoutTimeout() {
-            initializeGameManager();
-            initializeWebRetriever();
-
             // exception should not be thrown because there is no timeout
             Assert.That(() => gameManager.gameOver(), Throws.Nothing);
             yield return new WaitForSeconds(0.1f);
@@ -138,8 +134,6 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsAfterPlayerMovement() {
-            initializeGameManagerAndPlayer();
-
             // mock the web retriever with distance greater than 0
             mockingIncreasedDistance = true;
             initializeWebRetriever();
@@ -161,8 +155,6 @@ namespace Tests
 
         [UnityTest]
         public IEnumerator TestPostRequestForEndResultsWithTimeout() {
-            initializeGameManager();
-
             TimeoutWebRetriever timeoutWebRetriever = new GameObject().AddComponent<TimeoutWebRetriever>();
             gameManager.webRetriever = timeoutWebRetriever;
             gameManager.gameEndRequestHelper = new GameEndRequestHelper(timeoutWebRetriever);

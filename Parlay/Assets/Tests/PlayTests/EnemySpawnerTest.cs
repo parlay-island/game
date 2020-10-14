@@ -44,6 +44,7 @@ namespace Tests
       Assert.Greater(numberEnemiesAfterSpawnTime, initialNumberOfEnemies);
       yield return new WaitForSeconds(4.25f);
       Assert.Greater(GameObject.FindGameObjectsWithTag("Enemy").Length, numberEnemiesAfterSpawnTime);
+      yield return new WaitForSeconds(0.5f);
     }
 
 
