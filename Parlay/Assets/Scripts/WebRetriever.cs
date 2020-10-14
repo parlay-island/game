@@ -50,7 +50,14 @@ public class WebRetriever : AbstractWebRetriever
         // will switch to this URL once the apiBaseUrl is working
         // var postURL = apiBaseUrl + "/players/" + playerID.ToString() + "/result";
     	   var json = JsonConvert.SerializeObject(result);
-         StartCoroutine(PostRequest(postURL, json, playerID));
+         if (isActiveAndEnabled)
+        {
+            StartCoroutine(PostRequest(postURL, json, playerID));
+        }
+        else
+        {
+            Debug.Log("Web retriever was not active when starting post request coroutine");
+        }
     }
 
     IEnumerator PostRequest(string url, string json, int playerID)

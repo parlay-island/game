@@ -52,12 +52,12 @@ public class PlayerMovement : MonoBehaviour {
             animator.SetBool("IsJumping", true);
         }
 
-        distanceTravelled += movementAllowed ? (transform.position.x - lastPosition) : 0;
+        this.distanceTravelled += movementAllowed ? (transform.position.x - lastPosition) : 0;
         lastPosition = transform.position.x;
 	}
 
     public float getDistanceTravelled() {
-        return distanceTravelled;
+        return this.distanceTravelled;
     }
 
     void OnTriggerEnter2D(Collider2D col)
