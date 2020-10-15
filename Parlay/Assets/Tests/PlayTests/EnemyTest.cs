@@ -60,7 +60,7 @@ namespace Tests
       private void CollidePlayerWithEnemy()
       {
         Vector2 enemyPos = GetEnemyColliderPos();
-        characterController.Move(enemyPos.x - 0.1f, false);
+        characterController.Move(enemyPos.x - 0.3f, false);
       }
 
       [UnityTest, Order(1)]
@@ -69,7 +69,7 @@ namespace Tests
         float initialTime = gameManager.timerManager.getCurrTime();
         float timeReduction = testEnemy.GetComponent<Enemy>().GetTimeReduction();
         CollidePlayerWithEnemy();
-        float waitTime = 1f;
+        float waitTime = 2f;
         yield return new WaitForSeconds(waitTime);
         Assert.True(testEnemy != null);
         Assert.True(initialTime - waitTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
