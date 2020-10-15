@@ -69,7 +69,7 @@ namespace Tests
         float initialTime = gameManager.timerManager.getCurrTime();
         float timeReduction = testEnemy.GetComponent<Enemy>().GetTimeReduction();
         CollidePlayerWithEnemy();
-        float waitTime = 2f;
+        float waitTime = 4f;
         yield return new WaitForSeconds(waitTime);
         Assert.True(testEnemy != null);
         Assert.True(initialTime - waitTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
@@ -91,7 +91,7 @@ namespace Tests
       public IEnumerator TestEnemyCollisionWithEnemyHasNoEffect()
       {
         characterController.Move(-100f, false);
-        float waitTime = 0.5f;
+        float waitTime = 3f;
         Rigidbody2D body1 = testEnemy.GetComponent<Rigidbody2D>();
         enemy2 = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
         Vector3 currRotation = testEnemy.transform.eulerAngles;
@@ -103,8 +103,8 @@ namespace Tests
         Vector2 initialVelocityEnemy1 = body1.velocity;
         Vector2 initialVelocityEnemy2 = body2.velocity;
         yield return new WaitForSeconds(waitTime);
-        Assert.AreEqual(body1.velocity.x, initialVelocityEnemy1.x);
-        Assert.AreEqual(body2.velocity.x, initialVelocityEnemy2.x);
+        Assert.True(body1.velocity.x * initialVelocityEnemy1.x > 0);
+        Assert.True(body2.velocity.x * initialVelocityEnemy2.x > 0);
       }
 
       [UnityTest, Order(4)]
@@ -112,7 +112,7 @@ namespace Tests
       {
         float initialEnemyXPos = testEnemy.transform.position.x;
         yield return new WaitForSeconds(1f);
-        Assert.Greater(testEnemy.transform.position.x, initialEnemyXPos);
+        Assert.AreNotEqual(testEnemy.transform.position.x, initialEnemyXPos);
       }
 
       [UnityTest, Order(5)]
@@ -121,7 +121,7 @@ namespace Tests
         Rigidbody2D rigidbody = testEnemy.GetComponent<Rigidbody2D>();
         float initialXVelocity = rigidbody.velocity.x;
         CollidePlayerWithEnemy();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(4f);
         Assert.True(initialXVelocity * rigidbody.velocity.x < 0);
       }
 
