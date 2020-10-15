@@ -6,6 +6,7 @@ using UnityEngine.TestTools;
 
 namespace Tests
 {
+
   public class EnemyTest
   {
       private GameObject testEnemy;
@@ -21,7 +22,7 @@ namespace Tests
       {
         gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
         gameManager = gameManagerObj.GetComponent<GameManager>();
-        gameManager.setGameTime(20f);
+        gameManager.setGameTime(30f);
         player = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
         characterController = player.GetComponent<CharacterController2D>();
         testEnemy = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
@@ -54,13 +55,13 @@ namespace Tests
 
       private Vector2 GetEnemyColliderPos()
       {
-        return testEnemy.transform.position - testEnemy.transform.right * testEnemy.GetComponent<SpriteRenderer>().bounds.extents.x;
+        return testEnemy.transform.localPosition - (testEnemy.GetComponent<SpriteRenderer>().bounds.extents / 2);
       }
 
       private void CollidePlayerWithEnemy()
       {
         Vector2 enemyPos = GetEnemyColliderPos();
-        characterController.Move(enemyPos.x - 0.3f, false);
+        characterController.Move(enemyPos.x - 0.1f, false);
       }
 
       [UnityTest, Order(1)]
@@ -69,12 +70,12 @@ namespace Tests
         float initialTime = gameManager.timerManager.getCurrTime();
         float timeReduction = testEnemy.GetComponent<Enemy>().GetTimeReduction();
         CollidePlayerWithEnemy();
-        float waitTime = 4f;
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(1f);
         Assert.True(testEnemy != null);
-        Assert.True(initialTime - waitTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
+        Assert.True(initialTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
       }
 
+      [Retry(3)]
       [UnityTest, Order(2)]
       public IEnumerator TestEnemyKilled()
       {
@@ -87,11 +88,12 @@ namespace Tests
         Assert.True(testEnemy == null);
       }
 
+      [Retry(3)]
       [UnityTest, Order(3)]
       public IEnumerator TestEnemyCollisionWithEnemyHasNoEffect()
       {
         characterController.Move(-100f, false);
-        float waitTime = 3f;
+        float waitTime = 1f;
         Rigidbody2D body1 = testEnemy.GetComponent<Rigidbody2D>();
         enemy2 = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
         Vector3 currRotation = testEnemy.transform.eulerAngles;
@@ -115,16 +117,18 @@ namespace Tests
         Assert.AreNotEqual(testEnemy.transform.position.x, initialEnemyXPos);
       }
 
+      [Retry(3)]
       [UnityTest, Order(5)]
       public IEnumerator TestEnemyDirectionChangeWhenEncounterObstacle()
       {
         Rigidbody2D rigidbody = testEnemy.GetComponent<Rigidbody2D>();
         float initialXVelocity = rigidbody.velocity.x;
         CollidePlayerWithEnemy();
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         Assert.True(initialXVelocity * rigidbody.velocity.x < 0);
       }
 
+      [Retry(3)]
       [UnityTest, Order(6)]
       public IEnumerator TestEnemyDirectionChangeWhenReachEnd()
       {
