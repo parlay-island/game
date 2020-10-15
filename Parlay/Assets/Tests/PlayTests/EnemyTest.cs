@@ -64,13 +64,14 @@ namespace Tests
         characterController.Move(enemyPos.x - 0.1f, false);
       }
 
+      [Retry(3)]
       [UnityTest, Order(1)]
       public IEnumerator TestEnemyPlayerCollision()
       {
         float initialTime = gameManager.timerManager.getCurrTime();
         float timeReduction = testEnemy.GetComponent<Enemy>().GetTimeReduction();
         CollidePlayerWithEnemy();
-        float waitTime = 3f;
+        float waitTime = 2f;
         yield return new WaitForSeconds(waitTime);
         Assert.True(testEnemy != null);
         Assert.True(initialTime - waitTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
