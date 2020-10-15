@@ -34,7 +34,7 @@ namespace Tests
             GameObject.Destroy(camera);
         }
 
-        [UnityTest]
+        [UnityTest, Order(1)]
         public IEnumerator TestCameraMovementRight()
         {
             float initialXPos = camera.transform.position.x;
@@ -43,7 +43,7 @@ namespace Tests
             Assert.Greater(camera.transform.position.x, initialXPos);
         }
 
-        [UnityTest]
+        [UnityTest, Order(2)]
         public IEnumerator TestCameraMovementLeft()
         {
             float initialXPos = camera.transform.position.x;

@@ -106,7 +106,7 @@ namespace Tests
             return gameObject.AddComponent<T>();
         }
 
-        [UnityTest]
+        [UnityTest, Order(1)]
         public IEnumerator UserSelectAddsToTimerWhenQuestionIsCorrect()
         {
             var timeBefore = _timer.getCurrTime();
@@ -115,7 +115,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(2)]
         public IEnumerator UserSelectDoesntAddToTimerWhenQuestionIsIncorrect()
         {
             var timeBefore = _timer.getCurrTime();
@@ -124,7 +124,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(3)]
         public IEnumerator UserSelectTurnsUIInactive()
         {
             _questionManager.UserSelect(RightChoiceIndex);
@@ -132,7 +132,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(4)]
         public IEnumerator ApiTimesOutResponseSoTheErrorAppears()
         {
             var errorMessageBefore = _questionManager.errorDisplaySource.errorMessage.text;
