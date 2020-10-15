@@ -70,9 +70,10 @@ namespace Tests
         float initialTime = gameManager.timerManager.getCurrTime();
         float timeReduction = testEnemy.GetComponent<Enemy>().GetTimeReduction();
         CollidePlayerWithEnemy();
-        yield return new WaitForSeconds(1f);
+        float waitTime = 3f;
+        yield return new WaitForSeconds(waitTime);
         Assert.True(testEnemy != null);
-        Assert.True(initialTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
+        Assert.True(initialTime - waitTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
       }
 
       [Retry(3)]

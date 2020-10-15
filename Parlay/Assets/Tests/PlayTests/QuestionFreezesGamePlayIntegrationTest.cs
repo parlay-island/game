@@ -67,6 +67,7 @@ namespace Tests
       Assert.AreNotEqual(playerMovement.getDistanceTravelled(), initialDistance);
     }
 
+    [Retry(2)]
     [UnityTest, Order(2)]
     public IEnumerator TestEnemiesSpawningWhenQuestionNotShown()
     {
