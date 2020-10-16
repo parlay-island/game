@@ -73,7 +73,7 @@ namespace Tests
             GameObject.Destroy(testPlayer);
         }
 
-        [Retry(3)]
+        [Retry(4)]
         [UnityTest]
         public IEnumerator TestDistanceTrackingWhileGameIsNotOver() {
             // test that distance tracking label is showing

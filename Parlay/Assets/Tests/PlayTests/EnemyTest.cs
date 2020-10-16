@@ -64,14 +64,15 @@ namespace Tests
         characterController.Move(enemyPos.x - 0.1f, false);
       }
 
-      [Retry(3)]
+      [Retry(4)]
       [UnityTest, Order(1)]
       public IEnumerator TestEnemyPlayerCollision()
       {
+        float delta = 0.2f;
         float initialTime = gameManager.timerManager.getCurrTime();
         float timeReduction = testEnemy.GetComponent<Enemy>().GetTimeReduction();
         CollidePlayerWithEnemy();
-        float waitTime = 1.8f;
+        float waitTime = Mathf.Abs(timeReduction) - 0.2f;
         yield return new WaitForSeconds(waitTime);
         Assert.True(testEnemy != null);
         Assert.True(initialTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
@@ -130,7 +131,7 @@ namespace Tests
         Assert.True(initialXVelocity * rigidbody.velocity.x < 0);
       }
 
-      [Retry(3)]
+      [Retry(4)]
       [UnityTest, Order(6)]
       public IEnumerator TestEnemyDirectionChangeWhenReachEnd()
       {

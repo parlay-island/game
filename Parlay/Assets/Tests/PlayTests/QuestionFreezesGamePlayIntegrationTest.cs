@@ -54,6 +54,7 @@ namespace Tests
         GameObject.Destroy(level);
     }
 
+    [Retry(3)]
     [UnityTest, Order(1)]
     public IEnumerator TestMovementAllowedWhenQuestionNotShown()
     {
@@ -67,15 +68,16 @@ namespace Tests
       Assert.AreNotEqual(playerMovement.getDistanceTravelled(), initialDistance);
     }
 
-    [Retry(2)]
+    [Retry(3)]
     [UnityTest, Order(2)]
     public IEnumerator TestEnemiesSpawningWhenQuestionNotShown()
     {
       gameManager.questionUI.SetActive(false);
       int initialNumberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-      yield return new WaitForSeconds(4.5f);
+      yield return new WaitForSeconds(5f);
       Assert.Greater(GameObject.FindGameObjectsWithTag("Enemy").Length, initialNumberOfEnemies);
     }
+
 
     [UnityTest, Order(3)]
     public IEnumerator TestPlayerMovementFreezesWhenQuestionShown()
