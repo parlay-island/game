@@ -39,10 +39,10 @@ namespace Tests
     public IEnumerator TestEnemySpawning()
     {
       int initialNumberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-      yield return new WaitForSeconds(4.25f);
+      yield return new WaitForSeconds(4.5f);
       int numberEnemiesAfterSpawnTime = GameObject.FindGameObjectsWithTag("Enemy").Length;
       Assert.Greater(numberEnemiesAfterSpawnTime, initialNumberOfEnemies);
-      yield return new WaitForSeconds(4.25f);
+      yield return new WaitForSeconds(4.5f);
       Assert.Greater(GameObject.FindGameObjectsWithTag("Enemy").Length, numberEnemiesAfterSpawnTime);
       yield return new WaitForSeconds(0.5f);
     }

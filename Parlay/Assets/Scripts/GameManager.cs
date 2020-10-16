@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
     public void gameOver() {
         showGameOverUIElements();
         hideUIElementsWhenGameOver();
-
         sendPostRequestWithGameEndResults();
     }
 
@@ -95,9 +94,9 @@ public class GameManager : MonoBehaviour
             enabled = false;
             return;
         } else {
-            timerManager.updateTime();
-            playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled();
-            distanceText.text = "Distance: " + playerDistance.ToString("0.00");
+          timerManager.updateTime();
+          playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled();
+          distanceText.text = "Distance: " + playerDistance.ToString("0.00");
         }
     }
 

@@ -54,7 +54,8 @@ namespace Tests
         GameObject.Destroy(level);
     }
 
-    [UnityTest]
+    [Retry(3)]
+    [UnityTest, Order(1)]
     public IEnumerator TestMovementAllowedWhenQuestionNotShown()
     {
       playerMovement.questionUI.SetActive(false);
@@ -62,21 +63,23 @@ namespace Tests
       float initialEnemyXPos = testEnemy.transform.position.x;
       float initialDistance = playerMovement.getDistanceTravelled();
       characterController.Move(0.5f, false);
-      yield return new WaitForSeconds(1f);
-      Assert.Greater(testEnemy.transform.position.x, initialEnemyXPos);
-      Assert.Greater(playerMovement.getDistanceTravelled(), initialDistance);
+      yield return new WaitForSeconds(3f);
+      Assert.AreNotEqual(testEnemy.transform.position.x, initialEnemyXPos);
+      Assert.AreNotEqual(playerMovement.getDistanceTravelled(), initialDistance);
     }
 
-    // [UnityTest]
-    // public IEnumerator TestEnemiesSpawningWhenQuestionNotShown()
-    // {
-    //   gameManager.questionUI.SetActive(false);
-    //   int initialNumberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-    //   yield return new WaitForSeconds(4.25f);
-    //   Assert.Greater(GameObject.FindGameObjectsWithTag("Enemy").Length, initialNumberOfEnemies);
-    // }
+    [Retry(3)]
+    [UnityTest, Order(2)]
+    public IEnumerator TestEnemiesSpawningWhenQuestionNotShown()
+    {
+      gameManager.questionUI.SetActive(false);
+      int initialNumberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+      yield return new WaitForSeconds(5f);
+      Assert.Greater(GameObject.FindGameObjectsWithTag("Enemy").Length, initialNumberOfEnemies);
+    }
 
-    [UnityTest]
+
+    [UnityTest, Order(3)]
     public IEnumerator TestPlayerMovementFreezesWhenQuestionShown()
     {
       playerMovement.questionUI.SetActive(true);
@@ -86,7 +89,7 @@ namespace Tests
       Assert.AreEqual(playerMovement.getDistanceTravelled(), initialDistance);
     }
 
-    [UnityTest]
+    [UnityTest, Order(4)]
     public IEnumerator TestEnemyMovementFreezesWhenQuestionShown()
     {
       gameManager.questionUI.SetActive(true);
@@ -95,7 +98,7 @@ namespace Tests
       Assert.AreEqual(testEnemy.transform.position.x, initialEnemyXPos);
     }
 
-    [UnityTest]
+    [UnityTest, Order(5)]
     public IEnumerator TestEnemySpawningFreezesWhenQuestionShown()
     {
       gameManager.questionUI.SetActive(true);
