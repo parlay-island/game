@@ -66,10 +66,12 @@ namespace Tests
         {
             _questionManagerGameObjectList = new List<GameObject>();
                 _uiGameObject = new GameObject();
-            _questionManager = Object.Instantiate(Resources.Load<GameObject>("Prefabs/QuestionManager"))
-                .GetComponent<QuestionManager>();
-            _timer = Object.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"))
-                .GetComponent<Timer>();
+            GameObject questionManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/QuestionManager"));
+            _questionManagerGameObjectList.Add(questionManagerObj);
+            _questionManager = questionManagerObj.GetComponent<QuestionManager>();
+            GameObject timeManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"));
+            _questionManagerGameObjectList.Add(timeManagerObj);
+            _timer = timeManagerObj.GetComponent<Timer>();
             _questionManager.webRetriever = AddComponent<MockWebRetriever>();
             _questionManager.timer = _timer;
             _questionManager.questionUI = _uiGameObject;
@@ -90,12 +92,10 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(_questionManager);
-            Object.DestroyImmediate(_timer);
-            Object.DestroyImmediate(_uiGameObject);
+            GameObject.Destroy(_uiGameObject);
             foreach (var gameObject in _questionManagerGameObjectList)
             {
-                Object.DestroyImmediate(gameObject);
+                GameObject.Destroy(gameObject);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Tests
             return gameObject.AddComponent<T>();
         }
 
-        [UnityTest]
+        [UnityTest, Order(1)]
         public IEnumerator UserSelectAddsToTimerWhenQuestionIsCorrect()
         {
             var timeBefore = _timer.getCurrTime();
@@ -115,7 +115,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(2)]
         public IEnumerator UserSelectDoesntAddToTimerWhenQuestionIsIncorrect()
         {
             var timeBefore = _timer.getCurrTime();
@@ -124,7 +124,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(3)]
         public IEnumerator UserSelectTurnsUIInactive()
         {
             _questionManager.UserSelect(RightChoiceIndex);
@@ -132,7 +132,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(4)]
         public IEnumerator ApiTimesOutResponseSoTheErrorAppears()
         {
             var errorMessageBefore = _questionManager.errorDisplaySource.errorMessage.text;

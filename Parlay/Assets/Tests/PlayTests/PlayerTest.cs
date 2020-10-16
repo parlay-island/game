@@ -65,7 +65,7 @@ namespace Tests
         }
 
 
-        [UnityTest]
+        [UnityTest, Order(1)]
         public IEnumerator TestPlayerMovesLeftPosition()
         {
             float initialXPos = testPlayer.transform.position.x;
@@ -74,7 +74,7 @@ namespace Tests
             Assert.Less(testPlayer.transform.position.x, initialXPos);
         }
 
-        [UnityTest]
+        [UnityTest, Order(2)]
         public IEnumerator TestPlayerMovesLeftRotation()
         {
             float initalRotation = testPlayer.transform.localScale.x;
@@ -83,7 +83,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(3)]
         public IEnumerator TestPlayerMovesRightPosition()
         {
             float initialXPos = testPlayer.transform.position.x;
@@ -92,7 +92,7 @@ namespace Tests
             Assert.Greater(testPlayer.transform.position.x, initialXPos);
         }
 
-        [UnityTest]
+        [UnityTest, Order(4)]
         public IEnumerator TestPlayerMovesRightRotation()
         {
             float initalRotation = testPlayer.transform.localScale.x;
@@ -101,7 +101,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(5)]
         public IEnumerator TestPlayerRunsAnimation()
         {
             animator.SetFloat("Speed", Mathf.Abs(runSpeed));
@@ -110,14 +110,14 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(6)]
         public IEnumerator TestPlayerCantJump()
         {
             Assert.False(characterController.CanJump());
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(7)]
         public IEnumerator TestPlayerCanJump()
         {
             CreateGround();
@@ -125,7 +125,7 @@ namespace Tests
             Assert.True(characterController.CanJump());
         }
 
-        [UnityTest]
+        [UnityTest, Order(8)]
         public IEnumerator TestPlayerJump()
         {
           CreateGround();
@@ -140,7 +140,7 @@ namespace Tests
           Assert.Greater(testPlayer.transform.localPosition.y, initialYPos);
         }
 
-        [UnityTest]
+        [UnityTest, Order(9)]
         public IEnumerator TestPlayerJumpNotAllowed()
         {
           float initialYPos = testPlayer.transform.position.y;
@@ -150,7 +150,7 @@ namespace Tests
           Assert.AreEqual(testPlayer.transform.position.y, initialYPos);
         }
 
-        [UnityTest]
+        [UnityTest, Order(10)]
         public IEnumerator TestPlayerJumpAnimation()
         {
           animator.SetBool("IsJumping", true);
@@ -159,7 +159,7 @@ namespace Tests
           yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(11)]
         public IEnumerator TestDistanceIncreasesWhenPlayerMovesRight()
         {
             float initialXPos = testPlayer.transform.position.x;
@@ -171,7 +171,7 @@ namespace Tests
             Assert.Greater(playerMovement.getDistanceTravelled(), initialXPos);
         }
 
-        [UnityTest]
+        [UnityTest, Order(12)]
         public IEnumerator TestDistanceDecreasesWhenPlayerMovesLeft()
         {
             float initialXPos = testPlayer.transform.position.x;
@@ -183,7 +183,7 @@ namespace Tests
             Assert.Less(playerMovement.getDistanceTravelled(), initialXPos);
         }
 
-        [UnityTest]
+        [UnityTest, Order(13)]
         public IEnumerator TestDistanceDoesNotChangeWhenPlayerJumps()
         {
             CreateGround();

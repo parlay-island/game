@@ -24,7 +24,7 @@ namespace Tests
             GameObject.Destroy(testObject);
         }
 
-        [UnityTest]
+        [UnityTest, Order(1)]
         public IEnumerator ShowsTheSliderAndText()
         {
             Assert.IsTrue(timer.timerSlider.enabled);
@@ -32,7 +32,7 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
+        [UnityTest, Order(2)]
         public IEnumerator TimerDecreasesTimeProperly()
         {
             Assert.IsFalse(timer.isTimeUp());
@@ -40,7 +40,7 @@ namespace Tests
             while (timer.getCurrTime() > 1) {
                 timer.updateTime();
             }
-            
+
             // time should decrease by one second
             Assert.AreEqual(timer.timerText.text, "0:01");
             Assert.AreEqual(Mathf.Ceil(timer.getCurrTime()), 1);
@@ -50,7 +50,7 @@ namespace Tests
 
         }
 
-        [UnityTest]
+        [UnityTest, Order(3)]
         public IEnumerator TimerDoesNotGoToZero()
         {
             while (timer.getCurrTime() > 0) {

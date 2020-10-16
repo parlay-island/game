@@ -15,6 +15,7 @@ namespace Tests
         private CharacterController2D characterController;
         private PlayerMovement playerMovement;
         private float distanceTraveled;
+        private GameObject mockWebRetrieverObj;
 
         private static bool mockingIncreasedDistance;
 
@@ -72,7 +73,8 @@ namespace Tests
         }
 
         private void initializeWebRetriever() {
-            MockWebRetriever mockWebRetriever = new GameObject().AddComponent<MockWebRetriever>();
+            mockWebRetrieverObj = new GameObject();
+            MockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<MockWebRetriever>();
             gameManager.webRetriever = mockWebRetriever;
             gameManager.gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever);
         }
@@ -91,37 +93,38 @@ namespace Tests
         {
             GameObject.Destroy(testObject);
             GameObject.Destroy(testPlayer);
+            GameObject.Destroy(mockWebRetrieverObj);
         }
 
-        // [UnityTest]
-        // public IEnumerator TestTimerCountdownIntegration() {
-        //     // check that game over image and text are NOT showing
-        //     Assert.IsFalse(gameManager.gameOverImage.activeSelf);
-        //     Assert.IsFalse(gameManager.gameOverText.gameObject.activeSelf);
+        [UnityTest, Order(1)]
+        public IEnumerator TestTimerCountdownIntegration() {
+            // check that game over image and text are NOT showing
+            Assert.IsFalse(gameManager.gameOverImage.activeSelf);
+            Assert.IsFalse(gameManager.gameOverText.gameObject.activeSelf);
 
-        //     // check that timer is showing
-        //     Assert.IsTrue(gameManager.timerManager.timerSlider.enabled);
-        //     Assert.AreEqual(gameManager.timerManager.timerText.text, "0:02");
+            // check that timer is showing
+            Assert.IsTrue(gameManager.timerManager.timerSlider.enabled);
+            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:02");
 
-        //     // check that game time decreases properly
-        //     gameManager.timerManager.mockDecreaseTime(1f);
-        //     Assert.AreEqual(gameManager.timerManager.timerText.text, "0:01");
-        //     Assert.IsFalse(gameManager.timerManager.isTimeUp());
+            // check that game time decreases properly
+            gameManager.timerManager.mockDecreaseTime(1f);
+            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:01");
+            Assert.IsFalse(gameManager.timerManager.isTimeUp());
 
-        //     // check that game over screen shows at end
-        //     gameManager.timerManager.mockDecreaseTime(1f);
-        //     gameManager.gameOver();
-        //     Assert.IsTrue(gameManager.gameOverImage.activeSelf);
-        //     Assert.IsTrue(gameManager.gameOverText.gameObject.activeSelf);
-        //     Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
-        //     Assert.IsTrue(gameManager.timerManager.isTimeUp());
+            // check that game over screen shows at end
+            gameManager.timerManager.mockDecreaseTime(1f);
+            gameManager.gameOver();
+            Assert.IsTrue(gameManager.gameOverImage.activeSelf);
+            Assert.IsTrue(gameManager.gameOverText.gameObject.activeSelf);
+            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
+            Assert.IsTrue(gameManager.timerManager.isTimeUp());
 
-        //     // check that time doesn't go below 0
-        //     yield return new WaitForSeconds(1f);
-        //     Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
-        // }
+            // check that time doesn't go below 0
+            yield return new WaitForSeconds(1f);
+            Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
+        }
 
-        [UnityTest]
+        [UnityTest, Order(2)]
         public IEnumerator TestPostRequestForEndResultsWithoutTimeout() {
             // exception should not be thrown because there is no timeout
             Assert.That(() => gameManager.gameOver(), Throws.Nothing);
@@ -132,7 +135,7 @@ namespace Tests
             Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.level.ToString()));
         }
 
-        [UnityTest]
+        [UnityTest, Order(3)]
         public IEnumerator TestPostRequestForEndResultsAfterPlayerMovement() {
             // mock the web retriever with distance greater than 0
             mockingIncreasedDistance = true;
@@ -153,9 +156,10 @@ namespace Tests
             Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.level.ToString()));
         }
 
-        [UnityTest]
+        [UnityTest, Order(4)]
         public IEnumerator TestPostRequestForEndResultsWithTimeout() {
-            TimeoutWebRetriever timeoutWebRetriever = new GameObject().AddComponent<TimeoutWebRetriever>();
+            GameObject timeoutWebRetrieverObj = new GameObject();
+            TimeoutWebRetriever timeoutWebRetriever = timeoutWebRetrieverObj.AddComponent<TimeoutWebRetriever>();
             gameManager.webRetriever = timeoutWebRetriever;
             gameManager.gameEndRequestHelper = new GameEndRequestHelper(timeoutWebRetriever);
 
@@ -167,6 +171,7 @@ namespace Tests
             } catch (Exception e) {
                 // exception caught
             }
+            GameObject.Destroy(timeoutWebRetrieverObj);
             yield return null;
         }
     }

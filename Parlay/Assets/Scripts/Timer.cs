@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
         totalTime = time;
         currTime = time;
         timeElapsed = 0f;
-        
+
         activateTimer();
     }
 
@@ -56,7 +56,7 @@ public class Timer : MonoBehaviour
         int minutes = Mathf.FloorToInt(currTime / 60);
         int seconds = currTime == 0 ? 0 : Mathf.CeilToInt (currTime - minutes * 60);
         string textTime = string.Format("{0:0}:{1:00}", minutes, seconds);
-        
+
         timerText.text = textTime;
     }
 

@@ -50,9 +50,9 @@ public class Enemy : MonoBehaviour
       {
         if(!isTopHit)
         {
+          GameManager.instance.DeductTimeByEnemy(this);
           animator.SetTrigger("EnemyAttack");
           player.IsHit();
-          GameManager.instance.DeductTimeByEnemy(this);
         }
         else
         {
