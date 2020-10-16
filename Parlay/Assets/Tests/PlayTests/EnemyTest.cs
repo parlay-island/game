@@ -120,7 +120,7 @@ namespace Tests
         Assert.AreNotEqual(testEnemy.transform.position.x, initialEnemyXPos);
       }
 
-      [Retry(3)]
+      [Retry(4)]
       [UnityTest, Order(5)]
       public IEnumerator TestEnemyDirectionChangeWhenEncounterObstacle()
       {
