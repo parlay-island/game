@@ -105,6 +105,11 @@ public class GameManager : MonoBehaviour
       timerManager.AddTime(enemy.GetTimeReduction());
     }
 
+    public void IncreaseTimeByPowerUp(PowerUp powerUp)
+    {
+        timerManager.AddTime(powerUp.GetTimeBoost());
+    }
+
     public bool IsQuestionShown()
     {
       return questionUI.activeSelf;
