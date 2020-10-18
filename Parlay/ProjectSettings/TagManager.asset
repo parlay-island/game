@@ -8,6 +8,7 @@ TagManager:
   - Question
   - QuestionUI
   - Enemy
+  - Potion
   layers:
   - Default
   - TransparentFX

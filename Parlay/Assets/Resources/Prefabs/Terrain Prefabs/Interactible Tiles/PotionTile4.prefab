@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5580114655863025417}
   - component: {fileID: 899426846363288309}
   - component: {fileID: 5073107352208101312}
+  - component: {fileID: -2998738181082058048}
   m_Layer: 0
   m_Name: PotionTile4
-  m_TagString: Untagged
+  m_TagString: Potion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,3 +110,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-2998738181082058048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059360464025581581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec73900c2be6347efa5137be33142c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TimeBoost: 40
