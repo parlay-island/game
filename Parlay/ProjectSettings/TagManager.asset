@@ -9,6 +9,7 @@ TagManager:
   - QuestionUI
   - Enemy
   - Potion
+  - LeaderboardEntry
   layers:
   - Default
   - TransparentFX

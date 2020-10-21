@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -10,12 +11,15 @@ public class WebRetriever : AbstractWebRetriever
     private const int TIMEOUT = 5000;
     private string postRequestResult = "";
     private List<QuestionModel> questions = new List<QuestionModel>();
+    private List<ResultModel> results;
+    private bool isLoading;
 
     [SerializeField] public string apiBaseUrl;
 
+
     void Start()
     {
-      StartCoroutine(GetRequest(apiBaseUrl + "/questions/"));
+      StartCoroutine(GetQuestionRequest(apiBaseUrl + "/questions/"));
     }
 
     public override List<QuestionModel> GetQuestions()
@@ -23,7 +27,7 @@ public class WebRetriever : AbstractWebRetriever
         return questions;
     }
 
-    IEnumerator GetRequest(string uri)
+    IEnumerator GetQuestionRequest(string uri)
     {
       UnityWebRequest webRequest = UnityWebRequest.Get(uri);
       webRequest.timeout = TIMEOUT;
@@ -81,5 +85,40 @@ public class WebRetriever : AbstractWebRetriever
      public override string GetMostRecentPostRequestResult()
      {
        return postRequestResult;
+     }
+
+     public override List<ResultModel> GetMostRecentResults(){
+       return results;
+     }
+
+     public override void FetchResults(int level)
+     {
+        string url = apiBaseUrl + "/levels/" + level + "/results/?page=%1";
+        StartCoroutine(GetResultRequest(url));
+     }
+
+     IEnumerator GetResultRequest(string uri)
+     {
+       isLoading = true;
+       UnityWebRequest webRequest = UnityWebRequest.Get(uri);
+       webRequest.timeout = TIMEOUT;
+       webRequest.SetRequestHeader("Content-Type", "application/json");
+       yield return webRequest.SendWebRequest();
+       if (webRequest.isNetworkError || webRequest.isHttpError)
+       {
+          Debug.LogWarningFormat("There was an error when loading results [{0}]", webRequest.error);
+       }
+       else
+       {
+         string getString = webRequest.downloadHandler.text;
+         ResultList resultList = JsonConvert.DeserializeObject<ResultList>(getString);
+         results = resultList.results;
+       }
+       isLoading = false;
+     }
+
+     public override bool IsLoading()
+     {
+       return isLoading;
      }
 }

@@ -78,7 +78,7 @@ namespace Tests
         Assert.True(initialTime - gameManager.timerManager.getCurrTime() >= Mathf.Abs(timeReduction));
       }
 
-      [Retry(3)]
+      [Retry(4)]
       [UnityTest, Order(2)]
       public IEnumerator TestEnemyKilled()
       {

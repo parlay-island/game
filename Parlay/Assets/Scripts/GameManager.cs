@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public int level = 1;
     private int playerID = 1;
     private string postEndResultContent;
+    private bool sentRequest = false;
 
     void Awake()
     {
@@ -90,9 +91,17 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (timerManager.isTimeUp()) {
+          if(!sentRequest)
+          {
+            webRetriever.FetchResults(level);
+            sentRequest = true;
+          }
+          if(!webRetriever.IsLoading())
+          {
             gameOver();
             enabled = false;
             return;
+          }
         } else {
           timerManager.updateTime();
           playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled();
