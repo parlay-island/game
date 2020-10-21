@@ -15,7 +15,7 @@ public class GameEndRequestHelper
 
     public void postGameEndResults(float playerDistance, int level, int playerID) {
         try {
-						ResultModel endResult = new ResultModel(playerDistance, level);
+						ResultModel endResult = new ResultModel(level, playerDistance, playerID);
 						webRetriever.PostEndResult(endResult, playerID);
         }
         catch (Exception exception) {

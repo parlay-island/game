@@ -1,96 +1,68 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Leaderboard : MonoBehaviour
 {
+    [SerializeField] public AbstractWebRetriever webRetriever;
+    [SerializeField] public ErrorDisplaySource errorDisplaySource;
     private Transform entryContainer;
     private Transform entryTemplate;
-    private List<Transform> highscoreEntryTransformList;
-    // d before the first frame update
+    private List<Transform> resultEntryTransformList;
+    private List<ResultModel> results = new List<ResultModel>();
 
-    private void Awake() {
-        entryContainer = transform.Find("highscoreEntryContainer");
-        entryTemplate = entryContainer.Find("highscoreEntryTemplate");
-
-        entryTemplate.gameObject.SetActive(false);
-
-        //This code populates the json data, no need to use it as it is already populated
-        List<HighscoreEntry> highscoreEntryListPop = new List<HighscoreEntry>()
-        {
-           new HighscoreEntry{score = 123123, name ="TOM"},
-           new HighscoreEntry{score = 123412, name ="DOG"},
-           new HighscoreEntry{score = 534546, name ="CAT"},
-           new HighscoreEntry{score = 465745, name ="BOB"},
-           new HighscoreEntry{score = 984353, name ="JOE"},
-           new HighscoreEntry{score = 534534, name ="ANT"},
-           new HighscoreEntry{score = 923452, name ="JEN"},
-           new HighscoreEntry{score = 642524, name ="BOT"},
-        };
-
-        Highscores tempHighscores = new Highscores { highscoreEntryList = highscoreEntryListPop };
-        string json = JsonUtility.ToJson(tempHighscores);
-        PlayerPrefs.SetString("highscoreTable", json);
-        PlayerPrefs.Save();
-
-        Debug.Log(PlayerPrefs.GetString("highscoreTable"));
-
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
-
-
-        //Descending sort
-        for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
-        {
-            for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
-            {
-                if (highscores.highscoreEntryList[j].score > highscores.highscoreEntryList[i].score)
-                {
-                    HighscoreEntry temp = highscores.highscoreEntryList[i];
-                    highscores.highscoreEntryList[i] = highscores.highscoreEntryList[j];
-                    highscores.highscoreEntryList[j] = temp;
-                }
-            }
-        }
-
-        Debug.Log(highscores.highscoreEntryList.Count);
-
-        highscoreEntryTransformList = new List<Transform>();
-        foreach(HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
-        {
-            CreateHighScoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
-        }
-        Debug.Log(highscoreEntryTransformList);
-    }
-
-    private void AddHighScoreEntry(int score, string user)
+    public void Start()
     {
-        //Create HighscoreEntry
-        HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = user };
-
-        //Load saved Highscores
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
-
-        //Add new entry to Highscores
-        highscores.highscoreEntryList.Add(highscoreEntry);
-
-        //Save updated high scores
-        string json = JsonUtility.ToJson(highscores);
-        PlayerPrefs.SetString("highscoreTable", json);
-        PlayerPrefs.Save();
-        Debug.Log(PlayerPrefs.GetString("highscoreTable"));
+        try
+        {
+            RetrieveResultsIfNotAlreadySet();
+            CreateLeaderboard();
+        }
+        catch (Exception exception)
+        {
+            errorDisplaySource.DisplayNewError("Cannot load leaderboard", "An error occurred while loading "
+                            + "results. Please try again later.");
+            gameObject.SetActive(false);
+        }
     }
 
-    private void CreateHighScoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
+    public void ClearResults()
+    {
+      results = new List<ResultModel>();
+    }
+
+    private void RetrieveResultsIfNotAlreadySet()
+    {
+        if (results == null || results.Count == 0)
+        {
+            results = webRetriever.GetMostRecentResults();
+        }
+    }
+
+    private void CreateLeaderboard()
+    {
+      entryContainer = transform.Find("highscoreEntryContainer");
+      entryTemplate = entryContainer.Find("highscoreEntryTemplate");
+
+      entryTemplate.gameObject.SetActive(false);
+
+      resultEntryTransformList = new List<Transform>();
+      foreach(ResultModel resultEntry in results)
+      {
+          CreateHighScoreEntryTransform(resultEntry, entryContainer, resultEntryTransformList);
+      }
+    }
+
+    private void CreateHighScoreEntryTransform(ResultModel resultEntry, Transform container, List<Transform> transformList)
     {
         float templateHeight = 75f;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
         entryTransform.gameObject.SetActive(true);
-        
+
         int rank = transformList.Count + 1;
         string rankString;
         switch (rank)
@@ -111,11 +83,11 @@ public class Leaderboard : MonoBehaviour
 
         entryTransform.Find("PositionText").GetComponent<Text>().text = rankString;
 
-        int score = highscoreEntry.score;
+        float score = resultEntry.distance;
 
         entryTransform.Find("ScoreText").GetComponent<Text>().text = score.ToString();
 
-        string user = highscoreEntry.name;
+        string user = resultEntry.player_name;
         entryTransform.Find("NameText").GetComponent<Text>().text = user;
 
         //Set background visible odds and evens, makes it easier to read
@@ -129,17 +101,6 @@ public class Leaderboard : MonoBehaviour
         }
 
         transformList.Add(entryTransform);
-    }
-
-    private class Highscores {
-        public List<HighscoreEntry> highscoreEntryList;
-    }
-
-    [System.Serializable]
-    private class HighscoreEntry
-    {
-        public int score;
-        public string name;
     }
 
 }

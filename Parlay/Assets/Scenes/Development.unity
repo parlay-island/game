@@ -365,6 +365,14 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3712371928465612637, guid: 7fde276a1f08a43beb4a1f1c3538ec70, type: 3}
+      propertyPath: webRetriever
+      value: 
+      objectReference: {fileID: 1274213125}
+    - target: {fileID: 3712371928465612637, guid: 7fde276a1f08a43beb4a1f1c3538ec70, type: 3}
+      propertyPath: errorDisplaySource
+      value: 
+      objectReference: {fileID: 1559777278}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fde276a1f08a43beb4a1f1c3538ec70, type: 3}
 --- !u!1 &329161969 stripped
@@ -372,6 +380,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3712371928465612579, guid: 7fde276a1f08a43beb4a1f1c3538ec70, type: 3}
   m_PrefabInstance: {fileID: 329161968}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &329161971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3712371928465612637, guid: 7fde276a1f08a43beb4a1f1c3538ec70, type: 3}
+  m_PrefabInstance: {fileID: 329161968}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329161969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454b2c14c9f4644bb8bafe9148449215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &392965842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -705,8 +724,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
       propertyPath: apiBaseUrl
-      value: https://parlay-island-backend.herokuapp.com
+      value: http://parlay-island-server-prod.eba-kq6isupz.us-east-2.elasticbeanstalk.com
       objectReference: {fileID: 0}
+    - target: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
+      propertyPath: leaderboard
+      value: 
+      objectReference: {fileID: 329161971}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
 --- !u!114 &1231104016 stripped
@@ -1083,6 +1106,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a40385cece9d4cc288561e9067b93f8, type: 3}
+--- !u!114 &1559777278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8878849883676834197, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+  m_PrefabInstance: {fileID: 1787607194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b302b5943845b181b007c3fee172c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1578955426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2478473692336499448, guid: 7fde276a1f08a43beb4a1f1c3538ec70, type: 3}

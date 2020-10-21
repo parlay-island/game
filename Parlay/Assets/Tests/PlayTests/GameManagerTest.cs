@@ -34,6 +34,15 @@ namespace Tests
               }
               return requestParamContent;
             }
+            public override void FetchResults(int level) {
+            }
+            public override List<ResultModel> GetMostRecentResults() {
+              return new List<ResultModel>();
+            }
+            public override bool IsLoading()
+            {
+              return false;
+            }
         }
 
         public class TimeoutWebRetriever : AbstractWebRetriever
@@ -49,6 +58,15 @@ namespace Tests
 
             public override string GetMostRecentPostRequestResult() {
               return "";
+            }
+            public override void FetchResults(int level) {
+            }
+            public override List<ResultModel> GetMostRecentResults() {
+              return new List<ResultModel>();
+            }
+            public override bool IsLoading()
+            {
+              return false;
             }
         }
 

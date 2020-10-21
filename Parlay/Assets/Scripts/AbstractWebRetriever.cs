@@ -8,4 +8,11 @@ public abstract class AbstractWebRetriever : MonoBehaviour
     public abstract void PostEndResult(ResultModel result, int playerID);
 
     public abstract string GetMostRecentPostRequestResult();
+
+    public abstract void FetchResults(int level);
+
+    public abstract List<ResultModel> GetMostRecentResults();
+
+    public abstract bool IsLoading();
+
 }
