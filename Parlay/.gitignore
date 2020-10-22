@@ -90,5 +90,5 @@ WebGL-Dist/
 .DS_Store?
 *.DS_Store
 
-# Code Coverage 
+# Code Coverage
 CodeCoverage/
