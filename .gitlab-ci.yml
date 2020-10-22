@@ -2,9 +2,10 @@ stages:
   - test
   - play-test
   - build
+  - deploy
 
 unit-test:
-  script: 
+  script:
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -batchmode \
     -projectPath=. \
@@ -22,10 +23,52 @@ unit-test:
     - unity
 
 build-webgl:
-  script: 
+  script:
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
-    -quit -batchmode -executeMethod WebGLBuilder.build -buildTarget WebGL -projectPath=."
+    -quit -batchmode -projectPath ./Parlay -executeMethod WebGLBuilder.build -buildTarget WebGL"
     - "ls -a $(pwd)/Parlay"
   stage: build
+  artifacts:
+    paths:
+      - Parlay/WebGL-Dist/
+  tags:
+    - unity
+
+deploy-to-stage:
+  image: "python:latest"
+  stage: deploy
+  environment:
+    name: stage
+  needs:
+    - job: build-webgl
+      artifacts: true
+  variables:
+    AWS_ACCESS_KEY_ID: "$AWS_KEY_ID"
+    AWS_SECRET_ACCESS_KEY: "$AWS_KEY_SECRET"
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 cp ./Parlay/WebGL-Dist s3://parlay-island-game-stage --recursive --include "*" --metadata commit-hash=${CI_COMMIT_SHORT_SHA}
+  only:
+    - master
+  tags:
+    - unity
+
+deploy-to-prod:
+  image: "python:latest"
+  stage: deploy
+  when: manual
+  environment:
+    name: prod
+  needs:
+    - job: build-webgl
+      artifacts: true
+  variables:
+    AWS_ACCESS_KEY_ID: "$AWS_KEY_ID"
+    AWS_SECRET_ACCESS_KEY: "$AWS_KEY_SECRET"
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 cp ./Parlay/WebGL-Dist s3://parlay-island-game-prod --recursive --include "*" --metadata commit-hash=${CI_COMMIT_SHORT_SHA}
   tags:
     - unity

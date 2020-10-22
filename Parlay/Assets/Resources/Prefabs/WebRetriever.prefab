@@ -44,4 +44,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   apiBaseUrl: http://parlay-island-server-prod.eba-kq6isupz.us-east-2.elasticbeanstalk.com
-  leaderboard: {fileID: 2086566508094764950, guid: e7d499f8f7b774bc3955f8ed3158840f, type: 3}
