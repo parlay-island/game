@@ -38,22 +38,3 @@ public class ModeRetriever : MonoBehaviour
       }
     }
 }
-
-[JsonObject]
-public class LevelList
-{
-  [JsonProperty("levels")] public List<LevelModel> levels;
-}
-
-[JsonObject]
-public class LevelModel
-{
-    [JsonProperty("id")] public int id;
-    [JsonProperty("name")] public string name;
-
-    public LevelModel(int id, string name)
-    {
-        this.id = id;
-        this.name = name;
-    }
-}

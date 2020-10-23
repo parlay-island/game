@@ -19,7 +19,8 @@ public class WebRetriever : AbstractWebRetriever
 
     void Start()
     {
-      StartCoroutine(GetQuestionRequest(apiBaseUrl + "/questions/"));
+      int level = GameManager.instance.getLevel();
+      StartCoroutine(GetQuestionRequest(apiBaseUrl + "/questions/?level="));
     }
 
     public override List<QuestionModel> GetQuestions()
