@@ -20,7 +20,7 @@ public class WebRetriever : AbstractWebRetriever
     void Start()
     {
       int level = GameManager.instance.getLevel();
-      StartCoroutine(GetQuestionRequest(apiBaseUrl + "/questions/?level="));
+      StartCoroutine(GetQuestionRequest(apiBaseUrl + "/questions/?level=" + level));
     }
 
     public override List<QuestionModel> GetQuestions()
@@ -43,6 +43,10 @@ public class WebRetriever : AbstractWebRetriever
         string getString = webRequest.downloadHandler.text;
         QuestionList questionList = JsonConvert.DeserializeObject<QuestionList>(getString);
         questions = questionList.questions;
+        Debug.Log(uri);
+        Debug.Log(GameManager.instance.getLevel());
+        Debug.Log(questions);
+        Debug.Log(questions[0]);
       }
     }
 

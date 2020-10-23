@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,14 +9,16 @@ using TMPro;
 
 public class LevelSelector : MonoBehaviour
 {
-    private List<LevelModel> levels = new List<LevelModel>();
-    public GameObject levelHolder;
-    public GameObject levelIcon;
-    public GameObject thisCanvas;
-    public Vector2 iconSpacing;
-    public int amountPerPage = 9;
-    public GameObject leftButton;
-    public GameObject rightButton;
+
+    [SerializeField] private GameObject levelHolder;
+    [SerializeField] private GameObject levelIcon;
+    [SerializeField] private GameObject thisCanvas;
+    [SerializeField] private GameObject leftButton;
+    [SerializeField] private GameObject rightButton;
+    [SerializeField] private Vector2 iconSpacing;
+    [SerializeField] private ErrorDisplaySource errorDisplaySource;
+    [SerializeField] private int amountPerPage = 9;
+
 
     private Rect panelDimensions;
     private Rect iconDimensions;
@@ -24,39 +27,31 @@ public class LevelSelector : MonoBehaviour
     private int totalPages;
     private int currentPage = 1;
     private List<GameObject> panels = new List<GameObject>();
+    private List<LevelModel> levels;
 
 
     void Start()
     {
+      try
+      {
         ModeRetriever mode_retriever = GameObject.Find("ModeRetriever").GetComponent<ModeRetriever>();
         levels = mode_retriever.GetLevels();
         numberOfLevels = levels.Count;
-        // add exception handling for if null
 
         panelDimensions = levelHolder.GetComponent<RectTransform>().rect;
         iconDimensions = levelIcon.GetComponent<RectTransform>().rect;
         totalPages = Mathf.CeilToInt((float)numberOfLevels / amountPerPage);
         LoadPanels(totalPages);
-    }
-
-    void Update()
-    {
-      if(currentPage == 1)
-      {
-        leftButton.SetActive(false);
-      } else if (!leftButton.activeSelf){
-        leftButton.SetActive(true);
+        CheckAndActivateButtons();
       }
-
-      if(currentPage == totalPages)
+      catch (Exception e)
       {
-        rightButton.SetActive(false);
-      } else if (!rightButton.activeSelf){
-        rightButton.SetActive(true);
+        errorDisplaySource.DisplayNewError("Cannot load levels", "An error occurred while loading "
+                        + "levels. Please try again later.");
       }
     }
 
-    void LoadPanels(int numberOfPanels){
+    private void LoadPanels(int numberOfPanels){
         GameObject panelClone = Instantiate(levelHolder) as GameObject;
 
         for(int i = 1; i <= numberOfPanels; i++){
@@ -77,7 +72,7 @@ public class LevelSelector : MonoBehaviour
         Destroy(panelClone);
     }
 
-    void SetUpGrid(GameObject panel){
+    private void SetUpGrid(GameObject panel){
         GridLayoutGroup grid = panel.AddComponent<GridLayoutGroup>();
         grid.cellSize = new Vector2(iconDimensions.width, iconDimensions.height);
         grid.childAlignment = TextAnchor.UpperLeft;
@@ -86,7 +81,7 @@ public class LevelSelector : MonoBehaviour
         grid.constraintCount = 3;
     }
 
-    void LoadIcons(int numberOfIcons, GameObject parentObject){
+    private void LoadIcons(int numberOfIcons, GameObject parentObject){
         for(int i = 1; i <= numberOfIcons; i++){
             currentLevelCount++;
             GameObject icon = Instantiate(levelIcon) as GameObject;
@@ -105,6 +100,7 @@ public class LevelSelector : MonoBehaviour
         panels[currentPage - 1].SetActive(false);
         panels[currentPage - 2].SetActive(true);
         currentPage--;
+        CheckAndActivateButtons();
       }
     }
 
@@ -115,6 +111,25 @@ public class LevelSelector : MonoBehaviour
         panels[currentPage - 1].SetActive(false);
         panels[currentPage].SetActive(true);
         currentPage++;
+        CheckAndActivateButtons();
       }
     }
+
+    private void CheckAndActivateButtons()
+    {
+      if(currentPage == 1)
+      {
+        leftButton.SetActive(false);
+      } else if (!leftButton.activeSelf){
+        leftButton.SetActive(true);
+      }
+
+      if(currentPage == totalPages)
+      {
+        rightButton.SetActive(false);
+      } else if (!rightButton.activeSelf){
+        rightButton.SetActive(true);
+      }
+    }
+
 }

@@ -6,19 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class StartScreenManager : MonoBehaviour
 {
-    public Button play_game;
-    public GameObject mode_selector;
+    [SerializeField] private Button play_game;
+    [SerializeField] private GameObject mode_selector;
 
     public void LoadModeSelection()
     {
-      StartCoroutine(Load());
+      StartCoroutine(LoadModeScene());
     }
 
-    IEnumerator Load()
+    IEnumerator LoadModeScene()
     {
       Scene currentScene = SceneManager.GetActiveScene();
       string mode_scene_name = "ModeSelection";
-      //Scene mode_selection_scene = SceneManager.GetSceneByName(mode_scene_name);
 
       AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(mode_scene_name, LoadSceneMode.Additive);
       while (!asyncLoad.isDone)

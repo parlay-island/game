@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class ModeRetriever : MonoBehaviour
 {
-    [SerializeField] public string apiUrl;
+    [SerializeField] private string apiUrl;
     private List<LevelModel> levels;
 
 
@@ -28,6 +28,7 @@ public class ModeRetriever : MonoBehaviour
       yield return webRequest.SendWebRequest();
       if (webRequest.isNetworkError || webRequest.isHttpError)
       {
+          levels = null;
           Debug.LogWarningFormat("There was an error when loading levels [{0}]", webRequest.error);
       }
       else

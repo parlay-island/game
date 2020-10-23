@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public GameEndRequestHelper gameEndRequestHelper;
 
     public float playerDistance = 0f;
-    public int level = 1;
+    private int level = 1;
     private int playerID = 1;
     private string postEndResultContent;
     private bool sentRequest = false;

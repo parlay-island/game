@@ -9,6 +9,7 @@ public class LevelButton : MonoBehaviour
 {
     private List<LevelModel> levels = new List<LevelModel>();
     private GameObject levelObj;
+
     void Start()
     {
       ModeRetriever mode_retriever = GameObject.Find("ModeRetriever").GetComponent<ModeRetriever>();
@@ -20,13 +21,13 @@ public class LevelButton : MonoBehaviour
     {
       string level_name = gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
       LevelModel level_selected = new LevelModel(1, "");
-      foreach(LevelModel lev in levels){
-        if(lev.name == level_name)
+      foreach(LevelModel level in levels){
+        if(level.name == level_name)
         {
-          level_selected = lev;
+          level_selected = level;
         }
       }
-      levelObj.GetComponent<Level>().level = level_selected;
+      levelObj.GetComponent<Level>().SetLevel(level_selected);
       StartCoroutine(Load());
     }
 
