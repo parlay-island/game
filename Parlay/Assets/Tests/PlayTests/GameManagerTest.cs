@@ -150,7 +150,7 @@ namespace Tests
 
             // player did not move at all for this test --> distance should be 0.00
             Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.playerDistance.ToString("F2")));
-            Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.level.ToString()));
+            Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.getLevel().ToString()));
         }
 
         [UnityTest, Order(3)]
@@ -171,7 +171,7 @@ namespace Tests
             float distance = float.Parse(parts[0].Split(':')[1]);
 
             Assert.Greater(distance, 0f);
-            Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.level.ToString()));
+            Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.getLevel().ToString()));
         }
 
         [UnityTest, Order(4)]

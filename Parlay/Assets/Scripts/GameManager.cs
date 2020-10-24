@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,10 +24,8 @@ public class GameManager : MonoBehaviour
     public GameEndRequestHelper gameEndRequestHelper;
 
     public float playerDistance = 0f;
+    private int level = 1;
     public float bonusDistance = 0f;
-    // hardcoded for now for the purpose of mocking game end result
-    // TODO: make this value based on login information & mode selection
-    public int level = 1;
     private int playerID = 1;
     private string postEndResultContent;
     private bool sentRequest = false;
@@ -40,6 +39,8 @@ public class GameManager : MonoBehaviour
     		Destroy(gameObject);
     	}
     	DontDestroyOnLoad(gameObject);
+      GameObject levelObj = GameObject.Find("LevelObj");
+      level = levelObj != null ? levelObj.GetComponent<Level>().GetId() : 1;
     }
 
     private void initGame(float gameTime) {
