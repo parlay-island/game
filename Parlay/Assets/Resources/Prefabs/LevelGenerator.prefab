@@ -50,4 +50,9 @@ MonoBehaviour:
   - {fileID: 5968922716073246162, guid: da8e57d2b49d14caf92b392a0c97ef6d, type: 3}
   - {fileID: 1348672002552909613, guid: 8bc3972a5aa6242b2bac63ebf81f02e4, type: 3}
   - {fileID: 8317363516971670141, guid: 25bc55bd98c7643fc8febce2ba6e6913, type: 3}
+  - {fileID: 2463370710711623734, guid: 3a164c2f51226431b8be9f61e7cd9c05, type: 3}
+  - {fileID: 2919727854941776371, guid: d1c1766c580eb4ad89d04374ad12cb6d, type: 3}
+  - {fileID: 994933562856705557, guid: 22fd70e029deb4239b6eb931c7167b38, type: 3}
+  - {fileID: 9158545999755670113, guid: 7136bbab59f794c1ebf10ed391175dd6, type: 3}
+  - {fileID: 7939285781516894766, guid: b789b019ea8034b84b04ea2da5b80018, type: 3}
   player: {fileID: 7329300552794944232, guid: 22e8a5012d19d41ccbb6e54b318cc5d8, type: 3}
