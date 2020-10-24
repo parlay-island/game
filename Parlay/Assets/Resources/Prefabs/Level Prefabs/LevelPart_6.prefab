@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -903740927
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 5994285147630121518, guid: b65a4fabeb5d54577aee8febed023424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -241,7 +241,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -903740927
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 4606069708627012108, guid: b65a4fabeb5d54577aee8febed023424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -923,6 +923,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9138185071058096135, guid: 84531216db1e945919e0281a1ad6eece, type: 3}
+      propertyPath: questionUI
+      value: 
+      objectReference: {fileID: 1406895028589812272, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84531216db1e945919e0281a1ad6eece, type: 3}
 --- !u!4 &7801369577458979495 stripped
