@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     private int playerID = 1;
     private string postEndResultContent;
     private bool sentRequest = false;
+    public bool playerFallen = false;
 
     void Awake()
     {
@@ -95,7 +96,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (timerManager.isTimeUp()) {
+        if (timerManager.isTimeUp() || playerFallen) {
           if(!sentRequest)
           {
             webRetriever.FetchResults(level);
