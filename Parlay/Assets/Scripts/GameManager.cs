@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public GameEndRequestHelper gameEndRequestHelper;
 
     public float playerDistance = 0f;
+    public float bonusDistance = 0f;
     // hardcoded for now for the purpose of mocking game end result
     // TODO: make this value based on login information & mode selection
     public int level = 1;
@@ -104,7 +105,7 @@ public class GameManager : MonoBehaviour
           }
         } else {
           timerManager.updateTime();
-          playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled();
+          playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled() + bonusDistance;
           distanceText.text = "Distance: " + playerDistance.ToString("0.00");
         }
     }
@@ -117,6 +118,11 @@ public class GameManager : MonoBehaviour
     public void IncreaseTimeByPowerUp(PowerUp powerUp)
     {
         timerManager.AddTime(powerUp.GetTimeBoost());
+    }
+
+    public void IncreaseDistanceByPowerUp(PowerUp powerUp)
+    {
+        bonusDistance += powerUp.GetDistanceBoost();
     }
 
     public bool IsQuestionShown()
