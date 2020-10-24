@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Potion
   - LeaderboardEntry
+  - GameManager
   layers:
   - Default
   - TransparentFX

@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    [SerializeField] private float m_TimeBoost = 10f;
+    [SerializeField] private float m_TimeBoost;
+    [SerializeField] private int type;
+    [SerializeField] private float m_DistanceBoost;
 
-    void OnCollisionEnter()
-    {
-        GameManager.instance.IncreaseTimeByPowerUp(this);
-        GameObject.Destroy(gameObject);
-    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
         {
-            GameManager.instance.IncreaseTimeByPowerUp(this);
+            if (type == 1)
+            {
+                GameManager.instance.IncreaseTimeByPowerUp(this);
+            }
+            else if (type == 2)
+            {
+                print("Increase distance");
+                GameManager.instance.IncreaseDistanceByPowerUp(this);
+            }
             Destroy(gameObject);
         }
     }
@@ -23,5 +28,10 @@ public class PowerUp : MonoBehaviour
     public float GetTimeBoost()
     {
         return m_TimeBoost;
+    }
+
+    public float GetDistanceBoost()
+    {
+        return m_DistanceBoost;
     }
 }

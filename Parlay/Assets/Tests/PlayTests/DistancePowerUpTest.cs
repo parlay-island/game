@@ -7,17 +7,22 @@ using UnityEngine.TestTools;
 namespace Tests
 {
 
-    public class PowerUpTest
+    public class DistancePowerUpTest
     {
         private GameObject player;
         private CharacterController2D characterController;
         private GameObject powerUp;
         private GameManager gameManager;
         private GameObject gameManagerObj;
+        private float bonusDistance;
 
         [SetUp]
         public void Setup()
         {
+            foreach (GameObject GM in GameObject.FindGameObjectsWithTag("GameManager"))
+            {
+                GameObject.Destroy(GM);
+            }
             gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             gameManager = gameManagerObj.GetComponent<GameManager>();
             player = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
@@ -30,6 +35,7 @@ namespace Tests
             {
                 GameObject.Destroy(question);
             }
+            bonusDistance = gameManager.bonusDistance;
         }
 
         [TearDown]
@@ -57,15 +63,17 @@ namespace Tests
             characterController.Move(powerUpPos.x - 0.1f, false);
         }
 
+
+        [Retry(2)]
         [UnityTest, Order(1)]
-        public IEnumerator TestTimePowerUpActivation()
+        public IEnumerator TestDistancePowerUpActivation()
         {
-            float initialTime = gameManager.timerManager.getCurrTime();
-            powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/PotionTile1"));
+            powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/GemTile1"));
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
-            Assert.True(gameManager.timerManager.getCurrTime() - initialTime >= 0);
+            Assert.True(gameManager.bonusDistance > 0);
+            Assert.True(gameManager.playerDistance > player.GetComponent<PlayerMovement>().getDistanceTravelled());
         }
 
     }

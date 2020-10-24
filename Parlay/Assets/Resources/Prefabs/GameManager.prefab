@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4658577254398892442}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,4 +55,5 @@ MonoBehaviour:
   questionUI: {fileID: 8857682501309285010, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
   leaderBoard: {fileID: 2086566508094765032, guid: e7d499f8f7b774bc3955f8ed3158840f, type: 3}
   playerDistance: 0
+  bonusDistance: 0
   level: 1
