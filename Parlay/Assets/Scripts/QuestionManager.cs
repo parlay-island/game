@@ -11,7 +11,7 @@ public class QuestionManager : MonoBehaviour
     private static List<QuestionModel> _unansweredQuestions;
 
     private QuestionModel _currentQuestion;
-    private GameManager gameManager;
+    public GameManager gameManager;
 
     [SerializeField] public AbstractWebRetriever webRetriever;
     [SerializeField] public int timeReward;
@@ -21,9 +21,9 @@ public class QuestionManager : MonoBehaviour
 
     public void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         try
         {
+            gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             RetrieveQuestionsIfNotAlreadySet();
         }
         catch (Exception exception)

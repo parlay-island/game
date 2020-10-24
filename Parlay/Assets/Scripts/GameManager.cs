@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseDistanceByPowerUp(PowerUp powerUp)
     {
         bonusDistance += powerUp.GetDistanceBoost();
+        print(bonusDistance);
     }
 
     public void AddRetry(PowerUp powerUp)
