@@ -64,8 +64,15 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (col.gameObject.tag == "Question")
         {
+            Debug.Log("collided with question");
             questionUI.SetActive(true);
             Destroy(col.gameObject);
+        }
+
+        if (col.gameObject.tag == "FallDetector")
+        {
+            Debug.Log("fallen");
+            GameManager.instance.playerFell = true;
         }
     }
 
