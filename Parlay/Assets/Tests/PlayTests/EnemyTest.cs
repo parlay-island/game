@@ -91,7 +91,7 @@ namespace Tests
         Assert.True(testEnemy == null);
       }
 
-      [Retry(3)]
+      [Retry(4)]
       [UnityTest, Order(3)]
       public IEnumerator TestEnemyCollisionWithEnemyHasNoEffect()
       {
