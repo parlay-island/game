@@ -67,6 +67,13 @@ public class PlayerMovement : MonoBehaviour {
             questionUI.SetActive(true);
             Destroy(col.gameObject);
         }
+        if (col.gameObject.tag == "FallDetector") 
+        {
+            if (GameManager.instance)
+            {
+                GameManager.instance.playerFallen = true;
+            }
+        }
     }
 
     public void OnLanding()

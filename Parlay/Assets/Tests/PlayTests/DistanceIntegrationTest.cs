@@ -61,7 +61,7 @@ namespace Tests
             mockWebRetrieverObj = new GameObject();
             MockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<MockWebRetriever>();
             gameManager.webRetriever = mockWebRetriever;
-            gameManager.setGameTime(15f);
+            gameManager.setGameTime(3f);
             gameManager.player = testPlayer;
 
             playerMovement = testPlayer.GetComponent<PlayerMovement>();
@@ -90,18 +90,18 @@ namespace Tests
 
             // test that distance tracking label displays the correct distance when player moves right
             characterController.Move(distanceTraveled * directionReversal, false);
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
             // test that distance tracking label displays the correct distance when player moves left
             characterController.Move(distanceTraveled, false);
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
             // test that distance tracking label displays the correct distance when player jumps
             rigidbody.gravityScale = 3;
             characterController.Move(0f, true);
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
             Assert.That(findDifferenceBetweenActualAndDisplayedDifference(false) < deltaDistance);
 
             // test that the final distance is reported
