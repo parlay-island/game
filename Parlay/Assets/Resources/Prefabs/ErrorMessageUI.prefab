@@ -203,7 +203,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: An error occurred while loading results. Please try again later.
+  m_Text: An error occurred while loading questions. Please try again later.
 --- !u!1 &2989845810446509113
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +381,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Cannot load leaderboard
+  m_Text: Cannot load questions
 --- !u!1 &6407460018959552008
 GameObject:
   m_ObjectHideFlags: 0
