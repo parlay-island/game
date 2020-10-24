@@ -43,10 +43,6 @@ public class WebRetriever : AbstractWebRetriever
         string getString = webRequest.downloadHandler.text;
         QuestionList questionList = JsonConvert.DeserializeObject<QuestionList>(getString);
         questions = questionList.questions;
-        Debug.Log(uri);
-        Debug.Log(GameManager.instance.getLevel());
-        Debug.Log(questions);
-        Debug.Log(questions[0]);
       }
     }
 

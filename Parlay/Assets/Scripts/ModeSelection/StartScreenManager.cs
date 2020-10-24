@@ -25,6 +25,6 @@ public class StartScreenManager : MonoBehaviour
           yield return null;
       }
       SceneManager.MoveGameObjectToScene(mode_selector, SceneManager.GetSceneByName(mode_scene_name));
-      SceneManager.UnloadSceneAsync(currentScene);
+      yield return SceneManager.UnloadSceneAsync(currentScene);
     }
 }

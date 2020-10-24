@@ -472,7 +472,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8900688395708212098, guid: b1bf92e74778e498ea9c3c8b336464d9, type: 3}
       propertyPath: m_Name
-      value: Camera
+      value: MainCamera
       objectReference: {fileID: 0}
     - target: {fileID: 8900688395708212108, guid: b1bf92e74778e498ea9c3c8b336464d9, type: 3}
       propertyPath: levelHolder
@@ -494,6 +494,10 @@ PrefabInstance:
       propertyPath: errorDisplaySource
       value: 
       objectReference: {fileID: 1628442504}
+    - target: {fileID: 8900688395708212108, guid: b1bf92e74778e498ea9c3c8b336464d9, type: 3}
+      propertyPath: mode_retriever
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8900688395708212110, guid: b1bf92e74778e498ea9c3c8b336464d9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

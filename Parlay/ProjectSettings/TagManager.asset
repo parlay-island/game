@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Potion
   - LeaderboardEntry
+  - LevelButton
   layers:
   - Default
   - TransparentFX

@@ -179,10 +179,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e06e019222e4b2db835e67ce7734e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelHolder: {fileID: 0}
+  levelHolder: {fileID: 6621532279864295107, guid: f1971442396b44493adf15db10f75bbc, type: 3}
+  thisCanvas: {fileID: 5859371889778792324, guid: 75648a65e38a047c7af3c7658e46f4ce, type: 3}
+  mode_retriever: {fileID: 6397433101415458612, guid: a6412ee6c068f44269856fdf6eca19b6, type: 3}
   levelIcon: {fileID: 9007054485926577026, guid: f0d2abeec355246958bdb72cba5545d5, type: 3}
-  thisCanvas: {fileID: 0}
+  leftButton: {fileID: 2703611542889508804, guid: ba24b33a3ecd440ea8f914ec5e452dbe, type: 3}
+  rightButton: {fileID: 4905940629607962376, guid: 68bef98733d674e3db12b9ab2d12d6c5, type: 3}
   iconSpacing: {x: 440, y: 225}
+  errorDisplaySource: {fileID: 8878849883676834197, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
   amountPerPage: 9
-  leftButton: {fileID: 0}
-  rightButton: {fileID: 0}

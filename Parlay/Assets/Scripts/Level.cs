@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 // used to pass the level selected across scenes so it can be accessed in the game
 public class Level : MonoBehaviour
 {
-  protected LevelModel level;
+  private LevelModel level;
 
   public void Awake()
   {

@@ -10,18 +10,15 @@ using TMPro;
 public class LevelSelector : MonoBehaviour
 {
 
-    [SerializeField] private GameObject levelHolder;
+    [SerializeField] public GameObject levelHolder;
     [SerializeField] private GameObject levelIcon;
-    [SerializeField] private GameObject thisCanvas;
+    [SerializeField] public GameObject thisCanvas;
     [SerializeField] private GameObject leftButton;
     [SerializeField] private GameObject rightButton;
     [SerializeField] private Vector2 iconSpacing;
-    [SerializeField] private ErrorDisplaySource errorDisplaySource;
+    [SerializeField] public ErrorDisplaySource errorDisplaySource;
     [SerializeField] private int amountPerPage = 9;
-
-
-    private Rect panelDimensions;
-    private Rect iconDimensions;
+    
     private int currentLevelCount;
     private int numberOfLevels;
     private int totalPages;
@@ -29,17 +26,14 @@ public class LevelSelector : MonoBehaviour
     private List<GameObject> panels = new List<GameObject>();
     private List<LevelModel> levels;
 
-
-    void Start()
+    public void Start()
     {
       try
       {
-        ModeRetriever mode_retriever = GameObject.Find("ModeRetriever").GetComponent<ModeRetriever>();
+        AbstractModeRetriever mode_retriever = GameObject.Find("ModeRetriever").GetComponent<AbstractModeRetriever>();
         levels = mode_retriever.GetLevels();
         numberOfLevels = levels.Count;
 
-        panelDimensions = levelHolder.GetComponent<RectTransform>().rect;
-        iconDimensions = levelIcon.GetComponent<RectTransform>().rect;
         totalPages = Mathf.CeilToInt((float)numberOfLevels / amountPerPage);
         LoadPanels(totalPages);
         CheckAndActivateButtons();
@@ -74,6 +68,7 @@ public class LevelSelector : MonoBehaviour
 
     private void SetUpGrid(GameObject panel){
         GridLayoutGroup grid = panel.AddComponent<GridLayoutGroup>();
+        Rect iconDimensions = levelIcon.GetComponent<RectTransform>().rect;
         grid.cellSize = new Vector2(iconDimensions.width, iconDimensions.height);
         grid.childAlignment = TextAnchor.UpperLeft;
         grid.spacing = iconSpacing;

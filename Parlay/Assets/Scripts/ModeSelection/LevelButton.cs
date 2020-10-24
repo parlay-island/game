@@ -9,10 +9,12 @@ public class LevelButton : MonoBehaviour
 {
     private List<LevelModel> levels = new List<LevelModel>();
     private GameObject levelObj;
+    // when automated tests testing that level is set don't want to load the actual scene
+    public bool isTest = false;
 
     void Start()
     {
-      ModeRetriever mode_retriever = GameObject.Find("ModeRetriever").GetComponent<ModeRetriever>();
+      AbstractModeRetriever mode_retriever = GameObject.Find("ModeRetriever").GetComponent<AbstractModeRetriever>();
       levels = mode_retriever.GetLevels();
       levelObj = GameObject.Find("LevelObj");
     }
@@ -28,7 +30,8 @@ public class LevelButton : MonoBehaviour
         }
       }
       levelObj.GetComponent<Level>().SetLevel(level_selected);
-      StartCoroutine(Load());
+      if(!isTest)
+        StartCoroutine(Load());
     }
 
     IEnumerator Load()
@@ -41,6 +44,5 @@ public class LevelButton : MonoBehaviour
       {
           yield return null;
       }
-      SceneManager.UnloadSceneAsync(currentScene);
     }
 }
