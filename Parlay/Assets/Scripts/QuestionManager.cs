@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -9,6 +10,7 @@ public class QuestionManager : MonoBehaviour
     public GameObject questionUI;
     public Timer timer;
     private static List<QuestionModel> _unansweredQuestions;
+    private static readonly List<QuestionModel> _answeredQuestions = new List<QuestionModel>();
 
     private QuestionModel _currentQuestion;
     public GameManager gameManager;
@@ -69,6 +71,7 @@ public class QuestionManager : MonoBehaviour
         {
             timer.AddTime(timeReward);
             questionUI.SetActive(false);
+            _answeredQuestions.Add(_currentQuestion);
         } else if (gameManager.retries.Count > 0)
         {
             gameManager.retries.RemoveAt(0);
@@ -76,6 +79,7 @@ public class QuestionManager : MonoBehaviour
         } else
         {
             questionUI.SetActive(false);
+            _answeredQuestions.Add(_currentQuestion);
         }
     }
 
@@ -92,5 +96,10 @@ public class QuestionManager : MonoBehaviour
     public void SetChoiceTexts(List<Text> choiceTexts)
     {
         this.choiceTexts = choiceTexts;
+    }
+
+    public List<QuestionModel> GetAnsweredQuestions()
+    {
+        return _answeredQuestions;
     }
 }
