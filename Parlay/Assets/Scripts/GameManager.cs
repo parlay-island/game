@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject enemySpawner;
     [SerializeField] public GameObject questionUI;
     [SerializeField] public GameObject leaderBoard;
+    [SerializeField] public GameObject endGameScreen;
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void hideGameEndElements() {
+        endGameScreen.SetActive(false);
         gameOverImage.SetActive(false);
         gameOverText.gameObject.SetActive(false);
         finalDistanceText.gameObject.SetActive(false);
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void showGameOverUIElements() {
+        endGameScreen.SetActive(true);
         gameOverImage.SetActive(true);
         gameOverText.gameObject.SetActive(true);
         leaderBoard.gameObject.SetActive(true);

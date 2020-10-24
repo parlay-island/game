@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using TMPro;
 
 public class QuestionManager : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class QuestionManager : MonoBehaviour
 
     [SerializeField] public AbstractWebRetriever webRetriever;
     [SerializeField] public int timeReward;
-    [SerializeField] public Text questionText;
-    [SerializeField] public List<Text> choiceTexts;
+    [SerializeField] public TextMeshProUGUI questionText;
+    [SerializeField] public List<TextMeshProUGUI> choiceTexts;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
 
     public void Start()
@@ -54,11 +55,11 @@ public class QuestionManager : MonoBehaviour
         int randomQuestionIndex = Random.Range(0, _unansweredQuestions.Count - 1);
         _currentQuestion = _unansweredQuestions[randomQuestionIndex];
 
-        questionText.text = _currentQuestion.body;
+        questionText.SetText(_currentQuestion.body);
 
         for (int i = 0; i < choiceTexts.Count; i++)
         {
-            choiceTexts[i].text = _currentQuestion.choices[i].body;
+            choiceTexts[i].SetText(_currentQuestion.choices[i].body);
         }
 
         _unansweredQuestions.RemoveAt(randomQuestionIndex);
@@ -88,12 +89,12 @@ public class QuestionManager : MonoBehaviour
         this.timeReward = timeReward;
     }
 
-    public void SetQuestionText(Text questionText)
+    public void SetQuestionText(TextMeshProUGUI questionText)
     {
         this.questionText = questionText;
     }
 
-    public void SetChoiceTexts(List<Text> choiceTexts)
+    public void SetChoiceTexts(List<TextMeshProUGUI> choiceTexts)
     {
         this.choiceTexts = choiceTexts;
     }

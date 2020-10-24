@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public abstract class Award : MonoBehaviour
 {
     [SerializeField] public GameObject awardUI;
-    [SerializeField] public Text text;
+    [SerializeField] public TextMeshProUGUI text;
 
     void Start()
     {

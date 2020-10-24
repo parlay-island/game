@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using TMPro;
 
 namespace Tests
 {
@@ -14,7 +15,7 @@ namespace Tests
         private QuestionManager _questionManager;
         private GameObject questionManagerGameObject;
         private GameObject awardUI;
-        private Text awardText;
+        private TextMeshProUGUI awardText;
         private Answered10QuestionsAward award;
         private GameManager gameManager;
         private GameObject gameManagerObj;
@@ -24,11 +25,12 @@ namespace Tests
         public void SetUp()
         {
             _questionManagerGameObjectList = new List<GameObject>();
-            questionManagerGameObject = 
-                MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/QuestionManager"));
+            questionManagerGameObject =
+                MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
             _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
             award = questionManagerGameObject.AddComponent<Answered10QuestionsAward>();
-            awardText = questionManagerGameObject.AddComponent<Text>();
+            awardText = questionManagerGameObject.AddComponent<TextMeshProUGUI>();
+            Text awardText2 = questionManagerGameObject.AddComponent<Text>();
             awardUI = new GameObject();
             award.awardUI = awardUI;
             award.text = awardText;
@@ -63,7 +65,7 @@ namespace Tests
         {
             GameObject.Destroy(questionManagerGameObject);
         }
-        
+
         [UnityTest]
         public IEnumerator Answered10QuestionsAwardWinsAwardWhen10QuestionsAnswered()
         {
