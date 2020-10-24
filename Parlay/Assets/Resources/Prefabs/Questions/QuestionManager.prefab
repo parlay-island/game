@@ -43,14 +43,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba0434f2808b43eab5c9533e0120e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionUI: {fileID: 8857682501309285010, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+  questionUI: {fileID: 1406895028589812272, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
   timer: {fileID: 8007271838127522720, guid: 9f2cb90b73b7542b3bd99c4d4a4fb2fc, type: 3}
   webRetriever: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
   timeReward: 4
-  questionText: {fileID: 0}
+  questionText: {fileID: 8668543008895777803, guid: efd8ea451a8d942be9fbecd0ef3b6ff6, type: 3}
   choiceTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  errorDisplaySource: {fileID: 0}
+  - {fileID: 4401482500485091761, guid: 29c7669954406481a9d16594e6b7d6a6, type: 3}
+  - {fileID: 5133333444640768676, guid: f8262fc208ebf4a5ebde051a468a8108, type: 3}
+  - {fileID: 6342988613460806434, guid: 9c10d1055f3c840a1bdd5c038467c483, type: 3}
+  - {fileID: 7412203106073212577, guid: 27d9efabe6da848a8809612788e9eda8, type: 3}
+  errorDisplaySource: {fileID: 8878849883676834197, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}

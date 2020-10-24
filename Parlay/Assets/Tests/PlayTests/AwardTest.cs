@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Tests
 {
@@ -11,17 +12,18 @@ namespace Tests
         private QuestionManager _questionManager;
         private GameObject questionManagerGameObject;
         private GameObject awardUI;
-        private Text awardText;
+        private TextMeshProUGUI awardText;
         private Answered10QuestionsAward award;
 
         [SetUp]
         public void SetUp()
         {
-            questionManagerGameObject = 
-                MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/QuestionManager"));
+            questionManagerGameObject =
+                MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
             _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
             award = questionManagerGameObject.AddComponent<Answered10QuestionsAward>();
-            awardText = questionManagerGameObject.AddComponent<Text>();
+            awardText = questionManagerGameObject.AddComponent<TextMeshProUGUI>();
+            Text awardText2 = questionManagerGameObject.AddComponent<Text>();
             awardUI = new GameObject();
             award.awardUI = awardUI;
             award.text = awardText;
@@ -30,11 +32,6 @@ namespace Tests
             _questionManager.timer = null;
             _questionManager.questionUI = awardUI;
             _questionManager.SetTimeReward(10);
-            _questionManager.SetQuestionText(awardText);
-            _questionManager.errorDisplaySource = questionManagerGameObject.AddComponent<ErrorDisplaySource>();
-            _questionManager.errorDisplaySource.errorTitle = awardText;
-            _questionManager.errorDisplaySource.errorMessage = awardText;
-            _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
         }
 
         [TearDown]
@@ -42,7 +39,7 @@ namespace Tests
         {
             GameObject.Destroy(questionManagerGameObject);
         }
-        
+
         [UnityTest]
         public IEnumerator Answered10QuestionsAwardWinsAwardWhen10QuestionsAnswered()
         {
