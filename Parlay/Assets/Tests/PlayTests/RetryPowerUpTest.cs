@@ -177,17 +177,15 @@ namespace Tests
             characterController.Move(powerUpPos.x - 0.1f, false);
         }
 
-
-        [Retry(2)]
         [UnityTest, Order(1)]
-        public IEnumerator TestDistancePowerUpActivation()
+        public IEnumerator TestRetryPowerUpActivation()
         {
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/GemTile2"));
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
             Assert.True(gameManager.retries.Count > 0);
-            _questionManager.UserSelect(0);
+            _questionManager.UserSelect(1);
             Assert.True(gameManager.retries.Count == 0);
         }
 
