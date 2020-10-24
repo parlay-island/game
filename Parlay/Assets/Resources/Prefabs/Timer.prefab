@@ -202,7 +202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6450739626822550978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -269,9 +269,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 2
+  m_MaxValue: 30
   m_WholeNumbers: 0
-  m_Value: 2
+  m_Value: 27.996426
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

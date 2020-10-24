@@ -120,6 +120,13 @@ public class GameManager : MonoBehaviour
       timerManager.AddTime(enemy.GetTimeReduction());
     }
 
+    public float DistanceTraveledByPlayer()
+    {
+        print(playerDistance);
+        print(player.GetComponent<PlayerMovement>().getDistanceTravelled());
+        return player.GetComponent<PlayerMovement>().getDistanceTravelled();
+    }
+
     public void IncreaseTimeByPowerUp(PowerUp powerUp)
     {
         timerManager.AddTime(powerUp.GetTimeBoost());

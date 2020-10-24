@@ -99,18 +99,8 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            foreach (GameObject GM in GameObject.FindGameObjectsWithTag("GameManager"))
-            {
-                GameObject.Destroy(GM);
-            }
-            gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
-            gameManager = gameManagerObj.GetComponent<GameManager>();
-            player = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
-            characterController = player.GetComponent<CharacterController2D>();
-            player.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
-            gameManager.setGameTime(30f);
-            gameManager.questionUI.gameObject.SetActive(false);
-            characterController.Move(10f, false);
+
+
             foreach (GameObject question in GameObject.FindGameObjectsWithTag("Question"))
             {
                 GameObject.Destroy(question);
@@ -142,6 +132,22 @@ namespace Tests
                 AddComponent<TextMeshProUGUI>(),
                 AddComponent<TextMeshProUGUI>()
             });
+        }
+
+        private void initGameManager()
+        {
+            foreach (GameObject GM in GameObject.FindGameObjectsWithTag("GameManager"))
+            {
+                GameObject.Destroy(GM);
+            }
+            gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+            gameManager = gameManagerObj.GetComponent<GameManager>();
+            player = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
+            characterController = player.GetComponent<CharacterController2D>();
+            player.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
+            gameManager.setGameTime(30f);
+            gameManager.questionUI.gameObject.SetActive(false);
+            characterController.Move(10f, false);
         }
 
         private T AddComponent<T>() where T : Component
@@ -186,14 +192,14 @@ namespace Tests
         [UnityTest, Order(1)]
         public IEnumerator TestRetryPowerUpActivation()
         {
+            initGameManager();
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/GemTile2"));
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
-            Assert.True(true);
-            //Assert.True(gameManager.retries.Count > 0);
-            //_questionManager.UserSelect(1);
-            //Assert.True(gameManager.retries.Count == 0);
+            Assert.True(GameManager.instance.retries.Count > 0);
+            _questionManager.UserSelect(1);
+            Assert.True(GameManager.instance.retries.Count == 0);
         }
 
     }
