@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
+    public bool canRetry = false;
 
     public float playerDistance = 0f;
     private int level = 1;

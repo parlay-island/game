@@ -73,7 +73,11 @@ public class QuestionManager : MonoBehaviour
             timer.AddTime(timeReward);
             questionUI.SetActive(false);
             _answeredQuestions.Add(_currentQuestion);
-        } else if (gameManager.retries.Count > 0)
+        } else if (userChoice == 4) {
+            gameManager.canRetry = !gameManager.canRetry;
+            print("Retry State Changed");
+            //change question background color
+        } else if (gameManager.retries.Count > 0 && gameManager.canRetry)
         {
             gameManager.retries.RemoveAt(0);
             print("Granting Retry, Count: " + gameManager.retries.Count);
