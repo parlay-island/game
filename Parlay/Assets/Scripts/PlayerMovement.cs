@@ -69,8 +69,10 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (col.gameObject.tag == "FallDetector") 
         {
-            Debug.Log("Fallen");
-            GameManager.instance.playerFallen = true;
+            if (GameManager.instance)
+            {
+                GameManager.instance.playerFallen = true;
+            }
         }
     }
 

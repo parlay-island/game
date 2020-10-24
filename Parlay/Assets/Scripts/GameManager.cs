@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
           }
         } else {
           timerManager.updateTime();
-          playerDistance = player.GetComponent<PlayerMovement>().getDistanceTravelled() + bonusDistance;
+          playerDistance = Mathf.Max(0, player.GetComponent<PlayerMovement>().getDistanceTravelled() + bonusDistance);
           distanceText.text = "Distance: " + playerDistance.ToString("0.00");
         }
     }
