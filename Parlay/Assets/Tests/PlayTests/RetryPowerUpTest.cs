@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using TMPro;
 
 namespace Tests
 {
@@ -120,7 +121,7 @@ namespace Tests
 
             _questionManagerGameObjectList = new List<GameObject>();
             _uiGameObject = new GameObject();
-            GameObject questionManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/QuestionManager"));
+            GameObject questionManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
             _questionManagerGameObjectList.Add(questionManagerObj);
             _questionManager = questionManagerObj.GetComponent<QuestionManager>();
             GameObject timeManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"));
@@ -130,16 +131,16 @@ namespace Tests
             _questionManager.timer = _timer;
             _questionManager.questionUI = _uiGameObject;
             _questionManager.SetTimeReward(TimeReward);
-            _questionManager.SetQuestionText(AddComponent<Text>());
+            _questionManager.SetQuestionText(AddComponent<TextMeshProUGUI>());
             _questionManager.errorDisplaySource = AddComponent<ErrorDisplaySource>();
             _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
 
-            _questionManager.SetChoiceTexts(new List<Text>
+            _questionManager.SetChoiceTexts(new List<TextMeshProUGUI>
             {
-                AddComponent<Text>(),
-                AddComponent<Text>()
+                AddComponent<TextMeshProUGUI>(),
+                AddComponent<TextMeshProUGUI>()
             });
         }
 

@@ -30,7 +30,6 @@ namespace Tests
             _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
             award = questionManagerGameObject.AddComponent<Answered10QuestionsAward>();
             awardText = questionManagerGameObject.AddComponent<TextMeshProUGUI>();
-            Text awardText2 = questionManagerGameObject.AddComponent<Text>();
             awardUI = new GameObject();
             award.awardUI = awardUI;
             award.text = awardText;
@@ -39,10 +38,10 @@ namespace Tests
             _questionManager.timer = null;
             _questionManager.questionUI = awardUI;
             _questionManager.SetTimeReward(10);
-            _questionManager.SetQuestionText(awardText);
+            _questionManager.SetQuestionText(AddComponent<TextMeshProUGUI>());
             _questionManager.errorDisplaySource = questionManagerGameObject.AddComponent<ErrorDisplaySource>();
-            _questionManager.errorDisplaySource.errorTitle = awardText;
-            _questionManager.errorDisplaySource.errorMessage = awardText;
+            _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
+            _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
 
             gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
