@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace Tests
 {
@@ -13,10 +16,14 @@ namespace Tests
         private GameObject awardUI;
         private Text awardText;
         private Answered10QuestionsAward award;
+        private GameManager gameManager;
+        private GameObject gameManagerObj;
+        private List<GameObject> _questionManagerGameObjectList;
 
         [SetUp]
         public void SetUp()
         {
+            _questionManagerGameObjectList = new List<GameObject>();
             questionManagerGameObject = 
                 MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/QuestionManager"));
             _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
@@ -35,6 +42,20 @@ namespace Tests
             _questionManager.errorDisplaySource.errorTitle = awardText;
             _questionManager.errorDisplaySource.errorMessage = awardText;
             _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
+
+            gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+            gameManager = gameManagerObj.GetComponent<GameManager>();
+            QuestionManagerTest.MockWebRetriever webRetriever = AddComponent<QuestionManagerTest.MockWebRetriever>();
+            gameManager.webRetriever = webRetriever;
+            gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+            _questionManager.gameManager = gameManager;
+        }
+
+        private T AddComponent<T>() where T : Component
+        {
+            var gameObject = new GameObject();
+            _questionManagerGameObjectList.Add(gameObject);
+            return gameObject.AddComponent<T>();
         }
 
         [TearDown]
