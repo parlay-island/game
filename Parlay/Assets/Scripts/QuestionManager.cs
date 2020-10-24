@@ -11,6 +11,7 @@ public class QuestionManager : MonoBehaviour
     private static List<QuestionModel> _unansweredQuestions;
 
     private QuestionModel _currentQuestion;
+    private GameManager gameManager;
 
     [SerializeField] public AbstractWebRetriever webRetriever;
     [SerializeField] public int timeReward;
@@ -20,6 +21,7 @@ public class QuestionManager : MonoBehaviour
 
     public void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         try
         {
             RetrieveQuestionsIfNotAlreadySet();
@@ -62,12 +64,19 @@ public class QuestionManager : MonoBehaviour
 
     public void UserSelect(int userChoice)
     {
+
         if (_currentQuestion.answers.Contains(userChoice))
         {
             timer.AddTime(timeReward);
+            questionUI.SetActive(false);
+        } else if (gameManager.retries.Count > 0)
+        {
+            gameManager.retries.RemoveAt(0);
+            print("Granting Retry, Count: " + gameManager.retries.Count);
+        } else
+        {
+            questionUI.SetActive(false);
         }
-
-        questionUI.SetActive(false);
     }
 
     public void SetTimeReward(int timeReward)

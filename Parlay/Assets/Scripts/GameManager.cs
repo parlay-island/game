@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     private int playerID = 1;
     private string postEndResultContent;
     private bool sentRequest = false;
+    public ArrayList retries = new ArrayList();
 
     void Awake()
     {
@@ -123,6 +124,11 @@ public class GameManager : MonoBehaviour
     public void IncreaseDistanceByPowerUp(PowerUp powerUp)
     {
         bonusDistance += powerUp.GetDistanceBoost();
+    }
+
+    public void AddRetry(PowerUp powerUp)
+    {
+        retries.Add(powerUp);
     }
 
     public bool IsQuestionShown()
