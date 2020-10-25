@@ -131,7 +131,7 @@ namespace Tests
         Assert.True(initialXVelocity * rigidbody.velocity.x < 0);
       }
 
-      [Retry(4)]
+      [Retry(5)]
       [UnityTest, Order(6)]
       public IEnumerator TestEnemyDirectionChangeWhenReachEnd()
       {

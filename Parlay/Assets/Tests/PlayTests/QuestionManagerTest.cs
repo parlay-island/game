@@ -14,6 +14,7 @@ namespace Tests
     {
         private const int TimeReward = 1;
         private const string QuestionText = "question";
+        private const string Question2Text = "question2";
         private const string RightChoice = "choice0";
         private const string WrongChoice = "choice1";
         private const int RightChoiceIndex = 0;
@@ -23,6 +24,18 @@ namespace Tests
         private List<GameObject> _questionManagerGameObjectList;
         private QuestionManager _questionManager;
         private Timer _timer;
+        private static QuestionModel firstQuestion = new QuestionModel(QuestionText, new List<ChoiceModel>
+            {
+                new ChoiceModel(RightChoice),
+                new ChoiceModel(WrongChoice)
+            },
+            new List<int> {RightChoiceIndex});
+        private static QuestionModel secondQuestion = new QuestionModel(Question2Text, new List<ChoiceModel>
+            {
+                new ChoiceModel(RightChoice),
+                new ChoiceModel(WrongChoice)
+            },
+            new List<int> {RightChoiceIndex});
 
         public class MockWebRetriever : AbstractWebRetriever
         {
@@ -30,12 +43,8 @@ namespace Tests
             {
                 return new List<QuestionModel>
                 {
-                    new QuestionModel(QuestionText, new List<ChoiceModel>
-                        {
-                            new ChoiceModel(RightChoice),
-                            new ChoiceModel(WrongChoice)
-                        },
-                        new List<int> { RightChoiceIndex })
+                    firstQuestion,
+                    secondQuestion
                 };
             }
 
@@ -159,6 +168,15 @@ namespace Tests
             _questionManager.Start();
             Assert.AreNotEqual(errorMessageBefore,
                 _questionManager.errorDisplaySource.errorMessage.text);
+            yield return null;
+        }
+
+        [UnityTest, Order(5)]
+        public IEnumerator QuestionChangesRatherThanStayingTheSame()
+        {
+            var questionTextBefore = _questionManager.questionText.text;
+            _questionManager.UserSelect(1);
+            Assert.AreNotEqual(questionTextBefore, _questionManager.questionText.text);
             yield return null;
         }
     }
