@@ -23,7 +23,6 @@ namespace Tests
             _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
             award = questionManagerGameObject.AddComponent<Answered10QuestionsAward>();
             awardText = questionManagerGameObject.AddComponent<TextMeshProUGUI>();
-            Text awardText2 = questionManagerGameObject.AddComponent<Text>();
             awardUI = new GameObject();
             award.awardUI = awardUI;
             award.text = awardText;
