@@ -26,8 +26,8 @@ public class QuestionManager : MonoBehaviour
     {
         try
         {
-            gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             RetrieveQuestionsIfNotAlreadySet();
+            gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         }
         catch (Exception exception)
         {
@@ -74,13 +74,12 @@ public class QuestionManager : MonoBehaviour
             questionUI.SetActive(false);
             _answeredQuestions.Add(_currentQuestion);
         } else if (userChoice == 4) {
-            gameManager.canRetry = !gameManager.canRetry;
             print("Retry State Changed");
-            //change question background color
-        } else if (gameManager.retries.Count > 0 && gameManager.canRetry)
+            GameManager.instance.canRetry = !GameManager.instance.canRetry;
+        } else if (GameManager.instance.retries.Count > 0 && GameManager.instance.canRetry)
         {
-            gameManager.retries.RemoveAt(0);
-            print("Granting Retry, Count: " + gameManager.retries.Count);
+            GameManager.instance.retries.RemoveAt(0);
+            print("Granting Retry, Count: " + GameManager.instance.retries.Count);
         } else
         {
             questionUI.SetActive(false);

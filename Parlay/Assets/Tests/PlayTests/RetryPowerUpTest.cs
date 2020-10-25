@@ -20,118 +20,43 @@ namespace Tests
         private GameObject gameManagerObj;
         private GameObject mockWebRetrieverObj;
 
-        private const int TimeReward = 1;
-        private const string QuestionText = "question";
-        private const string RightChoice = "choice0";
-        private const string WrongChoice = "choice1";
-        private const int RightChoiceIndex = 0;
-        private const int WrongChoiceIndex = 1;
-
-        private GameObject _uiGameObject;
-        private List<GameObject> _questionManagerGameObjectList;
         private QuestionManager _questionManager;
-        private Timer _timer;
+        private GameObject questionManagerGameObject;
+        private List<GameObject> _questionManagerGameObjectList;
 
-        public class MockWebRetriever : AbstractWebRetriever
-        {
-            public override List<QuestionModel> GetQuestions()
-            {
-                return new List<QuestionModel>
-                {
-                    new QuestionModel(QuestionText, new List<ChoiceModel>
-                        {
-                            new ChoiceModel(RightChoice),
-                            new ChoiceModel(WrongChoice)
-                        },
-                        new List<int> { RightChoiceIndex })
-                };
-            }
+        private GameObject awardUI;
+        private TextMeshProUGUI awardText;
+        private Answered10QuestionsAward award;
 
-            public override void PostEndResult(ResultModel result, int playerID)
-            {
-            }
-
-            public override string GetMostRecentPostRequestResult()
-            {
-                return "";
-            }
-            public override void FetchResults(int level)
-            {
-            }
-            public override List<ResultModel> GetMostRecentResults()
-            {
-                return new List<ResultModel>();
-            }
-            public override bool IsLoading()
-            {
-                return false;
-            }
-        }
-
-        public class TimeoutWebRetriever : AbstractWebRetriever
-        {
-            public override List<QuestionModel> GetQuestions()
-            {
-                throw new TimeoutException();
-            }
-
-            public override void PostEndResult(ResultModel result, int playerID)
-            {
-            }
-
-            public override string GetMostRecentPostRequestResult()
-            {
-                return "";
-            }
-            public override void FetchResults(int level)
-            {
-            }
-            public override List<ResultModel> GetMostRecentResults()
-            {
-                return new List<ResultModel>();
-            }
-            public override bool IsLoading()
-            {
-                return false;
-            }
-        }
 
         [SetUp]
         public void Setup()
         {
-
-
             foreach (GameObject question in GameObject.FindGameObjectsWithTag("Question"))
             {
                 GameObject.Destroy(question);
             }
-            mockWebRetrieverObj = new GameObject();
-            MockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<MockWebRetriever>();
-
+            initGameManager();
 
             _questionManagerGameObjectList = new List<GameObject>();
-            _uiGameObject = new GameObject();
-            GameObject questionManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
-            _questionManagerGameObjectList.Add(questionManagerObj);
-            _questionManager = questionManagerObj.GetComponent<QuestionManager>();
-            GameObject timeManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"));
-            _questionManagerGameObjectList.Add(timeManagerObj);
-            _timer = timeManagerObj.GetComponent<Timer>();
-            _questionManager.webRetriever = AddComponent<MockWebRetriever>();
-            _questionManager.timer = _timer;
-            _questionManager.questionUI = _uiGameObject;
-            _questionManager.SetTimeReward(TimeReward);
+            questionManagerGameObject =
+                MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
+            _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
+            award = questionManagerGameObject.AddComponent<Answered10QuestionsAward>();
+            awardText = questionManagerGameObject.AddComponent<TextMeshProUGUI>();
+            awardUI = new GameObject();
+            award.awardUI = awardUI;
+            award.text = awardText;
+            award.questionManager = _questionManager;
+            _questionManager.webRetriever = questionManagerGameObject.AddComponent<QuestionManagerTest.MockWebRetriever>();
+            _questionManager.timer = null;
+            _questionManager.questionUI = awardUI;
+            _questionManager.SetTimeReward(10);
             _questionManager.SetQuestionText(AddComponent<TextMeshProUGUI>());
-            _questionManager.errorDisplaySource = AddComponent<ErrorDisplaySource>();
+            _questionManager.errorDisplaySource = questionManagerGameObject.AddComponent<ErrorDisplaySource>();
             _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
-
-            _questionManager.SetChoiceTexts(new List<TextMeshProUGUI>
-            {
-                AddComponent<TextMeshProUGUI>(),
-                AddComponent<TextMeshProUGUI>()
-            });
         }
 
         private void initGameManager()
@@ -165,13 +90,13 @@ namespace Tests
             GameObject.Destroy(player);
             GameObject.Destroy(gameManagerObj);
             GameObject.Destroy(mockWebRetrieverObj);
+            GameObject.Destroy(questionManagerGameObject);
 
             foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
             {
                 GameObject.Destroy(chunk);
             }
 
-            GameObject.Destroy(_uiGameObject);
             foreach (var gameObject in _questionManagerGameObjectList)
             {
                 GameObject.Destroy(gameObject);
@@ -192,12 +117,12 @@ namespace Tests
         [UnityTest, Order(1)]
         public IEnumerator TestRetryPowerUpActivation()
         {
-            initGameManager();
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/GemTile2"));
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
             Assert.True(GameManager.instance.retries.Count > 0);
+            GameManager.instance.canRetry = true;
             _questionManager.UserSelect(1);
             Assert.True(GameManager.instance.retries.Count == 0);
         }
