@@ -11,13 +11,13 @@ unit-test:
     -projectPath=./Parlay \
     -runTests -testPlatform editmode \
     -logFile \
-    -testResults ./edit-unit-tests.xml"
+    -testResults ./Parlay/edit-unit-tests.xml"
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -batchmode \
     -projectPath=./Parlay \
     -runTests -testPlatform playmode \
     -logFile \
-    -testResults ./play-unit-tests.xml"
+    -testResults ./Parlay/play-unit-tests.xml"
   stage: test
   tags:
     - unity
