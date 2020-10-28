@@ -38,19 +38,9 @@ namespace Tests
       [TearDown]
       public void Teardown()
       {
-        player.GetComponent<PlayerMovement>().questionUI.gameObject.SetActive(false);
-        gameManager.questionUI.gameObject.SetActive(false);
-        GameObject.Destroy(player);
-        GameObject.Destroy(gameManagerObj);
-        foreach(GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
-        {
-          GameObject.Destroy(chunk);
+        foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+          GameObject.Destroy(obj);
         }
-        GameObject.Destroy(level);
-        if(testEnemy != null)
-          GameObject.Destroy(testEnemy);
-        if(enemy2 != null)
-          GameObject.Destroy(enemy2);
       }
 
       private Vector2 GetEnemyColliderPos()
@@ -140,6 +130,26 @@ namespace Tests
         float initialXVelocity = rigidbody.velocity.x;
         testEnemy.transform.position = new Vector3(-1500f, testEnemy.transform.position.y, 0);
         yield return new WaitForFixedUpdate();
+        Assert.True(initialXVelocity * rigidbody.velocity.x < 0);
+      }
+
+      [Retry(3)]
+      [UnityTest, Order(7)]
+      public IEnumerator TestEnemyMovesWhenUnderCornerOfPlayer()
+      {
+        Rigidbody2D rigidbody = testEnemy.GetComponent<Rigidbody2D>();
+        float initialXVelocity = rigidbody.velocity.x;
+        testEnemy.SetActive(false);
+        Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>();
+        Vector2 playerBodySize = player.GetComponent<CapsuleCollider2D>().bounds.extents;
+        playerRigidbody.gravityScale = 0;
+        float topOfEnemy = testEnemy.GetComponent<SpriteRenderer>().bounds.max.y;
+        float playerOnCornerOfEnemy = (player.transform.localPosition.y - (playerBodySize.y/2)) + topOfEnemy;
+        float edgeOfPlayer = GetEnemyColliderPos().x  - (playerBodySize.x);
+        playerRigidbody.MovePosition(new Vector2(edgeOfPlayer, playerOnCornerOfEnemy));
+        yield return new WaitForSeconds(3f);
+        testEnemy.SetActive(true);
+        yield return new WaitForSeconds(4f);
         Assert.True(initialXVelocity * rigidbody.velocity.x < 0);
       }
 

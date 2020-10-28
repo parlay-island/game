@@ -64,7 +64,7 @@ namespace Tests
         }
 
 
-        [Retry(2)]
+        [Retry(4)]
         [UnityTest, Order(1)]
         public IEnumerator TestDistancePowerUpActivation()
         {
