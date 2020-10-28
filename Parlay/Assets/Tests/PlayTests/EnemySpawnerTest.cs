@@ -26,13 +26,10 @@ namespace Tests
     public void Teardown()
     {
       enemySpawner.gameObject.SetActive(true);
-      foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-      {
-        GameObject.Destroy(enemy);
+      foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+        GameObject.Destroy(obj);
       }
-      GameObject.Destroy(enemySpawner);
-      GameObject.Destroy(gameManagerObj);
-    }
+    } 
 
     //tests for 2 time cycles to show that this is a repeating process
     [UnityTest]

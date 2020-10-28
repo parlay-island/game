@@ -4,33 +4,38 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private const float MULTIPLIER = 100f;
+
     [SerializeField] private GameObject enemyPrefab;
-    [Range(0.1f, 5f)] [SerializeField] private float spawnTime = 1.25f;
+    [Range(0.1f, 5f)] [SerializeField] private float minSpawnTime = 1.25f;
     [Range(0.1f, 4f)] [SerializeField] private float spawnTimeRandomnessUpperBound = 3f;
 
-    private float spawnTimer;
+    private Timer timer;
 
     void Start()
     {
-      ResetSpawnTimer();
+      timer = gameObject.AddComponent<Timer>();
+      timer.Start();
+      timer.SetUp(GenerateRandomSpawnTime());
     }
 
     void Update()
     {
       if(!GameManager.instance.IsQuestionShown())
       {
-        spawnTimer -= Time.deltaTime;
-         if (spawnTimer <= 0.0f)
+         timer.updateTime();
+         if (timer.isTimeUp())
          {
-             Vector3 pos = new Vector3(transform.position.x, transform.position.y, 0);
-             Instantiate(enemyPrefab, pos, Quaternion.identity);
-             ResetSpawnTimer();
+           Vector3 pos = new Vector3(transform.position.x, transform.position.y, 0);
+           Instantiate(enemyPrefab, pos, Quaternion.identity);
+           timer.AddTime(GenerateRandomSpawnTime());
          }
       }
     }
 
-    private void ResetSpawnTimer()
-     {
-         spawnTimer = (float)(spawnTime + Random.Range(0, spawnTimeRandomnessUpperBound*100)/100.0);
-     }
+    private float GenerateRandomSpawnTime()
+    {
+      return (float)(minSpawnTime + Random.Range(0, spawnTimeRandomnessUpperBound * MULTIPLIER)/MULTIPLIER);
+    }
+
 }
