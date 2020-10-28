@@ -8,17 +8,20 @@ unit-test:
   script:
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -batchmode \
-    -projectPath=. \
+    -projectPath=./Parlay \
     -runTests -testPlatform editmode \
     -logFile \
     -testResults ./edit-unit-tests.xml"
     - "/Applications/Unity/Hub/Editor/2020.1.3f1/Unity.app/Contents/MacOS/Unity \
     -batchmode \
-    -projectPath=. \
+    -projectPath=./Parlay \
     -runTests -testPlatform playmode \
     -logFile \
     -testResults ./play-unit-tests.xml"
   stage: test
+  artifacts:
+    paths:
+      - Parlay/play-unit-tests.xml
   tags:
     - unity
 
