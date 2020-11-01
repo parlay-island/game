@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     private string postEndResultContent;
     private bool sentRequest = false;
     public bool playerFallen = false;
+    private List<AnsweredQuestion> _answeredQuestions;
 
     void Awake()
     {
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
         distanceText.gameObject.SetActive(true);
         gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
         enabled = true;
+        _answeredQuestions = new List<AnsweredQuestion>();
     }
 
     private void hideGameEndElements() {
@@ -59,6 +61,11 @@ public class GameManager : MonoBehaviour
         gameOverImage.SetActive(false);
         gameOverText.gameObject.SetActive(false);
         finalDistanceText.gameObject.SetActive(false);
+    }
+
+    public void addAnsweredQuestion(AnsweredQuestion question)
+    {
+        _answeredQuestions.Add(question);
     }
 
     public void setGameTime(float time) {
@@ -91,7 +98,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void sendPostRequestWithGameEndResults() {
-      gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID);
+      gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID, _answeredQuestions);
     }
 
     void Update()

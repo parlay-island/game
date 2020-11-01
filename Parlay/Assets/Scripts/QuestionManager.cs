@@ -72,10 +72,20 @@ public class QuestionManager : MonoBehaviour
         {
             timer.AddTime(timeReward);
         }
+        addQuestionToAnsweredQuestions(userChoice);
 
         questionUI.SetActive(false);
         _answeredQuestions.Add(_currentQuestion);
         SetCurrentQuestion();
+    }
+
+    private void addQuestionToAnsweredQuestions(int userChoice)
+    {
+        AnsweredQuestion answeredQuestion = new AnsweredQuestion(_currentQuestion.id, userChoice);
+        if (GameManager.instance)
+        {
+            GameManager.instance.addAnsweredQuestion(answeredQuestion);
+        }
     }
 
     public void SetTimeReward(int timeReward)
