@@ -31,10 +31,20 @@ public class Enemy : MonoBehaviour
       float moveSpeed = movementAllowed ? speed : 0f;
       if(!isGrounded || isBlocked)
       {
-        Vector3 currRotation = myTrans.eulerAngles;
-        currRotation.y += 180;
-        myTrans.eulerAngles = currRotation;
+        Rotate();
       }
+      Move(moveSpeed);
+    }
+
+    private void Rotate()
+    {
+      Vector3 currRotation = myTrans.eulerAngles;
+      currRotation.y += 180;
+      myTrans.eulerAngles = currRotation;
+
+    }
+    private void Move(float moveSpeed)
+    {
       Vector2 myVel = myBody.velocity;
       myVel.x = -myTrans.right.x * moveSpeed;
       myBody.velocity = myVel;
@@ -50,6 +60,8 @@ public class Enemy : MonoBehaviour
       {
         if(!isTopHit)
         {
+          Rotate();
+          Move(speed);
           GameManager.instance.DeductTimeByEnemy(this);
           animator.SetTrigger("EnemyAttack");
           player.IsHit();

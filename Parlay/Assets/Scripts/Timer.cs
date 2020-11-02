@@ -5,34 +5,46 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-	public Slider timerSlider;
-    public Text timerText;
-    public Text timeLabel;
+		public Slider timerSlider = null;
+    public Text timerText = null;
+    public Text timeLabel = null;
 
     private float totalTime;
     private float currTime;
     private float timeElapsed;
 
+		public void Start()
+		{
+			timerSlider = timerSlider ?? gameObject.AddComponent<Slider>();
+			timerText = timerText ?? gameObject.AddComponent<Text>();
+			timeLabel = timeLabel ?? timerText;
+		}
+
     public void initTimer(float time) {
-        totalTime = time;
-        currTime = time;
-        timeElapsed = 0f;
+        SetUp(time);
 
         activateTimer();
     }
 
-    private void activateTimer() {
-        timerSlider.gameObject.SetActive(true);
-        timeLabel.gameObject.SetActive(true);
-        timerSlider.maxValue = totalTime;
-        timerSlider.value = totalTime;
+		public void SetUp(float time)
+		{
+			totalTime = time;
+			currTime = time;
+			timeElapsed = 0f;
+		}
 
-        changeTimerLabel(currTime);
+    private void activateTimer() {
+				timerSlider.gameObject.SetActive(true);
+	      timeLabel.gameObject.SetActive(true);
+	      timerSlider.maxValue = totalTime;
+	      timerSlider.value = totalTime;
+
+	  		changeTimerLabel(currTime);
     }
 
     public void hideTimer() {
     	timerSlider.gameObject.SetActive(false);
-        timeLabel.gameObject.SetActive(false);
+      timeLabel.gameObject.SetActive(false);
     }
 
     public bool isTimeUp() {

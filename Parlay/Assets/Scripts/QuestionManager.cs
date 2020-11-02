@@ -11,6 +11,7 @@ public class QuestionManager : MonoBehaviour
     public GameObject questionUI;
     public Timer timer;
     private static List<QuestionModel> _unansweredQuestions;
+    private static List<QuestionModel> _allQuestions;
     private static readonly List<QuestionModel> _answeredQuestions = new List<QuestionModel>();
 
     private QuestionModel _currentQuestion;
@@ -40,7 +41,8 @@ public class QuestionManager : MonoBehaviour
     {
         if (_unansweredQuestions == null || _unansweredQuestions.Count == 0)
         {
-            _unansweredQuestions = webRetriever.GetQuestions();
+            _allQuestions = webRetriever.GetQuestions();
+            _unansweredQuestions = new List<QuestionModel>(_allQuestions);
             if(_unansweredQuestions.Count == 0)
             {
               throw new Exception();
@@ -52,12 +54,13 @@ public class QuestionManager : MonoBehaviour
 
     private void SetCurrentQuestion()
     {
+        if (!_unansweredQuestions.Any()) _unansweredQuestions = new List<QuestionModel>(_allQuestions);
         int randomQuestionIndex = Random.Range(0, _unansweredQuestions.Count - 1);
         _currentQuestion = _unansweredQuestions[randomQuestionIndex];
 
         questionText.SetText(_currentQuestion.body);
 
-        for (int i = 0; i < choiceTexts.Count; i++)
+        for (int i = 0; i < _currentQuestion.choices.Count; i++)
         {
             choiceTexts[i].SetText(_currentQuestion.choices[i].body);
         }
@@ -85,6 +88,8 @@ public class QuestionManager : MonoBehaviour
             questionUI.SetActive(false);
             _answeredQuestions.Add(_currentQuestion);
         }
+        
+        SetCurrentQuestion();
     }
 
     public void SetTimeReward(int timeReward)

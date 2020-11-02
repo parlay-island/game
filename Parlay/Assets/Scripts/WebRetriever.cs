@@ -49,15 +49,14 @@ public class WebRetriever : AbstractWebRetriever
 
     public override void PostEndResult(ResultModel result, int playerID)
     {
-        // temporary mock URL
-        var postURL = "https://httpbin.org/post";
+        var postURL = apiBaseUrl + "/players/" + playerID + "/results/";
 
-        // will switch to this URL once the apiBaseUrl is working
-        // var postURL = apiBaseUrl + "/players/" + playerID.ToString() + "/result";
     	   var json = JsonConvert.SerializeObject(result);
          if (isActiveAndEnabled)
         {
+          #if !UNITY_EDITOR
             StartCoroutine(PostRequest(postURL, json, playerID));
+          #endif
         }
         else
         {

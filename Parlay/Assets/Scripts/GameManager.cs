@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void sendPostRequestWithGameEndResults() {
-        gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID);
+      gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID);
     }
 
     void Update()
