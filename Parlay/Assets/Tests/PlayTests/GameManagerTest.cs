@@ -4,6 +4,8 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System;
+using TMPro;
+using UnityEngine.UI;
 
 namespace Tests
 {
@@ -16,21 +18,42 @@ namespace Tests
         private PlayerMovement playerMovement;
         private float distanceTraveled;
         private GameObject mockWebRetrieverObj;
+        private GameObject _uiGameObject;
+        private GameObject questionManagerGameObject;
+        private QuestionManager _questionManager;
 
         private static bool mockingIncreasedDistance;
+        private static bool mockingAnsweredQuestion;
+        
+        private static int user_choice = 1;
+        
+        private static QuestionModel firstQuestion = new QuestionModel("question", new List<ChoiceModel>
+            {
+                new ChoiceModel("choice0"),
+                new ChoiceModel("choice1")
+            },
+            new List<int> {0});
 
-        public class MockWebRetriever : AbstractWebRetriever {
+        public class GameMockWebRetriever : AbstractWebRetriever {
             public override List<QuestionModel> GetQuestions() {
-                return new List<QuestionModel>();
+                return new List<QuestionModel>
+                {
+                    firstQuestion
+                };
             }
 
-            public override void PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(EndResult result, int playerID) {
             }
 
             public override string GetMostRecentPostRequestResult() {
               string requestParamContent = "distance:0.00,level:1";
               if (mockingIncreasedDistance) {
                   requestParamContent = "distance:1.00,level:1";
+              }
+
+              if (mockingAnsweredQuestion)
+              {
+                  requestParamContent = "{'results': [{'question':0, 'player':2, 'choice':1, 'count':1}]}";
               }
               return requestParamContent;
             }
@@ -52,7 +75,7 @@ namespace Tests
                 throw new TimeoutException();
             }
 
-            public override void PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(EndResult result, int playerID) {
                 throw new TimeoutException();
             }
 
@@ -73,6 +96,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
+            initializeQuestionManager();
             initializeGameManager();
             initializeWebRetriever();
             initializePlayer();
@@ -82,17 +106,30 @@ namespace Tests
             initializeGameManager();
             initializePlayer();
         }
+        
+        private void initializeQuestionManager()
+        {
+            questionManagerGameObject =
+                MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
+            _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
+            _uiGameObject = new GameObject();
+            _questionManager.webRetriever = questionManagerGameObject.AddComponent<QuestionManagerTest.MockWebRetriever>();
+            _questionManager.timer = null;
+            _questionManager.questionUI = _uiGameObject;
+            _questionManager.SetTimeReward(10);
+        }
 
         private void initializeGameManager() {
             testObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             gameManager = testObject.GetComponent<GameManager>();
             gameManager.setGameTime(2f);
             mockingIncreasedDistance = false;
+            mockingAnsweredQuestion = false;
         }
 
         private void initializeWebRetriever() {
             mockWebRetrieverObj = new GameObject();
-            MockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<MockWebRetriever>();
+            GameMockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<GameMockWebRetriever>();
             gameManager.webRetriever = mockWebRetriever;
             gameManager.gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever);
         }
@@ -112,9 +149,10 @@ namespace Tests
             GameObject.Destroy(testObject);
             GameObject.Destroy(testPlayer);
             GameObject.Destroy(mockWebRetrieverObj);
+            GameObject.Destroy(questionManagerGameObject);
         }
 
-        [UnityTest, Order(1)]
+        [UnityTest, Order(2)]
         public IEnumerator TestTimerCountdownIntegration() {
             // check that game over image and text are NOT showing
             Assert.IsFalse(gameManager.gameOverImage.activeSelf);
@@ -142,7 +180,7 @@ namespace Tests
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
         }
 
-        [UnityTest, Order(2)]
+        [UnityTest, Order(3)]
         public IEnumerator TestPostRequestForEndResultsWithoutTimeout() {
             // exception should not be thrown because there is no timeout
             Assert.That(() => gameManager.gameOver(), Throws.Nothing);
@@ -153,7 +191,7 @@ namespace Tests
             Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.getLevel().ToString()));
         }
 
-        [UnityTest, Order(3)]
+        [UnityTest, Order(4)]
         public IEnumerator TestPostRequestForEndResultsAfterPlayerMovement() {
             // mock the web retriever with distance greater than 0
             mockingIncreasedDistance = true;
@@ -174,7 +212,30 @@ namespace Tests
             Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.getLevel().ToString()));
         }
 
-        [UnityTest, Order(4)]
+        [UnityTest, Order(1)]
+        public IEnumerator TestPostRequestForEndResultAfterAnsweringQuestion()
+        {
+            mockingAnsweredQuestion = true;
+            initializeWebRetriever();
+            
+            // answer question
+            _questionManager.UserSelect(user_choice);
+            yield return new WaitForSeconds(0.1f);
+            
+            // make sure that question is added to questions answered by player
+            List<AnsweredQuestion> playerAnsweredQuestions = gameManager.getPlayerAnsweredQuestions();
+            yield return new WaitForSeconds(0.1f);
+            Assert.AreEqual(playerAnsweredQuestions[0].question_id, firstQuestion.id);
+
+            Assert.That(() => gameManager.gameOver(), Throws.Nothing);
+            yield return new WaitForSeconds(0.1f);
+
+            string postEndResultContent = gameManager.gameEndRequestHelper.getPostEndResultContent();
+            Assert.That(postEndResultContent.Contains(firstQuestion.id.ToString()));
+            Assert.That(postEndResultContent.Contains(user_choice.ToString()));
+        }
+
+        [UnityTest, Order(5)]
         public IEnumerator TestPostRequestForEndResultsWithTimeout() {
             GameObject timeoutWebRetrieverObj = new GameObject();
             TimeoutWebRetriever timeoutWebRetriever = timeoutWebRetrieverObj.AddComponent<TimeoutWebRetriever>();

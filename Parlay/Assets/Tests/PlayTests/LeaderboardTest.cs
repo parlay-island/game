@@ -31,7 +31,7 @@ namespace Tests
                 return new List<QuestionModel>();
             }
 
-            public override void PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(EndResult result, int playerID) {
             }
 
             public override string GetMostRecentPostRequestResult() {
@@ -62,7 +62,7 @@ namespace Tests
               return new List<QuestionModel>();
             }
 
-            public override void PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(EndResult result, int playerID) {
             }
 
             public override string GetMostRecentPostRequestResult() {
