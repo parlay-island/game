@@ -48,7 +48,7 @@ namespace Tests
                 };
             }
 
-            public override void PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(EndResult result, int playerID) {
             }
 
             public override string GetMostRecentPostRequestResult() {
@@ -72,7 +72,7 @@ namespace Tests
                 throw new TimeoutException();
             }
 
-            public override void PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(EndResult result, int playerID) {
             }
 
             public override string GetMostRecentPostRequestResult() {

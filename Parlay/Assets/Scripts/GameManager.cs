@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public float playerDistance = 0f;
     private int level = 1;
     public float bonusDistance = 0f;
+    // TODO: update playerID to be based on log-in
     private int playerID = 1;
     private string postEndResultContent;
     private bool sentRequest = false;
@@ -66,6 +67,10 @@ public class GameManager : MonoBehaviour
     public void addAnsweredQuestion(AnsweredQuestion question)
     {
         _answeredQuestions.Add(question);
+    }
+
+    public List<AnsweredQuestion> getPlayerAnsweredQuestions() {
+        return _answeredQuestions;
     }
 
     public void setGameTime(float time) {

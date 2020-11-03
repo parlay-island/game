@@ -47,15 +47,14 @@ public class WebRetriever : AbstractWebRetriever
     }
 
 
-    public override void PostEndResult(ResultModel result, int playerID)
+    public override void PostEndResult(EndResult result, int playerID)
     {
         var postURL = apiBaseUrl + "/players/" + playerID + "/results/";
-
-    	   var json = JsonConvert.SerializeObject(result);
-         if (isActiveAndEnabled)
+        var json = JsonConvert.SerializeObject(result);
+        if (isActiveAndEnabled)
         {
           #if !UNITY_EDITOR
-            StartCoroutine(PostRequest(postURL, json, playerID));
+            StartCoroutine(PostRequest(postURL, json));
           #endif
         }
         else
@@ -64,7 +63,7 @@ public class WebRetriever : AbstractWebRetriever
         }
     }
 
-    IEnumerator PostRequest(string url, string json, int playerID)
+    IEnumerator PostRequest(string url, string json)
      {
          var webRequest = new UnityWebRequest(url, "POST");
          byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
@@ -80,6 +79,7 @@ public class WebRetriever : AbstractWebRetriever
               Debug.Log(webRequest.error);
          }
          postRequestResult = webRequest.downloadHandler.text;
+         Debug.Log(postRequestResult);
      }
 
      public override string GetMostRecentPostRequestResult()

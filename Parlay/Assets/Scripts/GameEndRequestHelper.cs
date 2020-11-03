@@ -15,8 +15,8 @@ public class GameEndRequestHelper
 
     public void postGameEndResults(float playerDistance, int level, int playerID, List<AnsweredQuestion> answeredQuestions) {
         try {
-						ResultModel endResult = new ResultModel(level, playerDistance, playerID, answeredQuestions);
-						webRetriever.PostEndResult(endResult, playerID);
+	        EndResult endResult = new EndResult(level, playerDistance, answeredQuestions);
+	        webRetriever.PostEndResult(endResult, playerID);
         }
         catch (Exception exception) {
         		Debug.LogWarningFormat("There was an error when making a post request for end results for player" + playerID.ToString());

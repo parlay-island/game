@@ -31,7 +31,7 @@ namespace Tests
                 return new List<QuestionModel>();
             }
 
-            public override void PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(EndResult result, int playerID) {
             }
 
             public override string GetMostRecentPostRequestResult() {
@@ -40,8 +40,8 @@ namespace Tests
 
             public override void FetchResults(int level) {
               results = new List<ResultModel>  {
-                    new ResultModel(level, distance1,0, new List<AnsweredQuestion>(), player_name1),
-                    new ResultModel(level, distance2,1, new List<AnsweredQuestion>(), player_name2)
+                    new ResultModel(level, distance1,0, player_name1),
+                    new ResultModel(level, distance2,1, player_name2)
                 };
             }
             public override List<ResultModel> GetMostRecentResults() {
@@ -62,7 +62,7 @@ namespace Tests
               return new List<QuestionModel>();
             }
 
-            public override void PostEndResult(ResultModel result, int playerID) {
+            public override void PostEndResult(EndResult result, int playerID) {
             }
 
             public override string GetMostRecentPostRequestResult() {

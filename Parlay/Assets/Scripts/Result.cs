@@ -15,14 +15,27 @@ public class ResultModel
 	[JsonProperty("distance")] public float distance;
 	[JsonProperty("player_id")] public int player_id;
 	[JsonProperty("player_name")] public string player_name;
-	[JsonProperty("answered_questions")] public List<AnsweredQuestion> answered_questions;
 
-	public ResultModel(int level, float distance, int player_id, List<AnsweredQuestion> answered_questions, string player_name = "") {
+	public ResultModel(int level, float distance, int player_id, string player_name = "") {
 		this.level = level;
 		this.distance = distance;
 		this.player_name = player_name;
 		this.player_id = player_id;
-		this.answered_questions = answered_questions;
+	}
+}
+
+[JsonObject]
+public class EndResult
+{
+	[JsonProperty("level")] public int level;
+	[JsonProperty("distance")] public float distance;
+	[JsonProperty("questions")] public List<AnsweredQuestion> questions;
+
+	public EndResult(int level, float distance, List<AnsweredQuestion> questions)
+	{
+		this.level = level;
+		this.distance = distance;
+		this.questions = questions;
 	}
 }
 
@@ -30,11 +43,11 @@ public class ResultModel
 public class AnsweredQuestion
 {
 	[JsonProperty("question_id")] public int question_id;
-	[JsonProperty("choice_selected")] public int choice_selected;
+	[JsonProperty("choice_id")] public int choice_id;
 
-	public AnsweredQuestion(int question_id, int choice_selected)
+	public AnsweredQuestion(int question_id, int choice_id)
 	{
 		this.question_id = question_id;
-		this.choice_selected = choice_selected;
+		this.choice_id = choice_id;
 	}
 }

@@ -5,7 +5,7 @@ public abstract class AbstractWebRetriever : MonoBehaviour
 {
     public abstract List<QuestionModel> GetQuestions();
 
-    public abstract void PostEndResult(ResultModel result, int playerID);
+    public abstract void PostEndResult(EndResult result, int playerID);
 
     public abstract string GetMostRecentPostRequestResult();
 
