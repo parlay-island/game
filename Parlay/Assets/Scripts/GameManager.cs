@@ -28,11 +28,13 @@ public class GameManager : MonoBehaviour
     public float playerDistance = 0f;
     private int level = 1;
     public float bonusDistance = 0f;
+    // TODO: update playerID to be based on log-in
     private int playerID = 1;
     private string postEndResultContent;
     private bool sentRequest = false;
     public ArrayList retries = new ArrayList();
     public bool playerFallen = false;
+    private List<AnsweredQuestion> _answeredQuestions;
 
     void Awake()
     {
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
         distanceText.gameObject.SetActive(true);
         gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
         enabled = true;
+        _answeredQuestions = new List<AnsweredQuestion>();
     }
 
     private void hideGameEndElements() {
@@ -61,6 +64,15 @@ public class GameManager : MonoBehaviour
         gameOverImage.SetActive(false);
         gameOverText.gameObject.SetActive(false);
         finalDistanceText.gameObject.SetActive(false);
+    }
+
+    public void addAnsweredQuestion(AnsweredQuestion question)
+    {
+        _answeredQuestions.Add(question);
+    }
+
+    public List<AnsweredQuestion> getPlayerAnsweredQuestions() {
+        return _answeredQuestions;
     }
 
     public void setGameTime(float time) {
@@ -93,7 +105,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void sendPostRequestWithGameEndResults() {
-      gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID);
+      gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID, _answeredQuestions);
     }
 
     void Update()

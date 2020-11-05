@@ -77,6 +77,7 @@ public class QuestionManager : MonoBehaviour
             questionUI.SetActive(false);
             _answeredQuestions.Add(_currentQuestion);
             SetCurrentQuestion();
+            addQuestionToAnsweredQuestions(userChoice);
         } else if (userChoice == 4) {
             print("Retry State Changed");
             GameManager.instance.canRetry = !GameManager.instance.canRetry;
@@ -85,11 +86,22 @@ public class QuestionManager : MonoBehaviour
             GameManager.instance.retries.RemoveAt(0);
             print("Granting Retry, Count: " + GameManager.instance.retries.Count);
             SetCurrentQuestion();
+            addQuestionToAnsweredQuestions(userChoice);
         } else
         {
             questionUI.SetActive(false);
             _answeredQuestions.Add(_currentQuestion);
             SetCurrentQuestion();
+            addQuestionToAnsweredQuestions(userChoice);
+        }
+    }
+
+    private void addQuestionToAnsweredQuestions(int userChoice)
+    {
+        AnsweredQuestion answeredQuestion = new AnsweredQuestion(_currentQuestion.id, userChoice);
+        if (GameManager.instance)
+        {
+            GameManager.instance.addAnsweredQuestion(answeredQuestion);
         }
     }
 
