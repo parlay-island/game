@@ -133,7 +133,7 @@ namespace Tests
         Assert.True(initialXVelocity * rigidbody.velocity.x < 0);
       }
 
-      [Retry(3)]
+      [Retry(4)]
       [UnityTest, Order(7)]
       public IEnumerator TestEnemyMovesWhenUnderCornerOfPlayer()
       {
