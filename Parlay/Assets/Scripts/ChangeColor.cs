@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,27 +8,51 @@ public class ChangeColor : MonoBehaviour
 {
     public Button button;
     public Image image;
+    public TextMeshProUGUI text;
+    public GameObject self;
+    private ColorBlock currentColor;
 
-    public void changeColor()
+    public void Awake()
     {
-        Debug.Log("Changing highlighed color");
-        ColorBlock colorVar = button.colors;
-        if (colorVar.normalColor != Color.white)
+        currentColor.normalColor = Color.clear;
+        currentColor.highlightedColor = Color.clear;
+        currentColor.pressedColor = Color.clear;
+    }
+
+    public void Update()
+    {
+        if (GameManager.instance.retries.Count == 0)
         {
-            Debug.Log("Change to white");
-            colorVar.normalColor = Color.white;
-            colorVar.highlightedColor = Color.white;
-            colorVar.pressedColor = Color.white;
-            image.color = Color.white;
+            text.text = "";
+            ColorBlock colorvar = button.colors;
+            colorvar.normalColor = Color.clear;
+            colorvar.highlightedColor = Color.clear;
+            colorvar.pressedColor = Color.clear;
+            button.colors = colorvar;
+            image.color = Color.clear;
+        } else if (GameManager.instance.canRetry)
+        {
+            text.text = "Retry";
+            ColorBlock colorvar = button.colors;
+            colorvar.normalColor = Color.green;
+            colorvar.highlightedColor = Color.green;
+            colorvar.pressedColor = Color.green;
+            image.color = Color.green;
+            button.colors = colorvar;
         } else
         {
-            Debug.Log("Change to green");
-            colorVar.normalColor = Color.green;
-            colorVar.highlightedColor = Color.green;
-            colorVar.pressedColor = Color.green;
-            image.color = Color.green;
+            text.text = "Retry";
+            ColorBlock colorvar = button.colors;
+            colorvar.normalColor = Color.white;
+            colorvar.highlightedColor = Color.white;
+            colorvar.pressedColor = Color.white;
+            image.color = Color.white;
+            button.colors = colorvar;
         }
-        button.colors = colorVar;
+    }
+    
+    public void changeColor()
+    {
 
     }
 }

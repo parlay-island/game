@@ -833,6 +833,7 @@ MonoBehaviour:
   - {fileID: 8568550985209718703}
   - {fileID: 332726593956227516}
   errorDisplaySource: {fileID: 8878849883676834197, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+  retryButton: {fileID: 0}
 --- !u!1 &1406895029413045204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,6 +1156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 7302680062471721258}
   image: {fileID: 7057534326098518651}
+  text: {fileID: 332726593956227516}
+  self: {fileID: 8889233146011747852}
 --- !u!1 &9052541429866981788
 GameObject:
   m_ObjectHideFlags: 0

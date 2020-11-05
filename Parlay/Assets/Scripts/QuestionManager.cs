@@ -22,7 +22,7 @@ public class QuestionManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI questionText;
     [SerializeField] public List<TextMeshProUGUI> choiceTexts;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
-
+    
     public void Start()
     {
         try
@@ -76,6 +76,7 @@ public class QuestionManager : MonoBehaviour
             timer.AddTime(timeReward);
             questionUI.SetActive(false);
             _answeredQuestions.Add(_currentQuestion);
+            SetCurrentQuestion();
         } else if (userChoice == 4) {
             print("Retry State Changed");
             GameManager.instance.canRetry = !GameManager.instance.canRetry;
@@ -83,13 +84,13 @@ public class QuestionManager : MonoBehaviour
         {
             GameManager.instance.retries.RemoveAt(0);
             print("Granting Retry, Count: " + GameManager.instance.retries.Count);
+            SetCurrentQuestion();
         } else
         {
             questionUI.SetActive(false);
             _answeredQuestions.Add(_currentQuestion);
+            SetCurrentQuestion();
         }
-        
-        SetCurrentQuestion();
     }
 
     public void SetTimeReward(int timeReward)

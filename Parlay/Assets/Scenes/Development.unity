@@ -139,6 +139,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1406895028589812272, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
   m_PrefabInstance: {fileID: 1406895028490368777}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &137766058 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9052541429866981788, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+  m_PrefabInstance: {fileID: 1406895028490368777}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &264688577
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,9 +686,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3460104482575868945, guid: c5bcf444a9efc469190a93198e0a36d2, type: 3}
+      propertyPath: chunckList.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3460104482575868945, guid: c5bcf444a9efc469190a93198e0a36d2, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 2133922564}
+    - target: {fileID: 3460104482575868945, guid: c5bcf444a9efc469190a93198e0a36d2, type: 3}
+      propertyPath: chunckList.Array.data[10]
+      value: 
+      objectReference: {fileID: 5968922716073246162, guid: da8e57d2b49d14caf92b392a0c97ef6d, type: 3}
+    - target: {fileID: 3460104482575868945, guid: c5bcf444a9efc469190a93198e0a36d2, type: 3}
+      propertyPath: chunckList.Array.data[11]
+      value: 
+      objectReference: {fileID: 5968922716073246162, guid: da8e57d2b49d14caf92b392a0c97ef6d, type: 3}
     - target: {fileID: 3460104482575868950, guid: c5bcf444a9efc469190a93198e0a36d2, type: 3}
       propertyPath: m_Name
       value: LevelGenerator
@@ -918,6 +935,10 @@ PrefabInstance:
       propertyPath: endGameScreen
       value: 
       objectReference: {fileID: 444155902}
+    - target: {fileID: 4658577254398892442, guid: 8109888813de743febc87e97dc0db779, type: 3}
+      propertyPath: retryButton
+      value: 
+      objectReference: {fileID: 137766058}
     - target: {fileID: 4658577254398892443, guid: 8109888813de743febc87e97dc0db779, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1216,6 +1237,10 @@ PrefabInstance:
       propertyPath: webRetriever
       value: 
       objectReference: {fileID: 1274213125}
+    - target: {fileID: 1406895029619407632, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+      propertyPath: retryButton
+      value: 
+      objectReference: {fileID: 137766058}
     - target: {fileID: 4322806984388122485, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
