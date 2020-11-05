@@ -55,5 +55,10 @@ MonoBehaviour:
   questionUI: {fileID: 1406895028589812272, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
   leaderBoard: {fileID: 2086566508094765032, guid: e7d499f8f7b774bc3955f8ed3158840f, type: 3}
   endGameScreen: {fileID: 4532637233398804949, guid: 3071e617608d64bc3b8c9e051793236c, type: 3}
+  resetButton: {fileID: 5558083060134056481, guid: 3075da33f6d4b4580883ecd1afd25fac, type: 3}
+  exitButton: {fileID: 5993369042335397313, guid: d68b71851ea644200ad625e69ec38373, type: 3}
+  levelGenerator: {fileID: 3460104482575868945, guid: c5bcf444a9efc469190a93198e0a36d2, type: 3}
+  mode_selector: {fileID: 6353385569383122465, guid: a6412ee6c068f44269856fdf6eca19b6, type: 3}
   playerDistance: 0
   bonusDistance: 0
+  playerFallen: 0

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject gameOverImage;
     [SerializeField] public Text gameOverText;
-	  [SerializeField] public Timer timerManager;
+    [SerializeField] public Timer timerManager;
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject ground;
     [SerializeField] public Text distanceText;
@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject questionUI;
     [SerializeField] public GameObject leaderBoard;
     [SerializeField] public GameObject endGameScreen;
+    [SerializeField] public GameObject resetButton;
+    [SerializeField] public GameObject exitButton;
+    [SerializeField] public LevelGenerator levelGenerator;
+    [SerializeField] private GameObject mode_selector;
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
@@ -49,7 +53,26 @@ public class GameManager : MonoBehaviour
       level = levelObj != null ? levelObj.GetComponent<Level>().GetId() : 1;
     }
 
+    public void exitGame()
+    {
+        StartCoroutine(loadStartScreen());
+    }
+
+    IEnumerator loadStartScreen()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        string mode_scene_name = "StartScreen";
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(mode_scene_name, LoadSceneMode.Additive);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        yield return SceneManager.UnloadSceneAsync(currentScene);
+    }
+
     private void initGame(float gameTime) {
+
         hideGameEndElements();
         enemySpawner.SetActive(true);
         timerManager.initTimer(gameTime);
@@ -64,6 +87,18 @@ public class GameManager : MonoBehaviour
         gameOverImage.SetActive(false);
         gameOverText.gameObject.SetActive(false);
         finalDistanceText.gameObject.SetActive(false);
+        leaderBoard.gameObject.SetActive(false);
+        resetButton.SetActive(false);
+        exitButton.SetActive(false);
+    }
+
+    public void Reset(float time)
+    {
+        playerDistance = 0f;
+        bonusDistance = 0f;
+        levelGenerator.Reset();
+        playerFallen = false;
+        initGame(time);
     }
 
     public void addAnsweredQuestion(AnsweredQuestion question)
@@ -92,9 +127,11 @@ public class GameManager : MonoBehaviour
     private void showGameOverUIElements() {
         endGameScreen.SetActive(true);
         gameOverImage.SetActive(true);
+        resetButton.SetActive(true);
         gameOverText.gameObject.SetActive(true);
         leaderBoard.gameObject.SetActive(true);
         finalDistanceText.gameObject.SetActive(true);
+        exitButton.gameObject.SetActive(true);
         finalDistanceText.text = "You have travelled " + playerDistance.ToString("0.00") + " m";
     }
 
