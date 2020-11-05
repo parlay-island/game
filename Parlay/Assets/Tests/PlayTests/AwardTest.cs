@@ -49,6 +49,7 @@ namespace Tests
             QuestionManagerTest.MockWebRetriever webRetriever = AddComponent<QuestionManagerTest.MockWebRetriever>();
             gameManager.webRetriever = webRetriever;
             gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+            gameManager.setGameTime(30f);
             _questionManager.gameManager = gameManager;
         }
 
@@ -65,6 +66,7 @@ namespace Tests
             GameObject.Destroy(questionManagerGameObject);
         }
 
+        [Retry (2)]
         [UnityTest]
         public IEnumerator Answered10QuestionsAwardWinsAwardWhen10QuestionsAnswered()
         {

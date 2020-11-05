@@ -14,54 +14,10 @@ namespace Tests
         private GameObject powerUp;
         private GameManager gameManager;
         private GameObject gameManagerObj;
-        private GameObject mockWebRetrieverObj;
-
-        public class MockWebRetriever : AbstractWebRetriever
-        {
-            public override List<QuestionModel> GetQuestions()
-            {
-                return new List<QuestionModel>();
-            }
-
-            public override void PostEndResult(ResultModel result, int playerID)
-            {
-            }
-
-            public override string GetMostRecentPostRequestResult()
-            {
-                return "";
-            }
-            public override void FetchResults(int level)
-            {
-            }
-            public override List<ResultModel> GetMostRecentResults()
-            {
-                return new List<ResultModel>();
-            }
-            public override bool IsLoading()
-            {
-                return false;
-            }
-        }
+        private float bonusDistance;
 
         [SetUp]
         public void Setup()
-        {
-
-            player = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
-            characterController = player.GetComponent<CharacterController2D>();
-            player.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
-
-            characterController.Move(10f, false);
-            foreach (GameObject question in GameObject.FindGameObjectsWithTag("Question"))
-            {
-                GameObject.Destroy(question);
-            }
-
-
-        }
-
-        public void initGameManager()
         {
             foreach (GameObject GM in GameObject.FindGameObjectsWithTag("GameManager"))
             {
@@ -69,18 +25,23 @@ namespace Tests
             }
             gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             gameManager = gameManagerObj.GetComponent<GameManager>();
+            player = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
+            characterController = player.GetComponent<CharacterController2D>();
+            player.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
             gameManager.setGameTime(30f);
             gameManager.questionUI.gameObject.SetActive(false);
-            mockWebRetrieverObj = new GameObject();
-            MockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<MockWebRetriever>();
-            gameManager.webRetriever = mockWebRetriever;
+            characterController.Move(10f, false);
+            foreach (GameObject question in GameObject.FindGameObjectsWithTag("Question"))
+            {
+                GameObject.Destroy(question);
+            }
+            bonusDistance = gameManager.bonusDistance;
         }
 
         [TearDown]
         public void Teardown()
         {
             gameManager.questionUI.gameObject.SetActive(false);
-            GameObject.Destroy(mockWebRetrieverObj);
             GameObject.Destroy(powerUp);
             GameObject.Destroy(player);
             GameObject.Destroy(gameManagerObj);
@@ -107,12 +68,12 @@ namespace Tests
         [UnityTest, Order(1)]
         public IEnumerator TestDistancePowerUpActivation()
         {
-            initGameManager();
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/GemTile1"));
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
-            Assert.True(GameManager.instance.bonusDistance > 0);
+            Assert.True(gameManager.bonusDistance > 0);
+            Assert.True(gameManager.playerDistance > player.GetComponent<PlayerMovement>().getDistanceTravelled());
         }
 
     }
