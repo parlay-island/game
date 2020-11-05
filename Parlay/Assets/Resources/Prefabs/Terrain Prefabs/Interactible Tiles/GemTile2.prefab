@@ -123,5 +123,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TimeBoost: 10
-  type: 2
+  type: 3
   m_DistanceBoost: 50

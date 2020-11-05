@@ -15,9 +15,14 @@ namespace Tests
         private GameManager gameManager;
         private GameObject gameManagerObj;
 
+
         [SetUp]
         public void Setup()
         {
+            foreach (GameObject GM in GameObject.FindGameObjectsWithTag("GameManager"))
+            {
+                GameObject.Destroy(GM);
+            }
             gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             gameManager = gameManagerObj.GetComponent<GameManager>();
             player = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));

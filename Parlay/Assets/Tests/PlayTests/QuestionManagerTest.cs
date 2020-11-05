@@ -24,6 +24,8 @@ namespace Tests
         private List<GameObject> _questionManagerGameObjectList;
         private QuestionManager _questionManager;
         private Timer _timer;
+        private GameManager gameManager;
+        private GameObject gameManagerObj;
         private static QuestionModel firstQuestion = new QuestionModel(QuestionText, new List<ChoiceModel>
             {
                 new ChoiceModel(RightChoice),
@@ -100,7 +102,8 @@ namespace Tests
             GameObject timeManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"));
             _questionManagerGameObjectList.Add(timeManagerObj);
             _timer = timeManagerObj.GetComponent<Timer>();
-            _questionManager.webRetriever = AddComponent<MockWebRetriever>();
+            MockWebRetriever webRetriever = AddComponent<MockWebRetriever>();
+            _questionManager.webRetriever = webRetriever;
             _questionManager.timer = _timer;
             _questionManager.questionUI = _uiGameObject;
             _questionManager.SetTimeReward(TimeReward);
@@ -115,12 +118,20 @@ namespace Tests
                 AddComponent<TextMeshProUGUI>(),
                 AddComponent<TextMeshProUGUI>()
             });
+
+            gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+            gameManager = gameManagerObj.GetComponent<GameManager>();
+            gameManager.webRetriever = webRetriever;
+            gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+            _questionManager.gameManager = gameManager;
+
         }
 
         [TearDown]
         public void TearDown()
         {
             GameObject.Destroy(_uiGameObject);
+            GameObject.Destroy(gameManagerObj);
             foreach (var gameObject in _questionManagerGameObjectList)
             {
                 GameObject.Destroy(gameObject);

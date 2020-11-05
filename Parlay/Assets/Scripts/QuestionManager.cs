@@ -15,18 +15,20 @@ public class QuestionManager : MonoBehaviour
     private static readonly List<QuestionModel> _answeredQuestions = new List<QuestionModel>();
 
     private QuestionModel _currentQuestion;
+    public GameManager gameManager;
 
     [SerializeField] public AbstractWebRetriever webRetriever;
     [SerializeField] public int timeReward;
     [SerializeField] public TextMeshProUGUI questionText;
     [SerializeField] public List<TextMeshProUGUI> choiceTexts;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
-
+    
     public void Start()
     {
         try
         {
             RetrieveQuestionsIfNotAlreadySet();
+            gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         }
         catch (Exception exception)
         {
@@ -68,15 +70,30 @@ public class QuestionManager : MonoBehaviour
 
     public void UserSelect(int userChoice)
     {
+
         if (_currentQuestion.answers.Contains(userChoice))
         {
             timer.AddTime(timeReward);
+            questionUI.SetActive(false);
+            _answeredQuestions.Add(_currentQuestion);
+            SetCurrentQuestion();
+            addQuestionToAnsweredQuestions(userChoice);
+        } else if (userChoice == 4) {
+            print("Retry State Changed");
+            GameManager.instance.canRetry = !GameManager.instance.canRetry;
+        } else if (GameManager.instance.retries.Count > 0 && GameManager.instance.canRetry)
+        {
+            GameManager.instance.retries.RemoveAt(0);
+            print("Granting Retry, Count: " + GameManager.instance.retries.Count);
+            SetCurrentQuestion();
+            addQuestionToAnsweredQuestions(userChoice);
+        } else
+        {
+            questionUI.SetActive(false);
+            _answeredQuestions.Add(_currentQuestion);
+            SetCurrentQuestion();
+            addQuestionToAnsweredQuestions(userChoice);
         }
-        addQuestionToAnsweredQuestions(userChoice);
-
-        questionUI.SetActive(false);
-        _answeredQuestions.Add(_currentQuestion);
-        SetCurrentQuestion();
     }
 
     private void addQuestionToAnsweredQuestions(int userChoice)

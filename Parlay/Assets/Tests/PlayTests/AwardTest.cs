@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 using TMPro;
 
 namespace Tests
@@ -14,10 +17,14 @@ namespace Tests
         private GameObject awardUI;
         private TextMeshProUGUI awardText;
         private Answered10QuestionsAward award;
+        private GameManager gameManager;
+        private GameObject gameManagerObj;
+        private List<GameObject> _questionManagerGameObjectList;
 
         [SetUp]
         public void SetUp()
         {
+            _questionManagerGameObjectList = new List<GameObject>();
             questionManagerGameObject =
                 MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
             _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
@@ -31,6 +38,26 @@ namespace Tests
             _questionManager.timer = null;
             _questionManager.questionUI = awardUI;
             _questionManager.SetTimeReward(10);
+            _questionManager.SetQuestionText(AddComponent<TextMeshProUGUI>());
+            _questionManager.errorDisplaySource = questionManagerGameObject.AddComponent<ErrorDisplaySource>();
+            _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
+            _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
+            _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
+
+            gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+            gameManager = gameManagerObj.GetComponent<GameManager>();
+            QuestionManagerTest.MockWebRetriever webRetriever = AddComponent<QuestionManagerTest.MockWebRetriever>();
+            gameManager.webRetriever = webRetriever;
+            gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+            gameManager.setGameTime(30f);
+            _questionManager.gameManager = gameManager;
+        }
+
+        private T AddComponent<T>() where T : Component
+        {
+            var gameObject = new GameObject();
+            _questionManagerGameObjectList.Add(gameObject);
+            return gameObject.AddComponent<T>();
         }
 
         [TearDown]
@@ -39,6 +66,7 @@ namespace Tests
             GameObject.Destroy(questionManagerGameObject);
         }
 
+        [Retry (2)]
         [UnityTest]
         public IEnumerator Answered10QuestionsAwardWinsAwardWhen10QuestionsAnswered()
         {

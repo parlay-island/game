@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
+    public bool canRetry = false;
 
     public float playerDistance = 0f;
     private int level = 1;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     private int playerID = 1;
     private string postEndResultContent;
     private bool sentRequest = false;
+    public ArrayList retries = new ArrayList();
     public bool playerFallen = false;
     private List<AnsweredQuestion> _answeredQuestions;
 
@@ -132,6 +134,13 @@ public class GameManager : MonoBehaviour
       timerManager.AddTime(enemy.GetTimeReduction());
     }
 
+    public float DistanceTraveledByPlayer()
+    {
+        print(playerDistance);
+        print(player.GetComponent<PlayerMovement>().getDistanceTravelled());
+        return player.GetComponent<PlayerMovement>().getDistanceTravelled();
+    }
+
     public void IncreaseTimeByPowerUp(PowerUp powerUp)
     {
         timerManager.AddTime(powerUp.GetTimeBoost());
@@ -140,6 +149,12 @@ public class GameManager : MonoBehaviour
     public void IncreaseDistanceByPowerUp(PowerUp powerUp)
     {
         bonusDistance += powerUp.GetDistanceBoost();
+        print(bonusDistance);
+    }
+
+    public void AddRetry(PowerUp powerUp)
+    {
+        retries.Add(powerUp);
     }
 
     public bool IsQuestionShown()
