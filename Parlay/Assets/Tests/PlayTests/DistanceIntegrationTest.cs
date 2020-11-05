@@ -23,7 +23,6 @@ namespace Tests
         private float runSpeed;
         private float distanceTraveled;
 
-
         public class MockWebRetriever : AbstractWebRetriever
         {
             public override List<QuestionModel> GetQuestions() {
