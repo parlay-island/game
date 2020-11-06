@@ -15,4 +15,10 @@ public class Loader : MonoBehaviour
     	}
     	GameManager.instance.setGameTime(gameTime);
     }
+
+    public void Reset()
+    {
+        GameManager.instance.Reset(gameTime);
+        print("Resetting game");
+    }
 }

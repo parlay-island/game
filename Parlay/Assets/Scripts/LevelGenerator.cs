@@ -8,7 +8,7 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField] private Transform levelStart;
     [SerializeField] private List<Transform> chunckList;
-    [SerializeField] private Rigidbody2D player;
+    [SerializeField] public Rigidbody2D player;
 
     //Legnth of chunck is 14
     private Vector3 lastEndPosition;
@@ -27,6 +27,26 @@ public class LevelGenerator : MonoBehaviour
 
         //Move Player
         player.MovePosition(new Vector2(-6, 1));
+    }
+
+    public void Reset()
+    {
+        //Delete chunks
+        foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
+        {
+            GameObject.Destroy(chunk);
+        }
+
+        //Generate Terrain
+        Transform firstChunck = SpawnChunck(levelStart, startPosition);
+        lastEndPosition = firstChunck.Find("EndPosition").position;
+        for (int i = 0; i < startingChuncks; i++)
+        {
+            SpawnChunck();
+        }
+
+        //Move Player
+        player.position = new Vector2(-6, 6);
     }
 
     private void Update()
