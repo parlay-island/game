@@ -90,7 +90,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
         }
         else
         {
-            GameObject.Destroy(player);
+            print("logout success!");
         }
     }
 

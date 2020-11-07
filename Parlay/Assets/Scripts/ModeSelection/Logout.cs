@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 public class Logout : MonoBehaviour
 {
     [SerializeField] public AbstractPlayerRetriever playerRetriever;
+    private GameObject playerObj;
     public Player player;
     public bool isTest = false;
 
     public void Awake()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerInfo");
+        playerObj = GameObject.FindGameObjectWithTag("PlayerInfo");
         if (playerObj != null)
             player = playerObj.GetComponent<Player>();
     }
@@ -28,6 +29,8 @@ public class Logout : MonoBehaviour
 
     private void LoadStart()
     {
+        GameObject.Destroy(playerObj);
+        GameObject.Destroy(GameObject.FindGameObjectWithTag("LevelInfo"));
         StartCoroutine(LoadStartScreen());
     }
 
