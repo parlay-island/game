@@ -22,15 +22,15 @@ public class PlayerRetriever : AbstractPlayerRetriever
     public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player)
     {
       var json = JsonConvert.SerializeObject(loginModel);
-      string token = player.GetAuthToken();
-      string url = apiBaseUrl + "/auth/token/login/" + token;
+      string url = apiBaseUrl + "/auth/token/login/?format=json";
       StartCoroutine(PostLoginRequest(url, json, successCallback, errorCallback, player));
     }
 
     public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
     {
         var json = JsonConvert.SerializeObject(player.GetAuthToken());
-        string url = apiBaseUrl + "/auth/token/logout/?format=json";
+        string token = player.GetAuthToken();
+        string url = apiBaseUrl + "/auth/token/login/" + token;
         StartCoroutine(PostLogoutRequest(url, json, successCallback, errorCallback, player));
     }
 
