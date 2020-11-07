@@ -76,21 +76,14 @@ public class PlayerRetriever : AbstractPlayerRetriever
         yield return webRequest.SendWebRequest();
         if (webRequest.isNetworkError || webRequest.isHttpError)
         {
-            // unity editor doesn't close the session until expires
-            // this is a work around because developers don't need to login when playing the game
-            #if UNITY_EDITOR
-            if (webRequest.responseCode == 403)
-            {
-                successCallback();
-                yield break;
-            }
-            #endif
             errorCallback("a problem occurred when logging out");
             Debug.Log(webRequest.error);
+            print(webRequest.error)
         }
         else
         {
             print("logout success!");
+            successCallback();
         }
     }
 
