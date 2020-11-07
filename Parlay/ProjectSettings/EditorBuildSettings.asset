@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScreen.unity
     guid: c02d011288e8147fca4184f7882c86a8
   - enabled: 1
+    path: Assets/Scenes/LoginScreen.unity
+    guid: 378e8f37bc54b4a748a9956d7809a94b
+  - enabled: 1
     path: Assets/Scenes/ModeSelection.unity
     guid: 9bdc9e739ae004889b7d06237a4e42e7
   - enabled: 1

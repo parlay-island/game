@@ -18,25 +18,59 @@ public class LevelSelector : MonoBehaviour
     [SerializeField] private Vector2 iconSpacing;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
     [SerializeField] private int amountPerPage = 9;
-    
+
     private int currentLevelCount;
     private int numberOfLevels;
     private int totalPages;
     private int currentPage = 1;
     private List<GameObject> panels = new List<GameObject>();
     private List<LevelModel> levels;
+    private bool hasFetchedLevels;
 
     public void Start()
     {
+      hasFetchedLevels = false;
+      GameObject ModeRetrieverObj = GameObject.Find("ModeRetriever");
+      AbstractModeRetriever mode_retriever = ModeRetrieverObj ? ModeRetrieverObj.GetComponent<AbstractModeRetriever>() : null;
       try
       {
-        AbstractModeRetriever mode_retriever = GameObject.Find("ModeRetriever").GetComponent<AbstractModeRetriever>();
-        levels = mode_retriever.GetLevels();
-        numberOfLevels = levels.Count;
+        SetUp(mode_retriever);
+      }
+      catch (Exception e)
+      {
+        errorDisplaySource.DisplayNewError("Cannot load levels", "An error occurred while loading "
+                        + "levels. Please try again later.");
+      }
+    }
 
-        totalPages = Mathf.CeilToInt((float)numberOfLevels / amountPerPage);
-        LoadPanels(totalPages);
-        CheckAndActivateButtons();
+    public void Update()
+    {
+      if(!hasFetchedLevels)
+      {
+        GameObject ModeRetrieverObj = GameObject.Find("ModeRetriever");
+        AbstractModeRetriever mode_retriever = ModeRetrieverObj ? ModeRetrieverObj.GetComponent<AbstractModeRetriever>() : null;
+        if(mode_retriever != null && !mode_retriever.IsLoading())
+        {
+          SetUp(mode_retriever);
+          hasFetchedLevels = true;
+        }
+      }
+    }
+
+    private void SetUp(AbstractModeRetriever mode_retriever)
+    {
+      try
+      {
+        if(mode_retriever != null && !mode_retriever.IsLoading())
+        {
+          levels = mode_retriever.GetLevels();
+          numberOfLevels = levels.Count;
+
+          totalPages = Mathf.CeilToInt((float)numberOfLevels / amountPerPage);
+          LoadPanels(totalPages);
+          CheckAndActivateButtons();
+          hasFetchedLevels = true;
+        }
       }
       catch (Exception e)
       {

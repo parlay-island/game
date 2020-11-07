@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     public float playerDistance = 0f;
     private int level = 1;
     public float bonusDistance = 0f;
-    // TODO: update playerID to be based on log-in
     private int playerID = 1;
     private string postEndResultContent;
     private bool sentRequest = false;
@@ -51,6 +50,8 @@ public class GameManager : MonoBehaviour
     	DontDestroyOnLoad(gameObject);
       GameObject levelObj = GameObject.Find("LevelObj");
       level = levelObj != null ? levelObj.GetComponent<Level>().GetId() : 1;
+      GameObject player = GameObject.Find("PlayerInfo");
+      playerID = player != null ? player.GetComponent<Player>().GetId() : 1;
     }
 
     public void exitGame()
