@@ -63,7 +63,7 @@ namespace Tests
       gameManager.questionUI.SetActive(false);
       float initialEnemyXPos = testEnemy.transform.position.x;
       float initialDistance = playerMovement.getDistanceTravelled();
-      characterController.Move(0.5f, false);
+      characterController.Move(2f, false);
       yield return new WaitForSeconds(3f);
       Assert.AreNotEqual(testEnemy.transform.position.x, initialEnemyXPos);
       Assert.AreNotEqual(playerMovement.getDistanceTravelled(), initialDistance);
