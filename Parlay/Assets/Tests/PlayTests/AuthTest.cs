@@ -10,7 +10,7 @@ using TMPro;
 
 namespace Tests
 {
-    public class LoginTest
+    public class AuthTest
     {
         private const int testPlayerId = 5;
         private const float testPlayerAccuracy = 100f;
@@ -23,6 +23,11 @@ namespace Tests
             player.SetPlayer(player_fetched);
             successCallback();
           }
+          public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+          {
+            GameObject.Destroy(player);
+            successCallback();
+          }
         }
 
         public class ErrorPlayerRetriever: AbstractPlayerRetriever
@@ -31,9 +36,14 @@ namespace Tests
           {
             errorCallback("error in test for player retriever");
           }
+          public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+          {
+            errorCallback("error in test for player retriever");
+          }
         }
 
         private LoginManager loginManager;
+        private Logout logoutManager;
         private Player player;
         private TextMeshProUGUI errorMessage;
         private AbstractPlayerRetriever playerRetriever;
@@ -62,8 +72,12 @@ namespace Tests
           loginManager.errorMessage = errorMessage;
           loginManager.usernameInput = usernameInput;
           loginManager.isTest = true;
+          logoutManager = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/LogoutButton")).GetComponent<Logout>();
+          logoutManager.player = player;
+          logoutManager.isTest = true;
           playerRetriever = new GameObject().AddComponent<MockPlayerRetriever>();
           loginManager.playerRetriever = playerRetriever;
+          logoutManager.playerRetriever = playerRetriever;
         }
 
         [TearDown]
@@ -130,7 +144,7 @@ namespace Tests
           yield return new WaitForSeconds(1f);
         }
 
-        [UnityTest, Order(4)]
+        [UnityTest, Order(5)]
         public IEnumerator TestPlayerNameIsSetOnLogin()
         {
           usernameInput.text = "Test";
@@ -142,6 +156,34 @@ namespace Tests
           SceneManager.SetActiveScene(testScene);
           SceneManager.UnloadSceneAsync(newScene);
           yield return new WaitForSeconds(1f);
+        }
+
+        [UnityTest, Order(6)]
+        public IEnumerator TestSuccessfulLogoutGoesToStart()
+        {
+            Scene originalScene = SceneManager.GetActiveScene();
+            loginManager.Login();
+            yield return new WaitForSeconds(1f);
+            logoutManager.LogoutOfGame();
+            yield return new WaitForSeconds(1f);
+            Scene newScene = SceneManager.GetActiveScene();
+            Assert.AreEqual("StartScreen", newScene.name);
+            SceneManager.SetActiveScene(testScene);
+            SceneManager.UnloadSceneAsync(newScene);
+            yield return new WaitForSeconds(1f);
+        }
+
+        [UnityTest, Order(7)]
+        public IEnumerator TestLogoutWithError()
+        {
+            Scene originalScene = SceneManager.GetActiveScene();
+            AbstractPlayerRetriever errorPlayerRetriever = new GameObject().AddComponent<ErrorPlayerRetriever>();
+            logoutManager.playerRetriever = errorPlayerRetriever;
+            logoutManager.LogoutOfGame();
+            yield return new WaitForSeconds(1f);
+            Scene newScene = SceneManager.GetActiveScene();
+            Assert.AreEqual(originalScene.name, newScene.name);
+            Assert.AreNotEqual("error in test for player retriever", errorMessage.text);
         }
 
     }

@@ -116,11 +116,11 @@ namespace Tests
         private void CollideWithPowerUp()
         {
             Vector2 powerUpPos = GetPowerUpColliderPos();
-            characterController.Move(powerUpPos.x - 0.1f, false);
+            characterController.Move(powerUpPos.x, false);
         }
 
 
-        [Retry (2)]
+        [Retry (4)]
         [UnityTest, Order(1)]
         public IEnumerator TestRetryPowerUpActivation()
         {
