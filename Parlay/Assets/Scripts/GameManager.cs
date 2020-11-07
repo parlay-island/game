@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject exitButton;
     [SerializeField] public LevelGenerator levelGenerator;
     [SerializeField] private GameObject mode_selector;
+    [SerializeField] public Text powerUpText;
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
@@ -182,17 +183,28 @@ public class GameManager : MonoBehaviour
     public void IncreaseTimeByPowerUp(PowerUp powerUp)
     {
         timerManager.AddTime(powerUp.GetTimeBoost());
+        powerUpText.text = "Time boost";
+        Invoke("resetText", 2);
     }
 
     public void IncreaseDistanceByPowerUp(PowerUp powerUp)
     {
         bonusDistance += powerUp.GetDistanceBoost();
+        powerUpText.text = "Score Boost";
         print(bonusDistance);
+        Invoke("resetText", 2);
     }
 
     public void AddRetry(PowerUp powerUp)
     {
         retries.Add(powerUp);
+        powerUpText.text = "Found Retry";
+        Invoke("resetText", 2);
+    }
+
+    private void resetText()
+    {
+        powerUpText.text = "";
     }
 
     public bool IsQuestionShown()
