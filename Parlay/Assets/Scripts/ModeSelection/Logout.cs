@@ -6,12 +6,14 @@ using UnityEngine.SceneManagement;
 public class Logout : MonoBehaviour
 {
     [SerializeField] public AbstractPlayerRetriever playerRetriever;
-    private Player player;
+    public Player player;
+    public bool isTest = false;
 
     public void Awake()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerInfo");
-        player = playerObj.GetComponent<Player>();
+        if (playerObj != null)
+            player = playerObj.GetComponent<Player>();
     }
 
     public void LogoutOfGame()
@@ -31,12 +33,17 @@ public class Logout : MonoBehaviour
 
     IEnumerator LoadStartScreen()
     {
-        string login_scene_name = "LoginScreen";
+        Scene currentScene = SceneManager.GetActiveScene();
+        string start_scene_name = "StartScreen";
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(login_scene_name, LoadSceneMode.Single);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(start_scene_name, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+        if (!isTest)
+            yield return SceneManager.UnloadSceneAsync(currentScene);
+        else
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(start_scene_name));
     }
 }
