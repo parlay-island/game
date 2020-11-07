@@ -9,6 +9,10 @@ TagManager:
   - GameManager
   - LeaderboardEntry
   - FallDetector
+  - Enemy
+  - Potion
+  - LevelButton
+  - PlayerInfo
   layers:
   - Default
   - TransparentFX

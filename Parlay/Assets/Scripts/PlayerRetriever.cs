@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 public abstract class AbstractPlayerRetriever : MonoBehaviour
 {
   public abstract void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player);
+    public abstract void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player);
 }
 
 
@@ -23,6 +24,13 @@ public class PlayerRetriever : AbstractPlayerRetriever
       var json = JsonConvert.SerializeObject(loginModel);
       string url = apiBaseUrl + "/auth/token/login/?format=json";
       StartCoroutine(PostLoginRequest(url, json, successCallback, errorCallback, player));
+    }
+
+    public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+    {
+        var json = JsonConvert.SerializeObject(player.GetAuthToken());
+        string url = apiBaseUrl + "/auth/token/logout/";
+        StartCoroutine(PostLogoutRequest(url, json, successCallback, errorCallback, player));
     }
 
     IEnumerator PostLoginRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, Player player)
@@ -56,7 +64,30 @@ public class PlayerRetriever : AbstractPlayerRetriever
          }
      }
 
-     IEnumerator GetPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+    IEnumerator PostLogoutRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, Player player)
+    {
+        var webRequest = new UnityWebRequest(url, "POST");
+        webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        webRequest.SetRequestHeader("Content-Type", "application/json");
+        webRequest.SetRequestHeader("Authorization", "Token " + player.GetAuthToken());
+        webRequest.timeout = TIMEOUT;
+
+        yield return webRequest.SendWebRequest();
+        if (webRequest.isNetworkError || webRequest.isHttpError)
+        {
+            errorCallback("a problem occurred when logging out");
+            Debug.Log(webRequest.error);
+            print(webRequest.error);
+        }
+        else
+        {
+            print("logout success!");
+            successCallback();
+        }
+    }
+
+
+    IEnumerator GetPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
       {
           string url = apiBaseUrl + "/players/me/";
           var webRequest = new UnityWebRequest(url, "GET");

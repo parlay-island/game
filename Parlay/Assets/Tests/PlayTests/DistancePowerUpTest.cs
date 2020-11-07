@@ -68,7 +68,7 @@ namespace Tests
         private void CollideWithPowerUp()
         {
             Vector2 powerUpPos = GetPowerUpColliderPos();
-            characterController.Move(powerUpPos.x - 0.1f, false);
+            characterController.Move(powerUpPos.x, false);
         }
 
 
