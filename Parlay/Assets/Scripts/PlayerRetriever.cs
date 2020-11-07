@@ -22,7 +22,8 @@ public class PlayerRetriever : AbstractPlayerRetriever
     public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player)
     {
       var json = JsonConvert.SerializeObject(loginModel);
-      string url = apiBaseUrl + "/auth/token/login/?format=json";
+      string token = player.GetAuthToken();
+      string url = apiBaseUrl + "/auth/token/login/" + token;
       StartCoroutine(PostLoginRequest(url, json, successCallback, errorCallback, player));
     }
 
@@ -67,8 +68,6 @@ public class PlayerRetriever : AbstractPlayerRetriever
     IEnumerator PostLogoutRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, Player player)
     {
         var webRequest = new UnityWebRequest(url, "POST");
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
-        webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         webRequest.SetRequestHeader("Content-Type", "application/json");
         webRequest.timeout = TIMEOUT;
