@@ -119,17 +119,17 @@ namespace Tests
             characterController.Move(powerUpPos.x - 0.1f, false);
         }
 
+
+        [Retry (2)]
         [UnityTest, Order(1)]
         public IEnumerator TestRetryPowerUpActivation()
         {
-            yield return new WaitForSeconds(.1f);
-            GameManager.instance.powerUpText = powerupText;
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/ChestTile1"));
             powerUp.GetComponent<PowerUp>().type = 3;
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
-
+            GameManager.instance.powerUpText = powerupText;
             Assert.True(GameManager.instance.retries.Count > 0);
             GameManager.instance.canRetry = true;
             _questionManager.UserSelect(1);
