@@ -76,7 +76,6 @@ namespace Tests
             characterController.Move(10f, false);
             powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
             gameManager.powerUpText = powerupText;
-            GameManager.instance.powerUpText = powerupText;
         }
 
         private T AddComponent<T>() where T : Component
@@ -92,10 +91,11 @@ namespace Tests
             gameManager.questionUI.gameObject.SetActive(false);
             GameObject.Destroy(powerUp);
             GameObject.Destroy(player);
+            GameObject.Destroy(powerupText);
             GameObject.Destroy(gameManagerObj);
             GameObject.Destroy(mockWebRetrieverObj);
             GameObject.Destroy(questionManagerGameObject);
-            GameObject.Destroy(powerupText);
+
 
             foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
             {
@@ -122,11 +122,14 @@ namespace Tests
         [UnityTest, Order(1)]
         public IEnumerator TestRetryPowerUpActivation()
         {
+            yield return new WaitForSeconds(.1f);
+            GameManager.instance.powerUpText = powerupText;
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/ChestTile1"));
             powerUp.GetComponent<PowerUp>().type = 3;
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
+
             Assert.True(GameManager.instance.retries.Count > 0);
             GameManager.instance.canRetry = true;
             _questionManager.UserSelect(1);
