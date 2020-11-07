@@ -6,25 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class StartScreenManager : MonoBehaviour
 {
-    [SerializeField] private Button play_game;
-    [SerializeField] private GameObject mode_selector;
-
-    public void LoadModeSelection()
+    public void LoadLogin()
     {
-      StartCoroutine(LoadModeScene());
+      StartCoroutine(LoadLoginScene());
     }
 
-    IEnumerator LoadModeScene()
+    IEnumerator LoadLoginScene()
     {
-      Scene currentScene = SceneManager.GetActiveScene();
-      string mode_scene_name = "ModeSelection";
+      string login_scene_name = "LoginScreen";
 
-      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(mode_scene_name, LoadSceneMode.Additive);
+      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(login_scene_name, LoadSceneMode.Single);
       while (!asyncLoad.isDone)
       {
           yield return null;
       }
-      SceneManager.MoveGameObjectToScene(mode_selector, SceneManager.GetSceneByName(mode_scene_name));
-      yield return SceneManager.UnloadSceneAsync(currentScene);
     }
 }
