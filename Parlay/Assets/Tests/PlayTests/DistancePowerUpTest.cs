@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.TestTools;
 
 namespace Tests
@@ -15,6 +16,7 @@ namespace Tests
         private GameManager gameManager;
         private GameObject gameManagerObj;
         private float bonusDistance;
+        private Text powerupText;
 
         [SetUp]
         public void Setup()
@@ -30,6 +32,10 @@ namespace Tests
             player.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
             gameManager.setGameTime(30f);
             gameManager.questionUI.gameObject.SetActive(false);
+
+            powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
+            gameManager.powerUpText = powerupText;
+
             characterController.Move(10f, false);
             foreach (GameObject question in GameObject.FindGameObjectsWithTag("Question"))
             {
@@ -45,6 +51,7 @@ namespace Tests
             GameObject.Destroy(powerUp);
             GameObject.Destroy(player);
             GameObject.Destroy(gameManagerObj);
+            GameObject.Destroy(powerupText);
 
             foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
             {

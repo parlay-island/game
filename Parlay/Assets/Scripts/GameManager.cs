@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject exitButton;
     [SerializeField] public LevelGenerator levelGenerator;
     [SerializeField] private GameObject mode_selector;
-    [SerializeField] private Text powerUpText;
+    [SerializeField] public Text powerUpText;
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;

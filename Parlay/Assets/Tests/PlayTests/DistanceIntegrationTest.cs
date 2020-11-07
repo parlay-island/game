@@ -56,12 +56,14 @@ namespace Tests
             testObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             testPlayer = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
 
+
             gameManager = testObject.GetComponent<GameManager>();
             mockWebRetrieverObj = new GameObject();
             MockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<MockWebRetriever>();
             gameManager.webRetriever = mockWebRetriever;
             gameManager.setGameTime(3f);
             gameManager.player = testPlayer;
+
 
             playerMovement = testPlayer.GetComponent<PlayerMovement>();
             characterController = testPlayer.GetComponent<CharacterController2D>();

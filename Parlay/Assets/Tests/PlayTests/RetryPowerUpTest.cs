@@ -19,6 +19,7 @@ namespace Tests
         private GameManager gameManager;
         private GameObject gameManagerObj;
         private GameObject mockWebRetrieverObj;
+        private Text powerupText;
 
         private QuestionManager _questionManager;
         private GameObject questionManagerGameObject;
@@ -57,6 +58,8 @@ namespace Tests
             _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
+            powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
+            gameManager.powerUpText = powerupText;
         }
 
         private void initGameManager()
@@ -91,6 +94,7 @@ namespace Tests
             GameObject.Destroy(gameManagerObj);
             GameObject.Destroy(mockWebRetrieverObj);
             GameObject.Destroy(questionManagerGameObject);
+            GameObject.Destroy(powerupText);
 
             foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
             {

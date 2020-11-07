@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 
 namespace Tests
 {
@@ -14,6 +15,7 @@ namespace Tests
         private GameObject powerUp;
         private GameManager gameManager;
         private GameObject gameManagerObj;
+        private Text powerupText;
 
 
         [SetUp]
@@ -31,6 +33,8 @@ namespace Tests
             {
                 GameObject.Destroy(question);
             }
+            powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
+            gameManager.powerUpText = powerupText;
         }
 
         [TearDown]
@@ -40,6 +44,7 @@ namespace Tests
             GameObject.Destroy(powerUp);
             GameObject.Destroy(player);
             GameObject.Destroy(gameManagerObj);
+            GameObject.Destroy(powerupText);
 
             foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
             {
