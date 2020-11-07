@@ -68,7 +68,8 @@ namespace Tests
         [UnityTest, Order(1)]
         public IEnumerator TestDistancePowerUpActivation()
         {
-            powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/GemTile1"));
+            powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/ChestTile1"));
+            powerUp.GetComponent<PowerUp>().type = 2;
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
