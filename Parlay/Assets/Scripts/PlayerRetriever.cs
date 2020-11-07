@@ -67,7 +67,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
 
     IEnumerator PostLogoutRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, Player player)
     {
-        var webRequest = new UnityWebRequest(url, "POST");
+        var webRequest = new UnityWebRequest(url, "GET");
         webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         webRequest.SetRequestHeader("Content-Type", "application/json");
         webRequest.timeout = TIMEOUT;
@@ -77,7 +77,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
         {
             errorCallback("a problem occurred when logging out");
             Debug.Log(webRequest.error);
-            print(webRequest.error)
+            print(webRequest.error);
         }
         else
         {
