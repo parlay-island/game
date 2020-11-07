@@ -19,6 +19,7 @@ namespace Tests
         private GameManager gameManager;
         private GameObject gameManagerObj;
         private GameObject mockWebRetrieverObj;
+        private Text powerupText;
 
         private QuestionManager _questionManager;
         private GameObject questionManagerGameObject;
@@ -73,6 +74,8 @@ namespace Tests
             gameManager.setGameTime(30f);
             gameManager.questionUI.gameObject.SetActive(false);
             characterController.Move(10f, false);
+            powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
+            gameManager.powerUpText = powerupText;
         }
 
         private T AddComponent<T>() where T : Component
@@ -88,9 +91,11 @@ namespace Tests
             gameManager.questionUI.gameObject.SetActive(false);
             GameObject.Destroy(powerUp);
             GameObject.Destroy(player);
+            GameObject.Destroy(powerupText);
             GameObject.Destroy(gameManagerObj);
             GameObject.Destroy(mockWebRetrieverObj);
             GameObject.Destroy(questionManagerGameObject);
+
 
             foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
             {
@@ -114,13 +119,17 @@ namespace Tests
             characterController.Move(powerUpPos.x - 0.1f, false);
         }
 
+
+        [Retry (2)]
         [UnityTest, Order(1)]
         public IEnumerator TestRetryPowerUpActivation()
         {
-            powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/GemTile2"));
+            powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/ChestTile1"));
+            powerUp.GetComponent<PowerUp>().type = 3;
             CollideWithPowerUp();
             yield return new WaitForSeconds(2);
             //Test if time was increased
+            GameManager.instance.powerUpText = powerupText;
             Assert.True(GameManager.instance.retries.Count > 0);
             GameManager.instance.canRetry = true;
             _questionManager.UserSelect(1);
