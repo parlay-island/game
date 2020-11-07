@@ -19,10 +19,6 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            foreach (GameObject GM in GameObject.FindGameObjectsWithTag("GameManager"))
-            {
-                GameObject.Destroy(GM);
-            }
             gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             gameManager = gameManagerObj.GetComponent<GameManager>();
             player = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
@@ -62,16 +58,17 @@ namespace Tests
             characterController.Move(powerUpPos.x - 0.1f, false);
         }
 
-        // [UnityTest, Order(1)]
-        // public IEnumerator TestTimePowerUpActivation()
-        // {
-        //     float initialTime = gameManager.timerManager.getCurrTime();
-        //     powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/PotionTile1"));
-        //     CollideWithPowerUp();
-        //     yield return new WaitForSeconds(2);
-        //     //Test if time was increased
-        //     Assert.True(gameManager.timerManager.getCurrTime() - initialTime >= 0);
-        // }
+         [UnityTest, Order(1)]
+         public IEnumerator TestTimePowerUpActivation()
+         {
+             float initialTime = gameManager.timerManager.getCurrTime();
+            powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/ChestTile1"));
+            powerUp.GetComponent<PowerUp>().type = 1; 
+            CollideWithPowerUp();
+             yield return new WaitForSeconds(2);
+             //Test if time was increased
+             Assert.True(gameManager.timerManager.getCurrTime() - initialTime >= 0);
+         }
 
     }
 }

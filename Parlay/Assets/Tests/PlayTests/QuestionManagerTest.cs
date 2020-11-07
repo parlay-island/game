@@ -124,6 +124,7 @@ namespace Tests
             gameManager.webRetriever = webRetriever;
             gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
             _questionManager.gameManager = gameManager;
+            gameManager.setGameTime(30f);
 
         }
 

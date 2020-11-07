@@ -30,6 +30,10 @@ namespace Tests
             {
                 GameObject.Destroy(question);
             }
+            foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
+            {
+                GameObject.Destroy(chunk);
+            }
         }
 
         [TearDown]
@@ -54,6 +58,7 @@ namespace Tests
             levelGenerator.Reset();
             yield return new WaitForSeconds(0.1f);
             Assert.IsTrue(levelGenerator.player.transform.position.x < 66);
+            Debug.Log(GameObject.FindGameObjectsWithTag("Chunck").Length);
             Assert.IsTrue(GameObject.FindGameObjectsWithTag("Chunck").Length <= 6);
             yield return null;
         }
