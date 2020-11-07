@@ -38,7 +38,9 @@ namespace Tests
       [TearDown]
       public void Teardown()
       {
-        foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+        GameObject.Destroy(characterController);
+        GameObject.Destroy(gameManager);
+        foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
           GameObject.Destroy(obj);
         }
       }
@@ -137,6 +139,11 @@ namespace Tests
       [UnityTest, Order(7)]
       public IEnumerator TestEnemyMovesWhenUnderCornerOfPlayer()
       {
+        gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+        gameManager = gameManagerObj.GetComponent<GameManager>();
+        gameManager.setGameTime(30f);
+        gameManager.questionUI.gameObject.SetActive(false);
+        gameManager.setGameTime(30f);
         Rigidbody2D rigidbody = testEnemy.GetComponent<Rigidbody2D>();
         float initialXVelocity = rigidbody.velocity.x;
         testEnemy.SetActive(false);

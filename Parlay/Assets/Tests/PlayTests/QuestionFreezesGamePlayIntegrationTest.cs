@@ -58,6 +58,7 @@ namespace Tests
     [UnityTest, Order(1)]
     public IEnumerator TestMovementAllowedWhenQuestionNotShown()
     {
+      GameManager.instance.setGameTime(10f);
       playerMovement.questionUI.SetActive(false);
       gameManager.questionUI.SetActive(false);
       float initialEnemyXPos = testEnemy.transform.position.x;
