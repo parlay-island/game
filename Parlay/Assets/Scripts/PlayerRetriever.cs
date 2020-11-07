@@ -66,7 +66,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
 
     IEnumerator PostLogoutRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, Player player)
     {
-        var webRequest = new UnityWebRequest(url, "GET");
+        var webRequest = new UnityWebRequest(url, "POST");
         webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         webRequest.SetRequestHeader("Content-Type", "application/json");
         webRequest.SetRequestHeader("Authorization", "Token " + player.GetAuthToken());
