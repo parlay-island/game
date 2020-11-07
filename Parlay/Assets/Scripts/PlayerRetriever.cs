@@ -30,7 +30,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
     {
         var json = JsonConvert.SerializeObject(player.GetAuthToken());
         string token = player.GetAuthToken();
-        string url = apiBaseUrl + "/auth/token/login/" + token;
+        string url = apiBaseUrl + "/auth/token/logout/" + token;
         StartCoroutine(PostLogoutRequest(url, json, successCallback, errorCallback, player));
     }
 
