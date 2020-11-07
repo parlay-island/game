@@ -58,9 +58,6 @@ namespace Tests
             _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
-            powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
-            gameManager.powerUpText = powerupText;
-            GameManager.instance.powerUpText = powerupText;
         }
 
         private void initGameManager()
@@ -77,6 +74,9 @@ namespace Tests
             gameManager.setGameTime(30f);
             gameManager.questionUI.gameObject.SetActive(false);
             characterController.Move(10f, false);
+            powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
+            gameManager.powerUpText = powerupText;
+            GameManager.instance.powerUpText = powerupText;
         }
 
         private T AddComponent<T>() where T : Component
