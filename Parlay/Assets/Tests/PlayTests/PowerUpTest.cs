@@ -35,6 +35,7 @@ namespace Tests
             }
             powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
             gameManager.powerUpText = powerupText;
+            GameManager.instance.powerUpText = powerupText;
         }
 
         [TearDown]
@@ -66,7 +67,7 @@ namespace Tests
          [UnityTest, Order(1)]
          public IEnumerator TestTimePowerUpActivation()
          {
-             float initialTime = gameManager.timerManager.getCurrTime();
+            float initialTime = gameManager.timerManager.getCurrTime();
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/ChestTile1"));
             powerUp.GetComponent<PowerUp>().type = 1; 
             CollideWithPowerUp();

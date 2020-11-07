@@ -60,6 +60,7 @@ namespace Tests
             _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
             powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
             gameManager.powerUpText = powerupText;
+            GameManager.instance.powerUpText = powerupText;
         }
 
         private void initGameManager()

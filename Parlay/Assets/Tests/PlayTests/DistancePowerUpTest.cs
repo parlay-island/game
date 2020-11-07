@@ -35,6 +35,7 @@ namespace Tests
 
             powerupText = MonoBehaviour.Instantiate(Resources.Load<Text>("Prefabs/PowerUpLabel"));
             gameManager.powerUpText = powerupText;
+            GameManager.instance.powerUpText = powerupText;
 
             characterController.Move(10f, false);
             foreach (GameObject question in GameObject.FindGameObjectsWithTag("Question"))
