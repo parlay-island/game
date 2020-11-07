@@ -23,11 +23,20 @@ namespace Tests
             player.SetPlayer(player_fetched);
             successCallback();
           }
+          public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+          {
+            GameObject.Destroy(player);
+            successCallback();
+          }
         }
 
         public class ErrorPlayerRetriever: AbstractPlayerRetriever
         {
           public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player)
+          {
+            errorCallback("error in test for player retriever");
+          }
+          public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
           {
             errorCallback("error in test for player retriever");
           }
