@@ -1,4 +1,4 @@
-﻿//place this script in the Editor folder within Assets.
+//place this script in the Editor folder within Assets.
 using UnityEditor;
 
 
@@ -7,7 +7,7 @@ using UnityEditor;
 
 class WebGLBuilder {
     static void build() {
-        string[] scenes = {"Assets/Scenes/StartScreen.unity", "Assets/Scenes/ModeSelection.unity", "Assets/Scenes/Development.unity"};
+        string[] scenes = {"Assets/Scenes/StartScreen.unity", "Assets/Scenes/LoginScreen.unity", "Assets/Scenes/ModeSelection.unity", "Assets/Scenes/Development.unity"};
         BuildPipeline.BuildPlayer(scenes, "WebGL-Dist", BuildTarget.WebGL, BuildOptions.None);
     }
 }
