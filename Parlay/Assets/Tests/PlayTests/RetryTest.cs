@@ -54,7 +54,7 @@ namespace Tests
             levelGenerator.Reset();
             yield return new WaitForSeconds(0.1f);
             Assert.IsTrue(levelGenerator.player.transform.position.x < 66);
-            Assert.IsTrue(GameObject.FindGameObjectsWithTag("Chunck").Length <= 6);
+            Assert.IsTrue(GameObject.FindGameObjectsWithTag("Chunck").Length <= 7);
             yield return null;
         }
 

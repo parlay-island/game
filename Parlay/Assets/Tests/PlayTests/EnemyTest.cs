@@ -20,6 +20,10 @@ namespace Tests
       [SetUp]
       public void Setup()
       {
+        foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
+        {
+            GameObject.Destroy(chunk);
+        }
         gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
         gameManager = gameManagerObj.GetComponent<GameManager>();
         gameManager.setGameTime(30f);
