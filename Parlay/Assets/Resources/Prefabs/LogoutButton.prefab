@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRetriever: {fileID: -6610488655681004865}
   player: {fileID: 0}
+  isTest: 0
 --- !u!114 &-6610488655681004865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24ed31b7f9124150a94a2df65a8f552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiBaseUrl: http://parlay-island-server-dev.eba-kq6isupz.us-east-2.elasticbeanstalk.com
+  apiBaseUrl: http://parlay-island-server-prod.eba-kq6isupz.us-east-2.elasticbeanstalk.com
 --- !u!1 &3650987707198388352
 GameObject:
   m_ObjectHideFlags: 0
