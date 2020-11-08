@@ -9,7 +9,7 @@ public abstract class AbstractWebRetriever : MonoBehaviour
 
     public abstract string GetMostRecentPostRequestResult();
 
-    public abstract void FetchResults(int level);
+    public abstract void FetchResults(int level, string auth_token);
 
     public abstract List<ResultModel> GetMostRecentResults();
 

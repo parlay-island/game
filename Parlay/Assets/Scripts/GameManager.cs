@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     private int level = 1;
     public float bonusDistance = 0f;
     private int playerID = 1;
+    private string player_auth_token = "";
     private string postEndResultContent;
     private bool sentRequest = false;
     public ArrayList retries = new ArrayList();
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
       level = levelObj != null ? levelObj.GetComponent<Level>().GetId() : 1;
       GameObject player = GameObject.Find("PlayerInfo");
       playerID = player != null ? player.GetComponent<Player>().GetId() : 1;
+      player_auth_token = player != null ? player.GetComponent<Player>().GetAuthToken() : "";
     }
 
     public void exitGame()
@@ -152,7 +154,7 @@ public class GameManager : MonoBehaviour
         if (timerManager.isTimeUp() || playerFallen) {
           if(!sentRequest)
           {
-            webRetriever.FetchResults(level);
+            webRetriever.FetchResults(level, player_auth_token);
             sentRequest = true;
           }
           if(!webRetriever.IsLoading())
