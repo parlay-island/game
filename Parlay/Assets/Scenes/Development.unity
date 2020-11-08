@@ -592,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
       propertyPath: apiBaseUrl
-      value: http://parlay-island-server-dev.eba-kq6isupz.us-east-2.elasticbeanstalk.com
+      value: http://parlay-island-server-prod.eba-kq6isupz.us-east-2.elasticbeanstalk.com
       objectReference: {fileID: 0}
     - target: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
       propertyPath: leaderboard

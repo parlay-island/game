@@ -513,6 +513,10 @@ PrefabInstance:
       propertyPath: errorMessage
       value: 
       objectReference: {fileID: 1939430566}
+    - target: {fileID: -8629770637390775908, guid: 17f776e79bcc74722a1afec753937623, type: 3}
+      propertyPath: apiBaseUrl
+      value: http://parlay-island-server-prod.eba-kq6isupz.us-east-2.elasticbeanstalk.com
+      objectReference: {fileID: 0}
     - target: {fileID: 1313772855537171184, guid: 17f776e79bcc74722a1afec753937623, type: 3}
       propertyPath: usernameInput
       value: 

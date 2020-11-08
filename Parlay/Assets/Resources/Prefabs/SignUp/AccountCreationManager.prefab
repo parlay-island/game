@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24ed31b7f9124150a94a2df65a8f552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiBaseUrl: http://parlay-island-server-dev.eba-kq6isupz.us-east-2.elasticbeanstalk.com
+  apiBaseUrl: http://parlay-island-server-prod.eba-kq6isupz.us-east-2.elasticbeanstalk.com
 --- !u!114 &3384091987578757296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,4 +82,3 @@ MonoBehaviour:
   classCodeInput: {fileID: 3572318007831949361, guid: 4ea559f5a97544f1dac0e9fbef0f316d, type: 3}
   loginManager: {fileID: 9127088722735437118}
   playerRetriever: {fileID: 4939058973195069466}
-  errorMessage: {fileID: 233434370549390783, guid: 955daf8c36de54c77a1e975ea3a8c32a, type: 3}
