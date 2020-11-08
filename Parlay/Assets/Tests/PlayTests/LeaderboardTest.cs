@@ -38,7 +38,7 @@ namespace Tests
               return "";
             }
 
-            public override void FetchResults(int level) {
+            public override void FetchResults(int level, string auth_token) {
               results = new List<ResultModel>  {
                     new ResultModel(level, distance1,0, player_name1),
                     new ResultModel(level, distance2,1, player_name2)
@@ -68,7 +68,7 @@ namespace Tests
             public override string GetMostRecentPostRequestResult() {
               return "";
             }
-            public override void FetchResults(int level) {
+            public override void FetchResults(int level, string auth_token) {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return results;
@@ -88,7 +88,7 @@ namespace Tests
           leaderboardObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Leaderboard"));
           leaderboard = leaderboardObj.GetComponent<Leaderboard>();
           leaderboard.webRetriever = mockWebRetriever;
-          mockWebRetriever.FetchResults(level);
+          mockWebRetriever.FetchResults(level, "");
           leaderboardObj.gameObject.SetActive(true);
           gameManager.GetComponent<GameManager>().setGameTime(20f);
         }
@@ -124,7 +124,7 @@ namespace Tests
             var errorMessageBefore = leaderboard.errorDisplaySource.errorMessage.text;
             TimeoutWebRetriever mockWebRetriever = new GameObject().AddComponent<TimeoutWebRetriever>();
             leaderboard.webRetriever = mockWebRetriever;
-            mockWebRetriever.FetchResults(level);
+            mockWebRetriever.FetchResults(level, "");
             leaderboard.Start();
             Assert.AreNotEqual(errorMessageBefore,
                 leaderboard.errorDisplaySource.errorMessage.text);

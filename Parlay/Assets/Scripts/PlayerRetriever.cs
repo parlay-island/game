@@ -30,6 +30,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
     {
         var json = JsonConvert.SerializeObject(player.GetAuthToken());
         string url = apiBaseUrl + "/auth/token/logout/";
+        UnityWebRequest.ClearCookieCache();
         StartCoroutine(PostLogoutRequest(url, json, successCallback, errorCallback, player));
     }
 
@@ -45,21 +46,13 @@ public class PlayerRetriever : AbstractPlayerRetriever
          yield return webRequest.SendWebRequest();
          if (webRequest.isNetworkError || webRequest.isHttpError)
          {
-             // unity editor doesn't close the session until expires
-             // this is a work around because developers don't need to login when playing the game
-              #if UNITY_EDITOR
-              if(webRequest.responseCode == 403)
-              {
-                 successCallback();
-                 yield break;
-              }
-              #endif
               errorCallback(webRequest.responseCode == 400 ? "username and password combination is invalid" : "a problem occurred when logging in");
               Debug.Log(webRequest.error);
          } else {
            string postRequestResult = webRequest.downloadHandler.text;
            LoginResponseModel login_response = JsonConvert.DeserializeObject<LoginResponseModel>(postRequestResult);
            player.SetAuthToken(login_response.auth_token);
+           UnityWebRequest.ClearCookieCache();
            yield return StartCoroutine(GetPlayer(successCallback, errorCallback, player));
          }
      }
@@ -77,11 +70,8 @@ public class PlayerRetriever : AbstractPlayerRetriever
         {
             errorCallback("a problem occurred when logging out");
             Debug.Log(webRequest.error);
-            print(webRequest.error);
         }
-        else
-        {
-            print("logout success!");
+        else {
             successCallback();
         }
     }

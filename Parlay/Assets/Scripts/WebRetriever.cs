@@ -91,18 +91,19 @@ public class WebRetriever : AbstractWebRetriever
        return results;
      }
 
-     public override void FetchResults(int level)
+     public override void FetchResults(int level, string auth_token)
      {
         string url = apiBaseUrl + "/levels/" + level + "/results/?page=%1";
-        StartCoroutine(GetResultRequest(url));
+        StartCoroutine(GetResultRequest(url, auth_token));
      }
 
-     IEnumerator GetResultRequest(string uri)
+     IEnumerator GetResultRequest(string uri, string auth_token)
      {
        isLoading = true;
        UnityWebRequest webRequest = UnityWebRequest.Get(uri);
        webRequest.timeout = TIMEOUT;
        webRequest.SetRequestHeader("Content-Type", "application/json");
+       webRequest.SetRequestHeader("Authorization", "Token " + auth_token);
        yield return webRequest.SendWebRequest();
        if (webRequest.isNetworkError || webRequest.isHttpError)
        {

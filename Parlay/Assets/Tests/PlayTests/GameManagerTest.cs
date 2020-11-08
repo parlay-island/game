@@ -24,9 +24,9 @@ namespace Tests
 
         private static bool mockingIncreasedDistance;
         private static bool mockingAnsweredQuestion;
-        
+
         private static int user_choice = 1;
-        
+
         private static QuestionModel firstQuestion = new QuestionModel("question", new List<ChoiceModel>
             {
                 new ChoiceModel("choice0"),
@@ -57,7 +57,7 @@ namespace Tests
               }
               return requestParamContent;
             }
-            public override void FetchResults(int level) {
+            public override void FetchResults(int level, string auth_token) {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return new List<ResultModel>();
@@ -82,7 +82,7 @@ namespace Tests
             public override string GetMostRecentPostRequestResult() {
               return "";
             }
-            public override void FetchResults(int level) {
+            public override void FetchResults(int level, string auth_token) {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return new List<ResultModel>();
@@ -106,7 +106,7 @@ namespace Tests
             initializeGameManager();
             initializePlayer();
         }
-        
+
         private void initializeQuestionManager()
         {
             questionManagerGameObject =
@@ -217,11 +217,11 @@ namespace Tests
         {
             mockingAnsweredQuestion = true;
             initializeWebRetriever();
-            
+
             // answer question
             _questionManager.UserSelect(user_choice);
             yield return new WaitForSeconds(0.1f);
-            
+
             // make sure that question is added to questions answered by player
             List<AnsweredQuestion> playerAnsweredQuestions = gameManager.getPlayerAnsweredQuestions();
             yield return new WaitForSeconds(0.1f);
