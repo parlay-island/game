@@ -34,7 +34,7 @@ namespace Tests
             GameObject.Destroy(camera);
         }
 
-        [Retry(2)]
+        [Retry(3)]
         [UnityTest, Order(1)]
         public IEnumerator TestCameraMovementRight()
         {
@@ -44,7 +44,7 @@ namespace Tests
             Assert.Greater(camera.transform.position.x, initialXPos);
         }
 
-        [Retry(2)]
+        [Retry(3)]
         [UnityTest, Order(2)]
         public IEnumerator TestCameraMovementLeft()
         {

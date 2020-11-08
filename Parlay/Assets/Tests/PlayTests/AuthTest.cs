@@ -14,6 +14,7 @@ namespace Tests
     {
         private const int testPlayerId = 5;
         private const float testPlayerAccuracy = 100f;
+        private const string testAssignedClass = "TestClass";
 
         public class MockPlayerRetriever: AbstractPlayerRetriever
         {
@@ -21,6 +22,10 @@ namespace Tests
           {
             PlayerModel player_fetched = new PlayerModel(testPlayerId, loginModel.username, testPlayerAccuracy);
             player.SetPlayer(player_fetched);
+            successCallback();
+          }
+          public override void CreateAccount(CreateAccountModel createAccountModel, System.Action successCallback, System.Action<string> errorCallback)
+          {
             successCallback();
           }
           public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
@@ -36,12 +41,17 @@ namespace Tests
           {
             errorCallback("error in test for player retriever");
           }
+          public override void CreateAccount(CreateAccountModel createAccountModel, System.Action successCallback, System.Action<string> errorCallback)
+          {
+            errorCallback("error in test for creating account");
+          }
           public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
           {
             errorCallback("error in test for player retriever");
           }
         }
 
+        private AccountCreationManager accountCreationManager;
         private LoginManager loginManager;
         private Logout logoutManager;
         private Player player;
@@ -49,6 +59,8 @@ namespace Tests
         private AbstractPlayerRetriever playerRetriever;
         private Scene testScene;
         private TMP_InputField usernameInput;
+        private TMP_InputField passwordInput;
+        private TMP_InputField passwordConfirmationInput;
 
         [OneTimeSetUp]
         public void Init()
@@ -59,6 +71,13 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
+          SetUpUIComponents();
+          SetUpLoginManager();
+          SetUpAccountManager();
+        }
+
+        private void SetUpUIComponents()
+        {
           GameObject playerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerInfo"));
           playerObj.name = "PlayerInfo";
           player = playerObj.GetComponent<Player>();
@@ -67,6 +86,10 @@ namespace Tests
           errorMessage = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Login/ErrorMessage")).GetComponent<TextMeshProUGUI>();
           errorMessage.SetText("");
           errorMessage.faceColor = new Color32(255, 0, 0, 255);
+        }
+
+        private void SetUpLoginManager()
+        {
           loginManager = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Login/LoginManager")).GetComponent<LoginManager>();
           loginManager.player = player;
           loginManager.errorMessage = errorMessage;
@@ -78,6 +101,20 @@ namespace Tests
           playerRetriever = new GameObject().AddComponent<MockPlayerRetriever>();
           loginManager.playerRetriever = playerRetriever;
           logoutManager.playerRetriever = playerRetriever;
+        }
+
+        private void SetUpAccountManager()
+        {
+          passwordInput = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/SignUp/Password")).GetComponent<TMP_InputField>();
+          passwordInput.text = "";
+          passwordConfirmationInput = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/SignUp/PasswordConfirm")).GetComponent<TMP_InputField>();
+          passwordConfirmationInput.text = "";
+          accountCreationManager = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/SignUp/AccountCreationManager")).GetComponent<AccountCreationManager>();
+          accountCreationManager.usernameInput = usernameInput;
+          accountCreationManager.playerRetriever = playerRetriever;
+          accountCreationManager.loginManager = loginManager;
+          accountCreationManager.passwordInput = passwordInput;
+          accountCreationManager.passwordConfirmationInput = passwordConfirmationInput;
         }
 
         [TearDown]
@@ -185,6 +222,76 @@ namespace Tests
             Assert.AreEqual(originalScene.name, newScene.name);
             Assert.AreNotEqual("error in test for player retriever", errorMessage.text);
         }
+        [UnityTest, Order(8)]
+        public IEnumerator TestSuccessfulCreateAccount()
+        {
+          usernameInput.text = "Test";
+          passwordInput.text = "Test1234";
+          passwordConfirmationInput.text = "Test1234";
+          Scene originalScene = SceneManager.GetActiveScene();
+          accountCreationManager.CreateAccount();
+          yield return new WaitForSeconds(1f);
+          Scene newScene = SceneManager.GetActiveScene();
+          Assert.AreEqual(player.GetName(), usernameInput.text);
+          Assert.AreNotEqual(originalScene.name, newScene.name);
+          Assert.AreEqual("ModeSelection", newScene.name);
+          SceneManager.SetActiveScene(testScene);
+          SceneManager.UnloadSceneAsync(newScene);
+          yield return new WaitForSeconds(1f);
+        }
+
+        [UnityTest, Order(9)]
+        public IEnumerator TestCreateAccountWithError()
+        {
+          usernameInput.text = "Test";
+          passwordInput.text = "Test1234";
+          passwordConfirmationInput.text = "Test1234";
+          Scene originalScene = SceneManager.GetActiveScene();
+          string errorMessageBefore = errorMessage.text;
+          AbstractPlayerRetriever errorPlayerRetriever = new GameObject().AddComponent<ErrorPlayerRetriever>();
+          loginManager.playerRetriever = errorPlayerRetriever;
+          accountCreationManager.CreateAccount();
+          yield return new WaitForSeconds(1f);
+          Scene newScene = SceneManager.GetActiveScene();
+          Assert.AreEqual(originalScene.name, newScene.name);
+          Assert.AreNotEqual(errorMessageBefore, errorMessage.text);
+        }
+
+        [UnityTest, Order(10)]
+        public IEnumerator TestCreateAccountWithErrorPasswordDontMatch()
+        {
+          usernameInput.text = "Test";
+          passwordInput.text = "Test1234";
+          passwordConfirmationInput.text = "test1234";
+          Scene originalScene = SceneManager.GetActiveScene();
+          string errorMessageBefore = errorMessage.text;
+          AbstractPlayerRetriever errorPlayerRetriever = new GameObject().AddComponent<ErrorPlayerRetriever>();
+          loginManager.playerRetriever = errorPlayerRetriever;
+          accountCreationManager.CreateAccount();
+          yield return new WaitForSeconds(1f);
+          Scene newScene = SceneManager.GetActiveScene();
+          Assert.AreEqual(originalScene.name, newScene.name);
+          Assert.AreNotEqual(errorMessageBefore, errorMessage.text);
+          Assert.AreEqual("Your passwords don't match", errorMessage.text);
+        }
+
+        [UnityTest, Order(10)]
+        public IEnumerator TestCreateAccountWithErrorPasswordNotLongEnough()
+        {
+          usernameInput.text = "Test";
+          passwordInput.text = "Test";
+          passwordConfirmationInput.text = "Test";
+          Scene originalScene = SceneManager.GetActiveScene();
+          string errorMessageBefore = errorMessage.text;
+          AbstractPlayerRetriever errorPlayerRetriever = new GameObject().AddComponent<ErrorPlayerRetriever>();
+          loginManager.playerRetriever = errorPlayerRetriever;
+          accountCreationManager.CreateAccount();
+          yield return new WaitForSeconds(1f);
+          Scene newScene = SceneManager.GetActiveScene();
+          Assert.AreEqual(originalScene.name, newScene.name);
+          Assert.AreNotEqual(errorMessageBefore, errorMessage.text);
+          Assert.AreEqual("Your password needs to be at least 8 characters", errorMessage.text);
+      }
 
     }
 }

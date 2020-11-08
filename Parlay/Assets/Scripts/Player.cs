@@ -76,3 +76,20 @@ public class LoginResponseModel
         this.auth_token = auth_token;
     }
 }
+
+[JsonObject]
+public class CreateAccountModel
+{
+    [JsonProperty("username")] public string username;
+    [JsonProperty("password")] public string password;
+    [JsonProperty("is_teacher")] public bool is_teacher;
+    [JsonProperty("class_code")] public string class_code;
+
+    public CreateAccountModel(string username, string password, string class_code)
+    {
+        this.username = username;
+        this.password = password;
+        this.is_teacher = false;
+        this.class_code = class_code;
+    }
+}

@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8399016933216149111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8399016933216149108}
+  - component: {fileID: 9127088722735437118}
+  - component: {fileID: 4939058973195069466}
+  - component: {fileID: 3384091987578757296}
+  m_Layer: 0
+  m_Name: AccountCreationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8399016933216149108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399016933216149111}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 6, z: 80}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9127088722735437118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399016933216149111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e6b46e76bf74fe49f3a961a6dc8847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usernameInput: {fileID: 1824342463429681967, guid: 633ba83ab9ed64144ac7dea773b9c53c, type: 3}
+  passwordInput: {fileID: 6815295342786983625, guid: ca53e106e7c5f4c109f0c523ae6bcfd1, type: 3}
+  playerRetriever: {fileID: 4939058973195069466}
+  errorMessage: {fileID: 233434370549390783, guid: 955daf8c36de54c77a1e975ea3a8c32a, type: 3}
+  player: {fileID: 9019475383020164083, guid: 7a765fa13eb9f45bf9565d66b6f1c969, type: 3}
+  isTest: 0
+--- !u!114 &4939058973195069466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399016933216149111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d24ed31b7f9124150a94a2df65a8f552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiBaseUrl: http://parlay-island-server-dev.eba-kq6isupz.us-east-2.elasticbeanstalk.com
+--- !u!114 &3384091987578757296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399016933216149111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d92a54da8a29d4a8fa22b21d09e8f7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usernameInput: {fileID: 1824342463429681967, guid: 633ba83ab9ed64144ac7dea773b9c53c, type: 3}
+  passwordInput: {fileID: 6815295342786983625, guid: ca53e106e7c5f4c109f0c523ae6bcfd1, type: 3}
+  passwordConfirmationInput: {fileID: 2368276990062318792, guid: b5ae874cb8e184e2fb8af8d6729cc968, type: 3}
+  classCodeInput: {fileID: 3572318007831949361, guid: 4ea559f5a97544f1dac0e9fbef0f316d, type: 3}
+  loginManager: {fileID: 9127088722735437118}
+  playerRetriever: {fileID: 4939058973195069466}
+  errorMessage: {fileID: 233434370549390783, guid: 955daf8c36de54c77a1e975ea3a8c32a, type: 3}
