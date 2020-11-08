@@ -21,16 +21,13 @@ public class PowerUp : MonoBehaviour
         {
             if (type == 1)
             {
-                print("Increase time");
                 GameManager.instance.IncreaseTimeByPowerUp(this);
             }
             else if (type == 2)
             {
-                print("Increase distance");
                 GameManager.instance.IncreaseDistanceByPowerUp(this);
             } else if (type == 3)
             {
-                print("Retry PowerUp");
                 GameManager.instance.AddRetry(this);
             }
             Destroy(gameObject);

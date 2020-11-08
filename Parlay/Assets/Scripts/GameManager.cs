@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     IEnumerator loadStartScreen()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        string mode_scene_name = "StartScreen";
+        string mode_scene_name = "ModeSelection";
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(mode_scene_name, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
@@ -177,8 +177,6 @@ public class GameManager : MonoBehaviour
 
     public float DistanceTraveledByPlayer()
     {
-        print(playerDistance);
-        print(player.GetComponent<PlayerMovement>().getDistanceTravelled());
         return player.GetComponent<PlayerMovement>().getDistanceTravelled();
     }
 
@@ -193,7 +191,6 @@ public class GameManager : MonoBehaviour
     {
         bonusDistance += powerUp.GetDistanceBoost();
         powerUpText.text = "Score Boost";
-        print(bonusDistance);
         Invoke("resetText", 2);
     }
 

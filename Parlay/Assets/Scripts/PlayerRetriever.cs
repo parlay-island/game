@@ -8,7 +8,8 @@ using UnityEngine.Networking;
 public abstract class AbstractPlayerRetriever : MonoBehaviour
 {
   public abstract void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player);
-    public abstract void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player);
+  public abstract void CreateAccount(CreateAccountModel createAccountModel, System.Action successCallback, System.Action<string> errorCallback);
+  public abstract void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player);
 }
 
 
@@ -21,6 +22,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
 
     public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player)
     {
+      UnityWebRequest.ClearCookieCache();
       var json = JsonConvert.SerializeObject(loginModel);
       string url = apiBaseUrl + "/auth/token/login/?format=json";
       StartCoroutine(PostLoginRequest(url, json, successCallback, errorCallback, player));
@@ -99,4 +101,31 @@ public class PlayerRetriever : AbstractPlayerRetriever
           }
 
       }
+
+      public override void CreateAccount(CreateAccountModel createAccountModel, System.Action successCallback, System.Action<string> errorCallback)
+      {
+        var json = JsonConvert.SerializeObject(createAccountModel);
+        string url = apiBaseUrl + "/auth/users/?format=json";
+        StartCoroutine(PostCreateAccountRequest(url, json, successCallback, errorCallback));
+      }
+
+      IEnumerator PostCreateAccountRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback)
+       {
+           var webRequest = new UnityWebRequest(url, "POST");
+           byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+           webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+           webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+           webRequest.SetRequestHeader("Content-Type", "application/json");
+           webRequest.timeout = TIMEOUT;
+
+           yield return webRequest.SendWebRequest();
+           if (webRequest.isNetworkError || webRequest.isHttpError)
+           {
+                errorCallback(webRequest.responseCode == 400 ? "one of the following problems occurred: your password was not strong enough, your username is already taken, or your class code was invalid" : "a problem occurred while creating your account");
+                Debug.Log(webRequest.error);
+           } else {
+             successCallback();
+           }
+       }
+
 }

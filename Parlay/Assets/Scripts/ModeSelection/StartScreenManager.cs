@@ -21,4 +21,21 @@ public class StartScreenManager : MonoBehaviour
           yield return null;
       }
     }
+
+
+    public void LoadSignUp()
+    {
+      StartCoroutine(LoadSignUpScene());
+    }
+
+    IEnumerator LoadSignUpScene()
+    {
+      string sign_up_scene_name = "SignUpScreen";
+
+      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sign_up_scene_name, LoadSceneMode.Single);
+      while (!asyncLoad.isDone)
+      {
+          yield return null;
+      }
+    }
 }
