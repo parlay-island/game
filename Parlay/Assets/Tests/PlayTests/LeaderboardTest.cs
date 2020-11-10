@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using TMPro;
 
 namespace Tests
 {
@@ -85,7 +86,7 @@ namespace Tests
           gameManager = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
           mockWebRetrieverObj = new GameObject();
           MockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<MockWebRetriever>();
-          leaderboardObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Leaderboard"));
+          leaderboardObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Leaderboard/Leaderboard"));
           leaderboard = leaderboardObj.GetComponent<Leaderboard>();
           leaderboard.webRetriever = mockWebRetriever;
           mockWebRetriever.FetchResults(level, "");
@@ -109,10 +110,10 @@ namespace Tests
             GameObject[] entries = GameObject.FindGameObjectsWithTag("LeaderboardEntry");
             GameObject entry0 = entries[0];
             GameObject entry1 = entries[1];
-            Assert.AreEqual(entry0.transform.Find("NameText").GetComponent<Text>().text, player_name1);
-            Assert.AreEqual(entry1.transform.Find("NameText").GetComponent<Text>().text, player_name2);
-            Assert.AreEqual(entry0.transform.Find("ScoreText").GetComponent<Text>().text, distance1.ToString());
-            Assert.AreEqual(entry1.transform.Find("ScoreText").GetComponent<Text>().text, distance2.ToString());
+            Assert.AreEqual(entry0.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name1);
+            Assert.AreEqual(entry1.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name2);
+            Assert.AreEqual(entry0.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance1.ToString() + "m");
+            Assert.AreEqual(entry1.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance2.ToString() + "m");
             yield return null;
         }
 

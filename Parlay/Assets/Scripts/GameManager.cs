@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
 {
 
     [SerializeField] public GameObject gameOverImage;
-    [SerializeField] public Text gameOverText;
     [SerializeField] public Timer timerManager;
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject ground;
@@ -89,7 +88,6 @@ public class GameManager : MonoBehaviour
     private void hideGameEndElements() {
         endGameScreen.SetActive(false);
         gameOverImage.SetActive(false);
-        gameOverText.gameObject.SetActive(false);
         finalDistanceText.gameObject.SetActive(false);
         leaderBoard.gameObject.SetActive(false);
         resetButton.SetActive(false);
@@ -132,7 +130,6 @@ public class GameManager : MonoBehaviour
         endGameScreen.SetActive(true);
         gameOverImage.SetActive(true);
         resetButton.SetActive(true);
-        gameOverText.gameObject.SetActive(true);
         leaderBoard.gameObject.SetActive(true);
         finalDistanceText.gameObject.SetActive(true);
         exitButton.gameObject.SetActive(true);
