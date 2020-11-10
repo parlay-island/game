@@ -156,7 +156,6 @@ namespace Tests
         public IEnumerator TestTimerCountdownIntegration() {
             // check that game over image and text are NOT showing
             Assert.IsFalse(gameManager.gameOverImage.activeSelf);
-            Assert.IsFalse(gameManager.gameOverText.gameObject.activeSelf);
 
             // check that timer is showing
             Assert.IsTrue(gameManager.timerManager.timerSlider.enabled);
@@ -171,7 +170,6 @@ namespace Tests
             gameManager.timerManager.mockDecreaseTime(1f);
             gameManager.gameOver();
             Assert.IsTrue(gameManager.gameOverImage.activeSelf);
-            Assert.IsTrue(gameManager.gameOverText.gameObject.activeSelf);
             Assert.AreEqual(gameManager.timerManager.timerText.text, "0:00");
             Assert.IsTrue(gameManager.timerManager.isTimeUp());
 

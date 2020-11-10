@@ -13,6 +13,7 @@ TagManager:
   - Potion
   - LevelButton
   - PlayerInfo
+  - Award
   layers:
   - Default
   - TransparentFX

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Leaderboard : MonoBehaviour
 {
@@ -43,8 +44,8 @@ public class Leaderboard : MonoBehaviour
 
     private void CreateLeaderboard()
     {
-      entryContainer = transform.Find("highscoreEntryContainer");
-      entryTemplate = entryContainer.Find("highscoreEntryTemplate");
+      entryContainer = transform;
+      entryTemplate = entryContainer.Find("LeaderboardEntry").transform;
 
       entryTemplate.gameObject.SetActive(false);
 
@@ -57,50 +58,39 @@ public class Leaderboard : MonoBehaviour
 
     private void CreateHighScoreEntryTransform(ResultModel resultEntry, Transform container, List<Transform> transformList)
     {
-        float templateHeight = 75f;
+        float templateHeight = 1.3f;
+        float initialPos = -1.6f;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-        entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+        entryRectTransform.anchoredPosition = new Vector2(-0f, initialPos + (-templateHeight * transformList.Count));
         entryTransform.gameObject.SetActive(true);
 
         int rank = transformList.Count + 1;
-        string rankString;
-        switch (rank)
-        {
-            case 1:
-                rankString = "1ST";
-                break;
-            case 2:
-                rankString = "2ND";
-                break;
-            case 3:
-                rankString = "3RD";
-                break;
-            default:
-                rankString = rank + "TH";
-                break;
-        }
+        string rankString = GetRankNumber(rank);
+        entryTransform.Find("Rank").GetComponent<TextMeshProUGUI>().SetText(rankString);
 
-        entryTransform.Find("PositionText").GetComponent<Text>().text = rankString;
-
-        float score = resultEntry.distance;
-
-        entryTransform.Find("ScoreText").GetComponent<Text>().text = score.ToString();
+        float score = Mathf.Round(resultEntry.distance);
+        entryTransform.Find("Distance").GetComponent<TextMeshProUGUI>().SetText(score.ToString() + "m");
 
         string user = resultEntry.player_name;
-        entryTransform.Find("NameText").GetComponent<Text>().text = user;
-
-        //Set background visible odds and evens, makes it easier to read
-        entryTransform.Find("templateBackground").gameObject.SetActive(rank % 2 == 1);
-
-        if (rank == 1)
-        {
-            entryTransform.Find("NameText").GetComponent<Text>().color = Color.green;
-            entryTransform.Find("ScoreText").GetComponent<Text>().color = Color.green;
-            entryTransform.Find("PositionText").GetComponent<Text>().color = Color.green;
-        }
+        entryTransform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(user);
 
         transformList.Add(entryTransform);
+    }
+
+    private string GetRankNumber(int rank)
+    {
+      switch (rank)
+      {
+          case 1:
+              return "1st";
+          case 2:
+              return "2nd";
+          case 3:
+              return "3rd";
+          default:
+              return rank + "th";
+      }
     }
 
 }
