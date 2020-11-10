@@ -444,6 +444,10 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7578708017307210022, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
+      propertyPath: m_text
+      value: BACK TO LEVELS
+      objectReference: {fileID: 0}
     - target: {fileID: 7578708017307210023, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
