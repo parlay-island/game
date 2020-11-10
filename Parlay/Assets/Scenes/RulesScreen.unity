@@ -334,11 +334,19 @@ PrefabInstance:
       objectReference: {fileID: 1642732279}
     - target: {fileID: 5563306521419371236, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: backToModeSelection
+      value: goToRulesOrModeScreen
       objectReference: {fileID: 0}
     - target: {fileID: 5563306521419371236, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Rules, GameAssembly
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563306521419371236, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563306521419371236, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: ModeSelection
       objectReference: {fileID: 0}
     - target: {fileID: 5563306521682832165, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -346,7 +354,7 @@ PrefabInstance:
       objectReference: {fileID: 1642732279}
     - target: {fileID: 5563306521682832165, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: goToRulesScreen
+      value: goToRulesOrModeScreen
       objectReference: {fileID: 0}
     - target: {fileID: 5563306521682832165, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -458,7 +466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7578708017307210023, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -53.032
+      value: -53.032013
       objectReference: {fileID: 0}
     - target: {fileID: 7578708017307210023, guid: 703365161ed544ab59f36c9a014d235c, type: 3}
       propertyPath: m_SizeDelta.y

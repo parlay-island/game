@@ -332,7 +332,7 @@ PrefabInstance:
       objectReference: {fileID: 695550256}
     - target: {fileID: 5807258720050733899, guid: 5e9afe46e0cb24d289c45fa510cc06ee, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: goToRulesScreen
+      value: goToRulesOrModeScreen
       objectReference: {fileID: 0}
     - target: {fileID: 5807258720050733899, guid: 5e9afe46e0cb24d289c45fa510cc06ee, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -368,11 +368,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399116608592447871, guid: 5e9afe46e0cb24d289c45fa510cc06ee, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 133.86
+      value: 133.85999
       objectReference: {fileID: 0}
     - target: {fileID: 8399116608592447871, guid: 5e9afe46e0cb24d289c45fa510cc06ee, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -53.032
+      value: -53.032013
       objectReference: {fileID: 0}
     - target: {fileID: 8399116608592447871, guid: 5e9afe46e0cb24d289c45fa510cc06ee, type: 3}
       propertyPath: m_SizeDelta.y

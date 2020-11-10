@@ -5,44 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class Rules : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool isTest = false;
+
+    public void goToRulesOrModeScreen(string next_screen_name)
     {
-        
+        StartCoroutine(LoadRulesOrModeScreen(next_screen_name));
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator LoadRulesOrModeScreen(string next_screen_name)
     {
-        
-    }
-
-    public void backToModeSelection()
-    {
-        StartCoroutine(LoadModeScreen());
-    }
-
-    IEnumerator LoadModeScreen()
-    {
-        string mode_scene_name = "ModeSelection";
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(mode_scene_name, LoadSceneMode.Single);
+		Scene currentScene = SceneManager.GetActiveScene();
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(next_screen_name, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-    }
-
-    public void goToRulesScreen(string rules_screen_name)
-    {
-        StartCoroutine(LoadRulesScreen(rules_screen_name));
-    }
-
-    IEnumerator LoadRulesScreen(string rules_screen_name)
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(rules_screen_name, LoadSceneMode.Single);
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
+		if(!isTest)
+        	yield return SceneManager.UnloadSceneAsync(currentScene);
+      	else
+        	SceneManager.SetActiveScene(SceneManager.GetSceneByName(next_screen_name));
     }
 }

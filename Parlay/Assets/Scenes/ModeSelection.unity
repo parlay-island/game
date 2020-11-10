@@ -375,7 +375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3650987706267362905, guid: 2a62f695286804f229263459cab2ea63, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: goToRulesScreen
+      value: goToRulesOrModeScreen
       objectReference: {fileID: 0}
     - target: {fileID: 3650987706267362905, guid: 2a62f695286804f229263459cab2ea63, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
