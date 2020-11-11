@@ -26,6 +26,7 @@ public class QuestionManager : MonoBehaviour
     [SerializeField] public List<TextMeshProUGUI> choiceTexts;
     [SerializeField] public List<Image> choicePanels;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
+    public Answered10QuestionsAward awardManager;
 
     public void Start()
     {
@@ -93,6 +94,7 @@ public class QuestionManager : MonoBehaviour
             _answeredQuestions.Add(_currentQuestion);
             addQuestionToAnsweredQuestions(userChoice);
             Invoke("HideQuestion", 0.25f);
+            awardManager.DisplayAward();
         } else if (GameManager.instance.retries.Count > 0 && GameManager.instance.canRetry)
         {
             choicePanel.color = red;

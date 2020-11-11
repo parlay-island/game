@@ -19,7 +19,6 @@ public abstract class Award : MonoBehaviour
         bronzeMedal.SetActive(false);
         silverMedal.SetActive(false);
         goldMedal.SetActive(false);
-        DisplayAward();
         awardMultiplier = 1;
     }
 

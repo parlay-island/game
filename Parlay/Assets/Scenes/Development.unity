@@ -532,6 +532,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5bcf444a9efc469190a93198e0a36d2, type: 3}
+--- !u!114 &1075832518 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3996218647079403280, guid: 97beb3691dd5b4de1b70dc9972a39bf7, type: 3}
+  m_PrefabInstance: {fileID: 8896740532609435054}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11deb31933f7445cbe5134044b053b43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1127273594 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8007271838127522720, guid: 9f2cb90b73b7542b3bd99c4d4a4fb2fc, type: 3}
@@ -1178,6 +1189,10 @@ PrefabInstance:
       propertyPath: choicePanels.Array.data[3]
       value: 
       objectReference: {fileID: 123659516}
+    - target: {fileID: 1406895029619407632, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
+      propertyPath: awardManager
+      value: 
+      objectReference: {fileID: 1075832518}
     - target: {fileID: 4322806984388122485, guid: c9b5da7802e114c03a89b09951e85aa7, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
