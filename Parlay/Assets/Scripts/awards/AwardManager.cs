@@ -17,11 +17,6 @@ public class AwardManager : MonoBehaviour
         award_ranking = new List<string>();
         awards_won = new List<Award>();
         top_award = new List<string>();
-        foreach (Award award in award_list)
-        {
-            award_ranking.Add(award.awardName);
-        }
-        top_award = new List<string>();
     }
 
     public bool WinsAward()
@@ -42,6 +37,11 @@ public class AwardManager : MonoBehaviour
     private void calculateTopAward()
     {
         print("Calculating award");
+        award_ranking.Clear();
+        foreach (Award award in award_list)
+        {
+            award_ranking.Add(award.awardName);
+        }
         string temp_award = "";
         foreach (Award award in awards_won)
         {
