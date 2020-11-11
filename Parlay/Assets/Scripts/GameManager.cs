@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public ArrayList retries = new ArrayList();
     public bool playerFallen = false;
     private List<AnsweredQuestion> _answeredQuestions;
+    private PlayerAuth _playerAuth;
 
     void Awake()
     {
@@ -51,9 +52,16 @@ public class GameManager : MonoBehaviour
     	DontDestroyOnLoad(gameObject);
       GameObject levelObj = GameObject.Find("LevelObj");
       level = levelObj != null ? levelObj.GetComponent<Level>().GetId() : 1;
-      GameObject player = GameObject.Find("PlayerInfo");
-      playerID = player != null ? player.GetComponent<Player>().GetId() : 1;
-      player_auth_token = player != null ? player.GetComponent<Player>().GetAuthToken() : "";
+      try
+      {
+          _playerAuth = GameObject.Find("PlayerInfo").GetComponent<PlayerAuth>();
+          playerID = _playerAuth != null ? _playerAuth.GetId() : 1;
+          player_auth_token = _playerAuth != null ? _playerAuth.GetAuthToken() : "";
+      }
+      catch (NullReferenceException e)
+      {
+          Debug.Log("Encountered null error when finding player info");
+      }
     }
 
     public void exitGame()
@@ -81,6 +89,8 @@ public class GameManager : MonoBehaviour
         timerManager.initTimer(gameTime);
         distanceText.gameObject.SetActive(true);
         gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+        leaderBoard.GetComponent<Leaderboard>().SetGameEndRequestHelper(gameEndRequestHelper);
+        leaderBoard.GetComponent<Leaderboard>().SetPlayer(_playerAuth);
         enabled = true;
         _answeredQuestions = new List<AnsweredQuestion>();
     }
