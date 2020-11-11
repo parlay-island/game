@@ -19,14 +19,14 @@ public class PowerUp : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            if (type == 1)
+            if (type == 1 && GameManager.instance)
             {
                 GameManager.instance.IncreaseTimeByPowerUp(this);
             }
-            else if (type == 2)
+            else if (type == 2 && GameManager.instance)
             {
                 GameManager.instance.IncreaseDistanceByPowerUp(this);
-            } else if (type == 3)
+            } else if (type == 3 && GameManager.instance)
             {
                 GameManager.instance.AddRetry(this);
             }
