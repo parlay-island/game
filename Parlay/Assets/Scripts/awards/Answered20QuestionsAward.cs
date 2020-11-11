@@ -11,7 +11,7 @@ public class Answered20QuestionsAward : Award
         awardName = "silver medal";
     }
 
-    public override bool WinsAward(int count)
+    public override bool WinsAward()
     {
         return questionManager.GetAnsweredQuestions().Count == 20;
     }

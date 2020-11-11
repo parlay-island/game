@@ -35,9 +35,10 @@ public abstract class Award : MonoBehaviour
         silverMedal.SetActive(false);
         goldMedal.SetActive(false);
         awardUI.SetActive(false);
+        text.text = "";
     }
 
     public abstract void DisplayAward();
-    public abstract bool WinsAward(int count);
+    public abstract bool WinsAward();
     public abstract string GetAwardMessage();
 }

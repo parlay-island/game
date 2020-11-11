@@ -15,6 +15,8 @@ public class AwardManager : MonoBehaviour
     void Start()
     {
         award_ranking = new List<string>();
+        awards_won = new List<Award>();
+        top_award = new List<string>();
         foreach (Award award in award_list)
         {
             award_ranking.Add(award.awardName);
@@ -22,14 +24,15 @@ public class AwardManager : MonoBehaviour
         top_award = new List<string>();
     }
 
-    public bool WinsAward(int count)
+    public bool WinsAward()
     {
         foreach (Award award in award_list)
         {
-            if (award.WinsAward(count))
+            if (award.WinsAward())
             {
                 awards_won.Add(award);
                 calculateTopAward();
+                award.DisplayAward();
                 return true;
             }
         }
@@ -52,9 +55,6 @@ public class AwardManager : MonoBehaviour
 
     public void DisplayAward()
     {
-        foreach (Award award in award_list)
-        {
-            award.DisplayAward();
-        }
+        WinsAward();
     }
 }
