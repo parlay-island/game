@@ -43,6 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e8a28360fd8147468ce9e83967026b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer_image: {fileID: 748265558494872304, guid: c72fb645f1b1e4ac892a1fe92297e638, type: 3}
+  neutral_image: {fileID: 21300000, guid: 448d1c44e460a4eb5b89ead495e8e43f, type: 3}
+  positive_image: {fileID: 21300000, guid: 70c7d519088b0496dba6cff82ecaf2b9, type: 3}
+  negative_image: {fileID: 21300000, guid: 6f2c5930ea8004d39b7524294fba967b, type: 3}
   timerSlider: {fileID: 6450739626822550977, guid: b710166a133174b5bb567b30cbc21026, type: 3}
+  time_icon: {fileID: 5614995954162474402, guid: 0ed587743890f48bd869007c67038e66, type: 3}
   timerText: {fileID: 5002066539427939721, guid: 8fe4e43a5ff024f82af4ab33e4fc6b8f, type: 3}
   timeLabel: {fileID: 5514747539825256181, guid: ad2d7c5a6d17e42c7b3d2ff45a955cea, type: 3}

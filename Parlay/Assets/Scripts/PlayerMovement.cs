@@ -17,9 +17,9 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField] public GameObject questionUI;
     public CharacterController2D controller;
-	public Animator animator;
+	  public Animator animator;
 
-	public float runSpeed = 40f;
+	  public float runSpeed = 40f;
 
 	  float horizontalMove = 0f;
 	  bool jump = false;
@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour {
       if(hitTimer <= 0f)
       {
         isHit = false;
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
       }
     }
     bool movementAllowed = !questionUI.activeSelf;
@@ -88,7 +89,20 @@ public class PlayerMovement : MonoBehaviour {
       isHit = true;
       hitTimer = PLAYER_RECOVERY_TIME;
       animator.SetTrigger("IsHit");
+      StartCoroutine(DoBlinks(0.1f));
     }
+
+    IEnumerator DoBlinks(float blinkTime) {
+      SpriteRenderer render = gameObject.GetComponent<SpriteRenderer>();
+      while (hitTimer > 0f && isHit) {
+        render.enabled = !render.enabled;
+        yield return new WaitForSeconds(blinkTime);
+        render.enabled = !render.enabled;
+        yield return new WaitForSeconds(blinkTime);
+      }
+      render.enabled = true;
+    }
+
 
 	void FixedUpdate ()
 	{

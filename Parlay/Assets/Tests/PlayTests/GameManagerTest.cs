@@ -146,10 +146,9 @@ namespace Tests
         [TearDown]
         public void Teardown()
         {
-            GameObject.Destroy(testObject);
-            GameObject.Destroy(testPlayer);
-            GameObject.Destroy(mockWebRetrieverObj);
-            GameObject.Destroy(questionManagerGameObject);
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
         }
 
         [UnityTest, Order(2)]

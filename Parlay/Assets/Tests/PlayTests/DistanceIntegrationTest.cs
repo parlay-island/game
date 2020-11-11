@@ -78,9 +78,9 @@ namespace Tests
         public void Teardown()
         {
             playerMovement.questionUI.gameObject.SetActive(false);
-            GameObject.Destroy(mockWebRetrieverObj);
-            GameObject.Destroy(testObject);
-            GameObject.Destroy(testPlayer);
+            foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+              GameObject.Destroy(obj);
+            }
         }
 
         [Retry(4)]

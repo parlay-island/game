@@ -25,13 +25,15 @@ namespace Tests
             rules = testObject.GetComponent<Rules>();
 			rules.isTest = true;
         }
-        
+
         [TearDown]
         public void Teardown()
         {
-            GameObject.Destroy(testObject);
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
         }
-        
+
         [UnityTest, Order(1)]
         public IEnumerator GoesToNextRulesScreen()
         {
@@ -43,7 +45,7 @@ namespace Tests
             SceneManager.UnloadSceneAsync(ruleScene2);
             yield return new WaitForSeconds(1f);
         }
-        
+
         [UnityTest, Order(2)]
         public IEnumerator GoesToFirstRulesScreen()
         {
@@ -55,7 +57,7 @@ namespace Tests
             SceneManager.UnloadSceneAsync(ruleScene);
             yield return new WaitForSeconds(1f);
         }
-        
+
         [UnityTest, Order(3)]
         public IEnumerator GoesBackToModeScreen()
         {
@@ -68,6 +70,6 @@ namespace Tests
             yield return new WaitForSeconds(1f);
         }
 
-        
+
     }
 }

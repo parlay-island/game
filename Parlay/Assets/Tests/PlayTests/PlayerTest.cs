@@ -45,11 +45,8 @@ namespace Tests
         public void Teardown()
         {
             playerMovement.questionUI.gameObject.SetActive(false);
-            GameObject.Destroy(testPlayer);
-            if (testGround != null)
-            {
-              Object.Destroy(testGround.GetComponent<BoxCollider2D>());
-              GameObject.Destroy(testGround);
+            foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+              GameObject.Destroy(obj);
             }
         }
 

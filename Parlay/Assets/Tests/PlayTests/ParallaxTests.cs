@@ -27,11 +27,9 @@ namespace Tests
         [TearDown]
         public void Teardown()
         {
-            GameObject.Destroy(camera);
-            GameObject.Destroy(cloudsObj);
-            GameObject.Destroy(mountainsObj);
-            GameObject.Destroy(treesObj);
-            GameObject.Destroy(testPlayer);
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
         }
 
         [UnityTest, Order(1)]

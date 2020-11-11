@@ -43,7 +43,6 @@ namespace Tests
       public void Teardown()
       {
         GameObject.Destroy(characterController);
-        GameObject.Destroy(gameManager);
         foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
           GameObject.Destroy(obj);
         }
