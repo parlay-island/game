@@ -7,7 +7,7 @@ using UnityEditor;
 
 class WebGLBuilder {
     static void build() {
-        string[] scenes = {"Assets/Scenes/StartScreen.unity", "Assets/Scenes/LoginScreen.unity", "Assets/Scenes/SignUpScreen.unity", "Assets/Scenes/ModeSelection.unity", "Assets/Scenes/Development.unity"};
+        string[] scenes = {"Assets/Scenes/StartScreen.unity", "Assets/Scenes/LoginScreen.unity", "Assets/Scenes/SignUpScreen.unity", "Assets/Scenes/ModeSelection.unity", "Assets/Scenes/Development.unity", "Assets/Scenes/RulesScreen.unity", "Assets/Scenes/RulesScreen2.unity"};
         BuildPipeline.BuildPlayer(scenes, "WebGL-Dist", BuildTarget.WebGL, BuildOptions.None);
     }
 }
