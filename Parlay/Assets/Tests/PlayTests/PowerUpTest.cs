@@ -42,14 +42,8 @@ namespace Tests
         public void Teardown()
         {
             gameManager.questionUI.gameObject.SetActive(false);
-            GameObject.Destroy(powerUp);
-            GameObject.Destroy(player);
-            GameObject.Destroy(gameManagerObj);
-            GameObject.Destroy(powerupText);
-
-            foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
-            {
-                GameObject.Destroy(chunk);
+            foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+              GameObject.Destroy(obj);
             }
         }
 
@@ -69,7 +63,7 @@ namespace Tests
          {
             float initialTime = gameManager.timerManager.getCurrTime();
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/ChestTile1"));
-            powerUp.GetComponent<PowerUp>().type = 1; 
+            powerUp.GetComponent<PowerUp>().type = 1;
             CollideWithPowerUp();
              yield return new WaitForSeconds(2);
              //Test if time was increased

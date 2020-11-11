@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
     private void hideUIElementsWhenGameOver() {
         enemySpawner.SetActive(false);
         distanceText.gameObject.SetActive(false);
+        questionUI.SetActive(false);
         timerManager.hideTimer();
     }
 

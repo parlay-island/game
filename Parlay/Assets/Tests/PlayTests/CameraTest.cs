@@ -30,8 +30,9 @@ namespace Tests
         [TearDown]
         public void Teardown()
         {
-            GameObject.Destroy(testPlayer);
-            GameObject.Destroy(camera);
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
         }
 
         [Retry(3)]

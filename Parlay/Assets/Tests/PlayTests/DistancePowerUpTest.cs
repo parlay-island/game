@@ -49,14 +49,8 @@ namespace Tests
         public void Teardown()
         {
             gameManager.questionUI.gameObject.SetActive(false);
-            GameObject.Destroy(powerUp);
-            GameObject.Destroy(player);
-            GameObject.Destroy(gameManagerObj);
-            GameObject.Destroy(powerupText);
-
-            foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
-            {
-                GameObject.Destroy(chunk);
+            foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+              GameObject.Destroy(obj);
             }
         }
 

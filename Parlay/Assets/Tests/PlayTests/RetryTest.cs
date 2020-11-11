@@ -40,12 +40,8 @@ namespace Tests
         public void Teardown()
         {
             gameManager.questionUI.gameObject.SetActive(false);
-            GameObject.Destroy(testObject);
-            GameObject.Destroy(playerObj);
-            GameObject.Destroy(gameManagerObj);
-            foreach (GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
-            {
-                GameObject.Destroy(chunk);
+            foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+              GameObject.Destroy(obj);
             }
         }
 
@@ -58,7 +54,6 @@ namespace Tests
             levelGenerator.Reset();
             yield return new WaitForSeconds(0.1f);
             Assert.IsTrue(levelGenerator.player.transform.position.x < 66);
-            Debug.Log(GameObject.FindGameObjectsWithTag("Chunck").Length);
             Assert.IsTrue(GameObject.FindGameObjectsWithTag("Chunck").Length <= 7);
             yield return null;
         }

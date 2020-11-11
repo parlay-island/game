@@ -98,9 +98,9 @@ namespace Tests
         public void TearDown()
         {
           leaderboardObj.gameObject.SetActive(false);
-          GameObject.Destroy(mockWebRetrieverObj);
-          GameObject.Destroy(leaderboardObj);
-          GameObject.Destroy(gameManager);
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
 
         }
 

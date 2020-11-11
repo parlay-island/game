@@ -10,18 +10,26 @@ namespace Tests
     {
         private GameObject testObject;
         private Timer timer;
+        private Sprite neutral_image;
+    		private Sprite positive_image;
+    		private Sprite negative_image;
 
         [SetUp]
         public void Setup() {
-            testObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"));
+            testObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Timer/TimeManager"));
             timer = testObject.GetComponent<Timer>();
             timer.initTimer(2f);
+            neutral_image = timer.neutral_image;
+            positive_image = timer.positive_image;
+            negative_image = timer.negative_image;
         }
 
         [TearDown]
         public void Teardown()
         {
-            GameObject.Destroy(testObject);
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
         }
 
         [UnityTest, Order(1)]
@@ -29,6 +37,7 @@ namespace Tests
         {
             Assert.IsTrue(timer.timerSlider.enabled);
             Assert.IsTrue(timer.timerText.gameObject.activeSelf);
+            Assert.AreEqual(timer.timer_image.sprite, neutral_image);
             yield return null;
         }
 
@@ -66,7 +75,24 @@ namespace Tests
             Assert.AreEqual(timer.getCurrTime(), 0f);
             Assert.AreEqual(timer.timerText.text, "0:00");
             yield return null;
+        }
 
+        [UnityTest, Order(4)]
+        public IEnumerator TestTimerImageChangeForPositiveTimeAddition()
+        {
+            Sprite currImage = timer.timer_image.sprite;
+            timer.AddTime(1f);
+            Assert.AreEqual(timer.timer_image.sprite, positive_image);
+            yield return null;
+        }
+
+        [UnityTest, Order(4)]
+        public IEnumerator TestTimerImageChangeForNegativeTimeAddition()
+        {
+            Sprite currImage = timer.timer_image.sprite;
+            timer.AddTime(-1f);
+            Assert.AreEqual(timer.timer_image.sprite, negative_image);
+            yield return null;
         }
     }
 }

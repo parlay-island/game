@@ -63,7 +63,9 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
-            GameObject.Destroy(questionManagerGameObject);
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
         }
 
         [Retry (2)]

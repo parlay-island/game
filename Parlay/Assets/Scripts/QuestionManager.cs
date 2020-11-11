@@ -16,25 +16,38 @@ public class QuestionManager : MonoBehaviour
 
     private QuestionModel _currentQuestion;
     public GameManager gameManager;
+    private Color32 originalColor;
+    public Color32 green;
+    public Color32 red;
 
     [SerializeField] public AbstractWebRetriever webRetriever;
     [SerializeField] public int timeReward;
     [SerializeField] public TextMeshProUGUI questionText;
     [SerializeField] public List<TextMeshProUGUI> choiceTexts;
+    [SerializeField] public List<Image> choicePanels;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
-    
+
     public void Start()
     {
         try
         {
             RetrieveQuestionsIfNotAlreadySet();
             gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            originalColor = new Color32(255, 255, 255, 100);
+            ResetPanelColors();
+            green = new Color32(152,251,152,150);
+            red = new Color32(220,20,60, 150);
         }
         catch (Exception exception)
         {
             errorDisplaySource.DisplayNewError("Cannot load questions", "An error occurred while loading "
                             + "questions. Please try again later.");
         }
+    }
+
+    public void ClearQuestions()
+    {
+      _unansweredQuestions = null;
     }
 
     private void RetrieveQuestionsIfNotAlreadySet()
@@ -70,30 +83,47 @@ public class QuestionManager : MonoBehaviour
 
     public void UserSelect(int userChoice)
     {
-
+      if(userChoice != 4)
+      {
+        Image choicePanel = choicePanels[userChoice];
         if (_currentQuestion.answers.Contains(userChoice))
         {
+            choicePanel.color = green;
             timer.AddTime(timeReward);
-            questionUI.SetActive(false);
             _answeredQuestions.Add(_currentQuestion);
-            SetCurrentQuestion();
             addQuestionToAnsweredQuestions(userChoice);
-        } else if (userChoice == 4) {
-            print("Retry State Changed");
-            GameManager.instance.canRetry = !GameManager.instance.canRetry;
+            Invoke("HideQuestion", 0.25f);
         } else if (GameManager.instance.retries.Count > 0 && GameManager.instance.canRetry)
         {
+            choicePanel.color = red;
             GameManager.instance.retries.RemoveAt(0);
-            print("Granting Retry, Count: " + GameManager.instance.retries.Count);
-            SetCurrentQuestion();
             addQuestionToAnsweredQuestions(userChoice);
+            Invoke("ResetPanelColors", 0.25f);
         } else
         {
-            questionUI.SetActive(false);
+            choicePanel.color = red;
             _answeredQuestions.Add(_currentQuestion);
-            SetCurrentQuestion();
             addQuestionToAnsweredQuestions(userChoice);
+            Invoke("HideQuestion", 0.25f);
         }
+      } else {
+            GameManager.instance.canRetry = !GameManager.instance.canRetry;
+      }
+    }
+
+    private void ResetPanelColors()
+    {
+      SetCurrentQuestion();
+      foreach(Image choicePanel in choicePanels)
+      {
+        choicePanel.color = originalColor;
+      }
+    }
+
+    private void HideQuestion()
+    {
+      questionUI.SetActive(false);
+      ResetPanelColors();
     }
 
     private void addQuestionToAnsweredQuestions(int userChoice)

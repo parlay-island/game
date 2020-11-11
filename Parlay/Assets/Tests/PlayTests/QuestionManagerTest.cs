@@ -21,11 +21,11 @@ namespace Tests
         private const int WrongChoiceIndex = 1;
 
         private GameObject _uiGameObject;
-        private List<GameObject> _questionManagerGameObjectList;
         private QuestionManager _questionManager;
         private Timer _timer;
         private GameManager gameManager;
         private GameObject gameManagerObj;
+        private List<Image> choicePanels;
         private static QuestionModel firstQuestion = new QuestionModel(QuestionText, new List<ChoiceModel>
             {
                 new ChoiceModel(RightChoice),
@@ -94,55 +94,85 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            _questionManagerGameObjectList = new List<GameObject>();
-                _uiGameObject = new GameObject();
+            _uiGameObject = new GameObject();
             GameObject questionManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
-            _questionManagerGameObjectList.Add(questionManagerObj);
             _questionManager = questionManagerObj.GetComponent<QuestionManager>();
-            GameObject timeManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/TimeManager"));
-            _questionManagerGameObjectList.Add(timeManagerObj);
-            _timer = timeManagerObj.GetComponent<Timer>();
             MockWebRetriever webRetriever = AddComponent<MockWebRetriever>();
             _questionManager.webRetriever = webRetriever;
-            _questionManager.timer = _timer;
             _questionManager.questionUI = _uiGameObject;
             _questionManager.SetTimeReward(TimeReward);
-            _questionManager.SetQuestionText(AddComponent<TextMeshProUGUI>());
-            _questionManager.errorDisplaySource = AddComponent<ErrorDisplaySource>();
-            _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
-            _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
-            _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
+            SetUpTimer();
+            SetUpErrorMessage();
+            SetUpText();
+            SetUpPanels();
+            SetUpGameManager(webRetriever);
 
-                _questionManager.SetChoiceTexts(new List<TextMeshProUGUI>
-            {
-                AddComponent<TextMeshProUGUI>(),
-                AddComponent<TextMeshProUGUI>()
-            });
-
-            gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
-            gameManager = gameManagerObj.GetComponent<GameManager>();
-            gameManager.webRetriever = webRetriever;
-            gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
-            _questionManager.gameManager = gameManager;
             gameManager.setGameTime(30f);
+        }
 
+        private void SetUpErrorMessage()
+        {
+          _questionManager.errorDisplaySource = AddComponent<ErrorDisplaySource>();
+          _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
+          _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
+          _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
+        }
+
+        private void SetUpTimer()
+        {
+          GameObject timeManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Timer/TimeManager"));
+          _timer = timeManagerObj.GetComponent<Timer>();
+          _questionManager.timer = _timer;
+        }
+
+        private void SetUpText()
+        {
+          _questionManager.SetQuestionText(AddComponent<TextMeshProUGUI>());
+          SetUpErrorMessage();
+
+              _questionManager.SetChoiceTexts(new List<TextMeshProUGUI>
+          {
+              AddComponent<TextMeshProUGUI>(),
+              AddComponent<TextMeshProUGUI>()
+          });
+        }
+
+        private void SetUpGameManager(AbstractWebRetriever webRetriever)
+        {
+          gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+          gameManager = gameManagerObj.GetComponent<GameManager>();
+          gameManager.webRetriever = webRetriever;
+          gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+          _questionManager.gameManager = gameManager;
+          gameManager.setGameTime(30f);
+        }
+
+        private void SetUpPanels()
+        {
+          GameObject panel1Obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/ChoicePanel1"));
+          GameObject panel2Obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/ChoicePanel2"));
+          GameObject panel3Obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/ChoicePanel3"));
+          GameObject panel4Obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/ChoicePanel4"));
+          choicePanels = new List<Image>{
+            panel1Obj.GetComponent<Image>(),
+            panel2Obj.GetComponent<Image>(),
+            panel3Obj.GetComponent<Image>(),
+            panel4Obj.GetComponent<Image>()
+          };
+          _questionManager.choicePanels = choicePanels;
         }
 
         [TearDown]
         public void TearDown()
         {
-            GameObject.Destroy(_uiGameObject);
-            GameObject.Destroy(gameManagerObj);
-            foreach (var gameObject in _questionManagerGameObjectList)
-            {
-                GameObject.Destroy(gameObject);
-            }
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
         }
 
         private T AddComponent<T>() where T : Component
         {
             var gameObject = new GameObject();
-            _questionManagerGameObjectList.Add(gameObject);
             return gameObject.AddComponent<T>();
         }
 
@@ -168,19 +198,20 @@ namespace Tests
         public IEnumerator UserSelectTurnsUIInactive()
         {
             _questionManager.UserSelect(RightChoiceIndex);
+            yield return new WaitForSeconds(1f);
             Assert.That(!_uiGameObject.activeSelf);
-            yield return null;
         }
 
         [UnityTest, Order(4)]
         public IEnumerator ApiTimesOutResponseSoTheErrorAppears()
         {
+            _questionManager.ClearQuestions();
             var errorMessageBefore = _questionManager.errorDisplaySource.errorMessage.text;
             _questionManager.webRetriever = AddComponent<TimeoutWebRetriever>();
             _questionManager.Start();
+            yield return new WaitForSeconds(1f);
             Assert.AreNotEqual(errorMessageBefore,
                 _questionManager.errorDisplaySource.errorMessage.text);
-            yield return null;
         }
 
         [UnityTest, Order(5)]
@@ -188,8 +219,32 @@ namespace Tests
         {
             var questionTextBefore = _questionManager.questionText.text;
             _questionManager.UserSelect(1);
+            yield return new WaitForSeconds(1f);
             Assert.AreNotEqual(questionTextBefore, _questionManager.questionText.text);
-            yield return null;
+        }
+
+        [UnityTest, Order(6)]
+        public IEnumerator UserSelectIncorrectDisplaysAsRed()
+        {
+            Color colorBefore = choicePanels[WrongChoiceIndex].color;
+            _questionManager.UserSelect(WrongChoiceIndex);
+            yield return new WaitForSeconds(0.1f);
+            Color red = _questionManager.red;
+            Assert.AreNotEqual(colorBefore, choicePanels[WrongChoiceIndex].color);
+            Assert.AreEqual(colorBefore, choicePanels[RightChoiceIndex].color);
+            Assert.AreEqual(red, choicePanels[WrongChoiceIndex].color);
+        }
+
+        [UnityTest, Order(7)]
+        public IEnumerator UserSelectCorrectDisplaysAsGreen()
+        {
+            Color colorBefore = choicePanels[RightChoiceIndex].color;
+            _questionManager.UserSelect(RightChoiceIndex);
+            yield return new WaitForSeconds(0.1f);
+            Color green = _questionManager.green;
+            Assert.AreNotEqual(colorBefore, choicePanels[RightChoiceIndex].color);
+            Assert.AreEqual(colorBefore, choicePanels[WrongChoiceIndex].color);
+            Assert.AreEqual(green, choicePanels[RightChoiceIndex].color);
         }
     }
 }

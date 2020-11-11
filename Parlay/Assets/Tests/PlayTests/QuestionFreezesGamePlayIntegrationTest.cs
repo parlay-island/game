@@ -39,19 +39,9 @@ namespace Tests
         playerMovement.questionUI.gameObject.SetActive(false);
         gameManager.questionUI.gameObject.SetActive(false);
         enemySpawner.gameObject.SetActive(true);
-        GameObject.Destroy(gameManagerObj);
-        GameObject.Destroy(testPlayer);
-        GameObject.Destroy(testEnemy);
-        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-          GameObject.Destroy(enemy);
+        foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+          GameObject.Destroy(obj);
         }
-        GameObject.Destroy(enemySpawner);
-        foreach(GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
-        {
-          GameObject.Destroy(chunk);
-        }
-        GameObject.Destroy(level);
     }
 
     [Retry(3)]

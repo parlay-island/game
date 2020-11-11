@@ -24,12 +24,9 @@ namespace Tests
         [TearDown]
         public void Teardown()
         {
-            GameObject.Destroy(testObject);
-            GameObject.Destroy(playerObj);
-            foreach(GameObject chunk in GameObject.FindGameObjectsWithTag("Chunck"))
-            {
-              GameObject.Destroy(chunk);
-            }
+          foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
+            GameObject.Destroy(obj);
+          }
         }
 
         [UnityTest]
