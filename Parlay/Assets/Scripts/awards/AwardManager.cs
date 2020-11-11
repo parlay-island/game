@@ -8,7 +8,7 @@ using TMPro;
 public class AwardManager : MonoBehaviour
 {
     public List<Award> award_list;
-    private List<string> award_ranking;
+    public List<string> award_ranking;
     private List<Award> awards_won;
     public List<string> top_award;
 
@@ -41,6 +41,7 @@ public class AwardManager : MonoBehaviour
 
     private void calculateTopAward()
     {
+        print("Calculating award");
         string temp_award = "";
         foreach (Award award in awards_won)
         {
