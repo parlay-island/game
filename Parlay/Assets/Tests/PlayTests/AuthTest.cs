@@ -18,26 +18,26 @@ namespace Tests
 
         public class MockPlayerRetriever: AbstractPlayerRetriever
         {
-          public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player)
+          public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
           {
             PlayerModel player_fetched = new PlayerModel(testPlayerId, loginModel.username, testPlayerAccuracy);
-            player.SetPlayer(player_fetched);
+            playerAuth.SetPlayer(player_fetched);
             successCallback();
           }
           public override void CreateAccount(CreateAccountModel createAccountModel, System.Action successCallback, System.Action<string> errorCallback)
           {
             successCallback();
           }
-          public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+          public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
           {
-            GameObject.Destroy(player);
+            GameObject.Destroy(playerAuth);
             successCallback();
           }
         }
 
         public class ErrorPlayerRetriever: AbstractPlayerRetriever
         {
-          public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player)
+          public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
           {
             errorCallback("error in test for player retriever");
           }
@@ -45,7 +45,7 @@ namespace Tests
           {
             errorCallback("error in test for creating account");
           }
-          public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+          public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
           {
             errorCallback("error in test for player retriever");
           }
@@ -54,7 +54,7 @@ namespace Tests
         private AccountCreationManager accountCreationManager;
         private LoginManager loginManager;
         private Logout logoutManager;
-        private Player player;
+        private PlayerAuth _playerAuth;
         private TextMeshProUGUI errorMessage;
         private AbstractPlayerRetriever playerRetriever;
         private Scene testScene;
@@ -80,7 +80,7 @@ namespace Tests
         {
           GameObject playerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerInfo"));
           playerObj.name = "PlayerInfo";
-          player = playerObj.GetComponent<Player>();
+          _playerAuth = playerObj.GetComponent<PlayerAuth>();
           usernameInput = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Login/Username")).GetComponent<TMP_InputField>();
           usernameInput.text = "";
           errorMessage = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Login/ErrorMessage")).GetComponent<TextMeshProUGUI>();
@@ -91,12 +91,12 @@ namespace Tests
         private void SetUpLoginManager()
         {
           loginManager = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Login/LoginManager")).GetComponent<LoginManager>();
-          loginManager.player = player;
+          loginManager.playerAuth = _playerAuth;
           loginManager.errorMessage = errorMessage;
           loginManager.usernameInput = usernameInput;
           loginManager.isTest = true;
           logoutManager = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/LogoutButton")).GetComponent<Logout>();
-          logoutManager.player = player;
+          logoutManager.playerAuth = _playerAuth;
           logoutManager.isTest = true;
           playerRetriever = new GameObject().AddComponent<MockPlayerRetriever>();
           loginManager.playerRetriever = playerRetriever;
@@ -175,7 +175,7 @@ namespace Tests
           yield return new WaitForSeconds(1f);
           Scene newScene = SceneManager.GetActiveScene();
           Assert.True(GameObject.Find("PlayerInfo") != null);
-          Assert.AreEqual(player.GetId(), testPlayerId);
+          Assert.AreEqual(_playerAuth.GetId(), testPlayerId);
           SceneManager.SetActiveScene(testScene);
           SceneManager.UnloadSceneAsync(newScene);
           yield return new WaitForSeconds(1f);
@@ -189,7 +189,7 @@ namespace Tests
           loginManager.Login();
           yield return new WaitForSeconds(1f);
           Scene newScene = SceneManager.GetActiveScene();
-          Assert.AreEqual(player.GetName(), usernameInput.text);
+          Assert.AreEqual(_playerAuth.GetName(), usernameInput.text);
           SceneManager.SetActiveScene(testScene);
           SceneManager.UnloadSceneAsync(newScene);
           yield return new WaitForSeconds(1f);
@@ -232,7 +232,7 @@ namespace Tests
           accountCreationManager.CreateAccount();
           yield return new WaitForSeconds(1f);
           Scene newScene = SceneManager.GetActiveScene();
-          Assert.AreEqual(player.GetName(), usernameInput.text);
+          Assert.AreEqual(_playerAuth.GetName(), usernameInput.text);
           Assert.AreNotEqual(originalScene.name, newScene.name);
           Assert.AreEqual("ModeSelection", newScene.name);
           SceneManager.SetActiveScene(testScene);

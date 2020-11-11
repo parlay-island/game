@@ -16,12 +16,15 @@ namespace Tests
         private const string player_name1 = "test";
         private const float distance2 = 200.0f;
         private const string player_name2 = "test2";
+        private const float distance3 = 300.0f;
+        private const string player_name3 = "test3";
         private const int level = 1;
 
         private GameObject leaderboardObj;
         private Leaderboard leaderboard;
         private GameObject gameManager;
         private GameObject mockWebRetrieverObj;
+        private GameEndRequestHelper _gameEndRequestHelper;
 
         public class MockWebRetriever : AbstractWebRetriever
         {
@@ -89,6 +92,13 @@ namespace Tests
           leaderboardObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Leaderboard/Leaderboard"));
           leaderboard = leaderboardObj.GetComponent<Leaderboard>();
           leaderboard.webRetriever = mockWebRetriever;
+          var playerAuth = leaderboardObj.AddComponent<PlayerAuth>();
+          playerAuth.SetPlayer(new PlayerModel(1, player_name3, 30.0f));
+          leaderboard.SetPlayer(playerAuth);
+          _gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever);
+          _gameEndRequestHelper.postGameEndResults(distance3, level, 1, 
+              new List<AnsweredQuestion>());
+          leaderboard.SetGameEndRequestHelper(_gameEndRequestHelper);
           mockWebRetriever.FetchResults(level, "");
           leaderboardObj.gameObject.SetActive(true);
           gameManager.GetComponent<GameManager>().setGameTime(20f);
@@ -110,10 +120,13 @@ namespace Tests
             GameObject[] entries = GameObject.FindGameObjectsWithTag("LeaderboardEntry");
             GameObject entry0 = entries[0];
             GameObject entry1 = entries[1];
+            GameObject entry2 = entries[2];
             Assert.AreEqual(entry0.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name1);
             Assert.AreEqual(entry1.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name2);
-            Assert.AreEqual(entry0.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance1.ToString() + "m");
-            Assert.AreEqual(entry1.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance2.ToString() + "m");
+            Assert.AreEqual(entry2.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name3);
+            Assert.AreEqual(entry0.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance1 + "m");
+            Assert.AreEqual(entry1.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance2 + "m");
+            Assert.AreEqual(entry2.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance3 + "m");
             yield return null;
         }
 

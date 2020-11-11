@@ -7,9 +7,9 @@ using UnityEngine.Networking;
 
 public abstract class AbstractPlayerRetriever : MonoBehaviour
 {
-  public abstract void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player);
+  public abstract void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth);
   public abstract void CreateAccount(CreateAccountModel createAccountModel, System.Action successCallback, System.Action<string> errorCallback);
-  public abstract void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player);
+  public abstract void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth);
 }
 
 
@@ -20,23 +20,23 @@ public class PlayerRetriever : AbstractPlayerRetriever
 
     private const int TIMEOUT = 5000;
 
-    public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, Player player)
+    public override void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
     {
       UnityWebRequest.ClearCookieCache();
       var json = JsonConvert.SerializeObject(loginModel);
       string url = apiBaseUrl + "/auth/token/login/?format=json";
-      StartCoroutine(PostLoginRequest(url, json, successCallback, errorCallback, player));
+      StartCoroutine(PostLoginRequest(url, json, successCallback, errorCallback, playerAuth));
     }
 
-    public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+    public override void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
     {
-        var json = JsonConvert.SerializeObject(player.GetAuthToken());
+        var json = JsonConvert.SerializeObject(playerAuth.GetAuthToken());
         string url = apiBaseUrl + "/auth/token/logout/";
         UnityWebRequest.ClearCookieCache();
-        StartCoroutine(PostLogoutRequest(url, json, successCallback, errorCallback, player));
+        StartCoroutine(PostLogoutRequest(url, json, successCallback, errorCallback, playerAuth));
     }
 
-    IEnumerator PostLoginRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, Player player)
+    IEnumerator PostLoginRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
      {
          var webRequest = new UnityWebRequest(url, "POST");
          byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
@@ -53,18 +53,18 @@ public class PlayerRetriever : AbstractPlayerRetriever
          } else {
            string postRequestResult = webRequest.downloadHandler.text;
            LoginResponseModel login_response = JsonConvert.DeserializeObject<LoginResponseModel>(postRequestResult);
-           player.SetAuthToken(login_response.auth_token);
+           playerAuth.SetAuthToken(login_response.auth_token);
            UnityWebRequest.ClearCookieCache();
-           yield return StartCoroutine(GetPlayer(successCallback, errorCallback, player));
+           yield return StartCoroutine(GetPlayer(successCallback, errorCallback, playerAuth));
          }
      }
 
-    IEnumerator PostLogoutRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, Player player)
+    IEnumerator PostLogoutRequest(string url, string json, System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
     {
         var webRequest = new UnityWebRequest(url, "POST");
         webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         webRequest.SetRequestHeader("Content-Type", "application/json");
-        webRequest.SetRequestHeader("Authorization", "Token " + player.GetAuthToken());
+        webRequest.SetRequestHeader("Authorization", "Token " + playerAuth.GetAuthToken());
         webRequest.timeout = TIMEOUT;
 
         yield return webRequest.SendWebRequest();
@@ -79,13 +79,13 @@ public class PlayerRetriever : AbstractPlayerRetriever
     }
 
 
-    IEnumerator GetPlayer(System.Action successCallback, System.Action<string> errorCallback, Player player)
+    IEnumerator GetPlayer(System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth)
       {
           string url = apiBaseUrl + "/players/me/";
           var webRequest = new UnityWebRequest(url, "GET");
           webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
           webRequest.SetRequestHeader("Content-Type", "application/json");
-          webRequest.SetRequestHeader("Authorization", "Token " + player.GetAuthToken());
+          webRequest.SetRequestHeader("Authorization", "Token " + "c1ee5b88354ead063b351d71aeea7e2bbb477667");
           webRequest.timeout = TIMEOUT;
           yield return webRequest.SendWebRequest();
 
@@ -96,7 +96,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
           } else {
             string postRequestResult = webRequest.downloadHandler.text;
             PlayerModel player_fetched = JsonConvert.DeserializeObject<PlayerModel>(postRequestResult);
-            player.SetPlayer(player_fetched);
+            playerAuth.SetPlayer(player_fetched);
             successCallback();
           }
 

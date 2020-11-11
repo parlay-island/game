@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class Logout : MonoBehaviour
 {
     [SerializeField] public AbstractPlayerRetriever playerRetriever;
     private GameObject playerObj;
-    public Player player;
+    [FormerlySerializedAs("player")] public PlayerAuth playerAuth;
     public bool isTest = false;
 
     public void Awake()
     {
         playerObj = GameObject.FindGameObjectWithTag("PlayerInfo");
         if (playerObj != null)
-            player = playerObj.GetComponent<Player>();
+            playerAuth = playerObj.GetComponent<PlayerAuth>();
     }
 
     public void LogoutOfGame()
     {
-        playerRetriever.LogoutPlayer(LoadStart, DisplayError, player);
+        playerRetriever.LogoutPlayer(LoadStart, DisplayError, playerAuth);
     }
 
     public void DisplayError(string message)

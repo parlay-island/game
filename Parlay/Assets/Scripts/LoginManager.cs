@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class LoginManager : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private TMP_InputField passwordInput;
     [SerializeField] public AbstractPlayerRetriever playerRetriever;
     [SerializeField] public TextMeshProUGUI errorMessage;
-    [SerializeField] public Player player;
+    [FormerlySerializedAs("player")] [SerializeField] public PlayerAuth playerAuth;
 
     public bool isTest = false;
 
@@ -47,7 +48,7 @@ public class LoginManager : MonoBehaviour
       string username = usernameInput.text;
       string password = passwordInput.text;
       LoginModel loginModel = new LoginModel(username, password);
-      playerRetriever.LoginPlayer(loginModel, GoToModeSelection, DisplayError, player);
+      playerRetriever.LoginPlayer(loginModel, GoToModeSelection, DisplayError, playerAuth);
     }
 
     public void DisplayError(string message)
@@ -64,7 +65,7 @@ public class LoginManager : MonoBehaviour
 
     IEnumerator LoadModeScene()
     {
-      DontDestroyOnLoad(player);
+      DontDestroyOnLoad(playerAuth);
       Scene currentScene = SceneManager.GetActiveScene();
       string mode_scene_name = "ModeSelection";
 
