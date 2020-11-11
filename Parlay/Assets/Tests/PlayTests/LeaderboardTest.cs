@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -15,7 +16,7 @@ namespace Tests
         private const float distance1 = 100.0f;
         private const string player_name1 = "test";
         private const float distance2 = 200.0f;
-        private const string player_name2 = "test2";
+        private const string player_name2 = "test2"; 
         private const int level = 1;
 
         private GameObject leaderboardObj;
@@ -26,6 +27,7 @@ namespace Tests
         public class MockWebRetriever : AbstractWebRetriever
         {
             private List<ResultModel> results;
+            private List<string> top_award;
 
             public override List<QuestionModel> GetQuestions()
             {
@@ -40,9 +42,10 @@ namespace Tests
             }
 
             public override void FetchResults(int level, string auth_token) {
-              results = new List<ResultModel>  {
-                    new ResultModel(level, distance1,0, player_name1),
-                    new ResultModel(level, distance2,1, player_name2)
+                top_award = new List<string>();
+                results = new List<ResultModel>  {
+                    new ResultModel(level, distance1,0, top_award, player_name1),
+                    new ResultModel(level, distance2,1, top_award, player_name2)
                 };
             }
             public override List<ResultModel> GetMostRecentResults() {

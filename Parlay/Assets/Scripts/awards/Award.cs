@@ -8,10 +8,10 @@ public abstract class Award : MonoBehaviour
 {
     [SerializeField] public GameObject awardUI;
     [SerializeField] public TextMeshProUGUI text;
-    [SerializeField] public int awardMultiplier;
     [SerializeField] public GameObject bronzeMedal;
     [SerializeField] public GameObject silverMedal;
     [SerializeField] public GameObject goldMedal;
+    public string awardName;
 
     void Start()
     {
@@ -19,36 +19,14 @@ public abstract class Award : MonoBehaviour
         bronzeMedal.SetActive(false);
         silverMedal.SetActive(false);
         goldMedal.SetActive(false);
-        awardMultiplier = 1;
     }
 
-    public void DisplayAward()
+    public void DisplayChosenAward(GameObject award)
     {
-        if (WinsAward(awardMultiplier * 30))
-        {
-            text.text = GetAwardMessage();
-            awardUI.SetActive(true);
-            bronzeMedal.SetActive(false);
-            silverMedal.SetActive(false);
-            goldMedal.SetActive(true);
-            Invoke("hideAward", 5);
-        } else if (WinsAward(awardMultiplier * 20))
-        {
-            text.text = GetAwardMessage();
-            awardUI.SetActive(true);
-            bronzeMedal.SetActive(false);
-            silverMedal.SetActive(true);
-            goldMedal.SetActive(false);
-            Invoke("hideAward", 5);
-        } else if (WinsAward(awardMultiplier * 10))
-        {
-            text.text = GetAwardMessage();
-            awardUI.SetActive(true);
-            bronzeMedal.SetActive(true);
-            silverMedal.SetActive(false);
-            goldMedal.SetActive(false);
-            Invoke("hideAward", 5);
-        }
+        text.text = GetAwardMessage();
+        awardUI.SetActive(true);
+        award.SetActive(true);
+        Invoke("hideAward", 5);
     }
 
     private void hideAward()
@@ -59,6 +37,7 @@ public abstract class Award : MonoBehaviour
         awardUI.SetActive(false);
     }
 
+    public abstract void DisplayAward();
     public abstract bool WinsAward(int count);
     public abstract string GetAwardMessage();
 }

@@ -13,6 +13,7 @@ public class Leaderboard : MonoBehaviour
     private Transform entryTemplate;
     private List<Transform> resultEntryTransformList;
     private List<ResultModel> results = new List<ResultModel>();
+    public GameObject medal;
 
     public void Start()
     {
@@ -74,6 +75,18 @@ public class Leaderboard : MonoBehaviour
 
         string user = resultEntry.player_name;
         entryTransform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(user);
+
+        List<string> awards = resultEntry.award_list;
+        if (awards.Count == 1)
+        {
+            medal.SetActive(true);
+            medal.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Resources/Prefabs/Award Prefabs/" + awards[0]);
+        }
+        else
+        {
+            medal.SetActive(false);
+        }
+
 
         transformList.Add(entryTransform);
     }

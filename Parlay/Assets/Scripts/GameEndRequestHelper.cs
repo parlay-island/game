@@ -13,9 +13,9 @@ public class GameEndRequestHelper
     	this.webRetriever = webRetriever;
     }
 
-    public void postGameEndResults(float playerDistance, int level, int playerID, List<AnsweredQuestion> answeredQuestions) {
+    public void postGameEndResults(float playerDistance, int level, int playerID, List<AnsweredQuestion> answeredQuestions, List<String> awards) {
         try {
-	        EndResult endResult = new EndResult(level, playerDistance, answeredQuestions);
+	        EndResult endResult = new EndResult(level, playerDistance, answeredQuestions, awards);
 	        webRetriever.PostEndResult(endResult, playerID);
         }
         catch (Exception exception) {

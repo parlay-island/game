@@ -26,7 +26,7 @@ public class QuestionManager : MonoBehaviour
     [SerializeField] public List<TextMeshProUGUI> choiceTexts;
     [SerializeField] public List<Image> choicePanels;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
-    public Answered10QuestionsAward awardManager;
+    [SerializeField] public AwardManager awardManager;
 
     public void Start()
     {

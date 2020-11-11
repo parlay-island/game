@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public LevelGenerator levelGenerator;
     [SerializeField] private GameObject mode_selector;
     [SerializeField] public Text powerUpText;
+    [SerializeField] public AwardManager awardManager;
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     public ArrayList retries = new ArrayList();
     public bool playerFallen = false;
     private List<AnsweredQuestion> _answeredQuestions;
+
 
     void Awake()
     {
@@ -144,7 +146,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void sendPostRequestWithGameEndResults() {
-      gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID, _answeredQuestions);
+      gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID, _answeredQuestions, awardManager.top_award);
     }
 
     void Update()
