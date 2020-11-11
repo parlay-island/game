@@ -2329,6 +2329,10 @@ PrefabInstance:
       propertyPath: text
       value: 
       objectReference: {fileID: 53764492}
+    - target: {fileID: 3996218647079403280, guid: 97beb3691dd5b4de1b70dc9972a39bf7, type: 3}
+      propertyPath: awardMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8896740532187672127, guid: 97beb3691dd5b4de1b70dc9972a39bf7, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -420.30005
