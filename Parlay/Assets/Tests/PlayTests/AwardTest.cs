@@ -19,6 +19,8 @@ namespace Tests
         private Answered10QuestionsAward award;
         private GameManager gameManager;
         private GameObject gameManagerObj;
+        private GameObject awardObject;
+        private AwardManager awardManager;
         private List<GameObject> _questionManagerGameObjectList;
 
         [SetUp]
@@ -51,6 +53,11 @@ namespace Tests
             gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
             gameManager.setGameTime(30f);
             _questionManager.gameManager = gameManager;
+            awardObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Award Prefabs/AwardManager"));
+            awardManager = awardObject.GetComponent<AwardManager>();
+            awardManager.award_list = new List<Award>();
+            _questionManager.awardManager = awardManager;
+
         }
 
         private T AddComponent<T>() where T : Component
@@ -63,6 +70,7 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
+          GameObject.Destroy(awardObject);
           foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
             GameObject.Destroy(obj);
           }

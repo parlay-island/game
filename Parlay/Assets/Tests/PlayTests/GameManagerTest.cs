@@ -21,6 +21,8 @@ namespace Tests
         private GameObject _uiGameObject;
         private GameObject questionManagerGameObject;
         private QuestionManager _questionManager;
+        private GameObject awardObject;
+        private AwardManager awardManager;
 
         private static bool mockingIncreasedDistance;
         private static bool mockingAnsweredQuestion;
@@ -96,10 +98,18 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
+            initializeAwardManager();
             initializeQuestionManager();
             initializeGameManager();
             initializeWebRetriever();
             initializePlayer();
+        }
+
+        private void initializeAwardManager()
+        {
+            awardObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Award Prefabs/AwardManager"));
+            awardManager = awardObject.GetComponent<AwardManager>();
+            awardManager.award_list = new List<Award>();
         }
 
         private void initializeGameManagerAndPlayer() {
@@ -117,6 +127,7 @@ namespace Tests
             _questionManager.timer = null;
             _questionManager.questionUI = _uiGameObject;
             _questionManager.SetTimeReward(10);
+            _questionManager.awardManager = awardManager;
         }
 
         private void initializeGameManager() {
@@ -125,6 +136,7 @@ namespace Tests
             gameManager.setGameTime(2f);
             mockingIncreasedDistance = false;
             mockingAnsweredQuestion = false;
+            gameManager.awardManager = awardManager;
         }
 
         private void initializeWebRetriever() {

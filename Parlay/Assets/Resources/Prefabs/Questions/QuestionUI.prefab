@@ -444,7 +444,7 @@ MonoBehaviour:
   - {fileID: 332726593956227516}
   choicePanels: []
   errorDisplaySource: {fileID: 8878849883676834197, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
-  awardManager: {fileID: -3746157272482175229, guid: c9fafd38932ba41d29273e27334486b8, type: 3}
+  awardManager: {fileID: 0}
 --- !u!1 &1406895030395100748
 GameObject:
   m_ObjectHideFlags: 0

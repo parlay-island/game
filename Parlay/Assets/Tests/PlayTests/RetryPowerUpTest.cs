@@ -20,6 +20,8 @@ namespace Tests
         private GameObject gameManagerObj;
         private GameObject mockWebRetrieverObj;
         private Text powerupText;
+        private GameObject awardObject;
+        private AwardManager awardManager;
 
         private QuestionManager _questionManager;
         private GameObject questionManagerGameObject;
@@ -58,6 +60,11 @@ namespace Tests
             _questionManager.errorDisplaySource.errorTitle = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessage = AddComponent<Text>();
             _questionManager.errorDisplaySource.errorMessageObject = new GameObject();
+            awardObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Award Prefabs/AwardManager"));
+            awardManager = awardObject.GetComponent<AwardManager>();
+            awardManager.award_list = new List<Award>();
+            _questionManager.awardManager = awardManager;
+            gameManager.awardManager = awardManager;
         }
 
         private void initGameManager()
