@@ -79,9 +79,9 @@ namespace Tests
           GameObject level1 = levelButtons[0];
           GameObject level2 = levelButtons[1];
           GameObject level3 = levelButtons[2];
-          Assert.AreEqual(level1.GetComponentInChildren<TextMeshProUGUI>().text, level1Name);
+          Assert.AreEqual(level1.GetComponentInChildren<TextMeshProUGUI>().text, level3Name);
           Assert.AreEqual(level2.GetComponentInChildren<TextMeshProUGUI>().text, level2Name);
-          Assert.AreEqual(level3.GetComponentInChildren<TextMeshProUGUI>().text, level3Name);
+          Assert.AreEqual(level3.GetComponentInChildren<TextMeshProUGUI>().text, level1Name);
 
           yield return null;
         }

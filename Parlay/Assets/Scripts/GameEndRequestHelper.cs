@@ -9,12 +9,14 @@ public class GameEndRequestHelper
 	private const int TIMEOUT = 5000;
 	private string postEndResultContent;
 	private EndResult _mostRecentEndResult;
+	private int level;
 
-    public GameEndRequestHelper(AbstractWebRetriever webRetriever) {
+    public GameEndRequestHelper(AbstractWebRetriever webRetriever, int level) {
     	this.webRetriever = webRetriever;
+			this.level = level;
     }
 
-    public void postGameEndResults(float playerDistance, int level, int playerID, List<AnsweredQuestion> answeredQuestions) {
+    public void postGameEndResults(float playerDistance, int playerID, List<AnsweredQuestion> answeredQuestions) {
         try {
 	        _mostRecentEndResult = new EndResult(level, playerDistance, answeredQuestions);
 	        webRetriever.PostEndResult(_mostRecentEndResult, playerID);

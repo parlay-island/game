@@ -21,6 +21,7 @@ namespace Tests
         private GameObject _uiGameObject;
         private GameObject questionManagerGameObject;
         private QuestionManager _questionManager;
+        private static int level = 1;
 
         private static bool mockingIncreasedDistance;
         private static bool mockingAnsweredQuestion;
@@ -35,6 +36,9 @@ namespace Tests
             new List<int> {0});
 
         public class GameMockWebRetriever : AbstractWebRetriever {
+
+            public override void SetUp(string auth_token, int level){
+            }
             public override List<QuestionModel> GetQuestions() {
                 return new List<QuestionModel>
                 {
@@ -46,9 +50,9 @@ namespace Tests
             }
 
             public override string GetMostRecentPostRequestResult() {
-              string requestParamContent = "distance:0.00,level:1";
+              string requestParamContent = "distance:0.00,level:" + level;
               if (mockingIncreasedDistance) {
-                  requestParamContent = "distance:1.00,level:1";
+                  requestParamContent = "distance:1.00,level:" + level;
               }
 
               if (mockingAnsweredQuestion)
@@ -57,7 +61,7 @@ namespace Tests
               }
               return requestParamContent;
             }
-            public override void FetchResults(int level, string auth_token) {
+            public override void FetchResults() {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return new List<ResultModel>();
@@ -70,6 +74,8 @@ namespace Tests
 
         public class TimeoutWebRetriever : AbstractWebRetriever
         {
+            public override void SetUp(string auth_token, int level){
+            }
             public override List<QuestionModel> GetQuestions()
             {
                 throw new TimeoutException();
@@ -82,7 +88,7 @@ namespace Tests
             public override string GetMostRecentPostRequestResult() {
               return "";
             }
-            public override void FetchResults(int level, string auth_token) {
+            public override void FetchResults() {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return new List<ResultModel>();
@@ -96,10 +102,11 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            initializeQuestionManager();
             initializeGameManager();
             initializeWebRetriever();
+            initializeQuestionManager();
             initializePlayer();
+            gameManager.setGameTime(2f);
         }
 
         private void initializeGameManagerAndPlayer() {
@@ -122,7 +129,6 @@ namespace Tests
         private void initializeGameManager() {
             testObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
             gameManager = testObject.GetComponent<GameManager>();
-            gameManager.setGameTime(2f);
             mockingIncreasedDistance = false;
             mockingAnsweredQuestion = false;
         }
@@ -131,7 +137,7 @@ namespace Tests
             mockWebRetrieverObj = new GameObject();
             GameMockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<GameMockWebRetriever>();
             gameManager.webRetriever = mockWebRetriever;
-            gameManager.gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever);
+            gameManager.gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever, level);
         }
 
         private void initializePlayer() {
@@ -185,7 +191,7 @@ namespace Tests
 
             // player did not move at all for this test --> distance should be 0.00
             Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.playerDistance.ToString("F2")));
-            Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.getLevel().ToString()));
+            Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(level.ToString()));
         }
 
         [UnityTest, Order(4)]
@@ -206,7 +212,7 @@ namespace Tests
             float distance = float.Parse(parts[0].Split(':')[1]);
 
             Assert.Greater(distance, 0f);
-            Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(gameManager.getLevel().ToString()));
+            Assert.That(gameManager.gameEndRequestHelper.getPostEndResultContent().Contains(level.ToString()));
         }
 
         [UnityTest, Order(1)]
@@ -237,7 +243,7 @@ namespace Tests
             GameObject timeoutWebRetrieverObj = new GameObject();
             TimeoutWebRetriever timeoutWebRetriever = timeoutWebRetrieverObj.AddComponent<TimeoutWebRetriever>();
             gameManager.webRetriever = timeoutWebRetriever;
-            gameManager.gameEndRequestHelper = new GameEndRequestHelper(timeoutWebRetriever);
+            gameManager.gameEndRequestHelper = new GameEndRequestHelper(timeoutWebRetriever, level);
 
             // making sure that exception is thrown
             try {

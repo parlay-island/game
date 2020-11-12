@@ -64,6 +64,8 @@ public class LevelSelector : MonoBehaviour
         if(mode_retriever != null && !mode_retriever.IsLoading())
         {
           levels = mode_retriever.GetLevels();
+          // currently comes from backend in reversed order
+          levels.Reverse();
           numberOfLevels = levels.Count;
 
           totalPages = Mathf.CeilToInt((float)numberOfLevels / amountPerPage);

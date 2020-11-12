@@ -47,7 +47,7 @@ public class LevelGenerator : MonoBehaviour
 
         //Move Player
         player.position = new Vector2(-6, 6);
-        player.MovePosition(new Vector2(-6, 10));
+        player.MovePosition(new Vector2(-6, 14));
     }
 
     private void Update()
