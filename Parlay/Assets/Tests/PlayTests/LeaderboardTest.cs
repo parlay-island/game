@@ -129,7 +129,6 @@ namespace Tests
         public IEnumerator LeaderboardShowsResultsCorrectly()
         {
             GameObject[] entries = GameObject.FindGameObjectsWithTag("LeaderboardEntry");
-            Debug.Log(entries);
             GameObject entry0 = entries[0];
             GameObject entry1 = entries[1];
             GameObject entry2 = entries[2];
