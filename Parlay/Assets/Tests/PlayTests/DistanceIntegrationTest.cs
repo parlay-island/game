@@ -63,7 +63,7 @@ namespace Tests
             mockWebRetrieverObj = new GameObject();
             MockWebRetriever mockWebRetriever = mockWebRetrieverObj.AddComponent<MockWebRetriever>();
             gameManager.webRetriever = mockWebRetriever;
-            gameManager.setGameTime(3f);
+            gameManager.setGameTime(10f);
             gameManager.player = testPlayer;
 
 

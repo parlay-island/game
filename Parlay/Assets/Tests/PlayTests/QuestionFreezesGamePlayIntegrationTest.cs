@@ -28,7 +28,7 @@ namespace Tests
         testEnemy = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
         gameManager = gameManagerObj.GetComponent<GameManager>();
         enemySpawner = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/EnemySpawner"));
-        gameManager.setGameTime(10f);
+        gameManager.setGameTime(20f);
         enemySpawner.gameObject.SetActive(true);
         gameManager.questionUI.gameObject.SetActive(true);
     }
@@ -48,7 +48,6 @@ namespace Tests
     [UnityTest, Order(1)]
     public IEnumerator TestMovementAllowedWhenQuestionNotShown()
     {
-      GameManager.instance.setGameTime(10f);
       playerMovement.questionUI.SetActive(false);
       gameManager.questionUI.SetActive(false);
       float initialEnemyXPos = testEnemy.transform.position.x;
