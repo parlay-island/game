@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     public void exitGame()
     {
+        GameObject.Destroy(GameObject.Find("LevelObj"));
         StartCoroutine(loadStartScreen());
     }
 

@@ -30,8 +30,11 @@ public class LevelButton : MonoBehaviour
         }
       }
       levelObj.GetComponent<Level>().SetLevel(level_selected);
-      if(!isTest)
-        StartCoroutine(Load());
+        if (!isTest)
+        {
+            GameObject.Destroy(GameObject.Find("GameManager"));
+            StartCoroutine(Load());
+        }
     }
 
     IEnumerator Load()
