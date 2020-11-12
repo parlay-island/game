@@ -53,7 +53,8 @@ public class Leaderboard : MonoBehaviour
             results = webRetriever.GetMostRecentResults();
             EndResult endResult = _gameEndRequestHelper.getMostRecentEndResult();
             results.Add(new ResultModel(endResult.level, endResult.distance, _playerAuth.GetId(), _playerAuth.GetName()));
-            results.Sort((model1, model2) => model1.distance.CompareTo(model2.distance));
+            results.Sort((model1, model2) => model2.distance.CompareTo(model1.distance));
+
         }
     }
 
@@ -65,8 +66,9 @@ public class Leaderboard : MonoBehaviour
       entryTemplate.gameObject.SetActive(false);
 
       resultEntryTransformList = new List<Transform>();
-      foreach(ResultModel resultEntry in results)
+      for(int i = 0; i < Mathf.Min(10, results.Count); i++)
       {
+          ResultModel resultEntry = results[i];
           CreateHighScoreEntryTransform(resultEntry, entryContainer, resultEntryTransformList);
       }
     }

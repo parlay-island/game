@@ -55,9 +55,10 @@ namespace Tests
         private void CollideWithPowerUp()
         {
             Vector2 powerUpPos = GetPowerUpColliderPos();
-            characterController.Move(powerUpPos.x - 0.1f, false);
+            characterController.Move(powerUpPos.x, false);
         }
 
+         [Retry(4)]
          [UnityTest, Order(1)]
          public IEnumerator TestTimePowerUpActivation()
          {
@@ -65,9 +66,10 @@ namespace Tests
             powerUp = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Terrain Prefabs/Interactible Tiles/ChestTile1"));
             powerUp.GetComponent<PowerUp>().type = 1;
             CollideWithPowerUp();
-             yield return new WaitForSeconds(2);
+            float waitTime = 3f;
+             yield return new WaitForSeconds(waitTime);
              //Test if time was increased
-             Assert.True(gameManager.timerManager.getCurrTime() - initialTime >= 0);
+             Assert.True(gameManager.timerManager.getCurrTime() - initialTime - waitTime >= 0);
          }
 
     }

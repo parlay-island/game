@@ -3,13 +3,15 @@ using UnityEngine;
 
 public abstract class AbstractWebRetriever : MonoBehaviour
 {
+    public abstract void SetUp(string auth_token, int level);
+
     public abstract List<QuestionModel> GetQuestions();
 
     public abstract void PostEndResult(EndResult result, int playerID);
 
     public abstract string GetMostRecentPostRequestResult();
 
-    public abstract void FetchResults(int level, string auth_token);
+    public abstract void FetchResults();
 
     public abstract List<ResultModel> GetMostRecentResults();
 

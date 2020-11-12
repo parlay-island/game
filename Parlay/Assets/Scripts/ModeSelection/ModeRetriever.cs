@@ -20,7 +20,8 @@ public class ModeRetriever : AbstractModeRetriever
 
     void Awake()
     {
-      StartCoroutine(GetLevelsRequest(apiUrl));
+      string auth_token = GameObject.Find("PlayerInfo")?.GetComponent<PlayerAuth>()?.GetAuthToken() ?? "";
+      StartCoroutine(GetLevelsRequest(apiUrl, auth_token));
     }
 
     public override bool IsLoading()
@@ -33,12 +34,13 @@ public class ModeRetriever : AbstractModeRetriever
         return levels;
     }
 
-    IEnumerator GetLevelsRequest(string uri)
+    IEnumerator GetLevelsRequest(string uri, string auth_token)
     {
       isLoading = true;
       UnityWebRequest webRequest = UnityWebRequest.Get(uri);
       webRequest.timeout = 5000;
       webRequest.SetRequestHeader("Content-Type", "application/json");
+      webRequest.SetRequestHeader("Authorization", "Token " + auth_token);
       yield return webRequest.SendWebRequest();
       if (webRequest.isNetworkError || webRequest.isHttpError)
       {

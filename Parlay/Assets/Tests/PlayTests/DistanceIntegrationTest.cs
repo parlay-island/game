@@ -25,6 +25,8 @@ namespace Tests
 
         public class MockWebRetriever : AbstractWebRetriever
         {
+            public override void SetUp(string auth_token, int level){
+            }
             public override List<QuestionModel> GetQuestions() {
                 return new List<QuestionModel>();
             }
@@ -35,7 +37,7 @@ namespace Tests
             public override string GetMostRecentPostRequestResult() {
               return "";
             }
-            public override void FetchResults(int level, string auth_token) {
+            public override void FetchResults() {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return new List<ResultModel>();
