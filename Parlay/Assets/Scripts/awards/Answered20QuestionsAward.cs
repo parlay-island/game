@@ -13,7 +13,7 @@ public class Answered20QuestionsAward : Award
 
     public override bool WinsAward()
     {
-        return questionManager.GetAnsweredQuestions().Count == 4;
+        return questionManager.GetAnsweredQuestions().Count == 20;
     }
 
     public override void DisplayAward()
