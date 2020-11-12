@@ -42,6 +42,7 @@ public class QuestionManager : MonoBehaviour
         {
             errorDisplaySource.DisplayNewError("Cannot load questions", "An error occurred while loading "
                             + "questions. Please try again later.");
+            questionUI.SetActive(false);
         }
     }
 

@@ -13,13 +13,21 @@ public class WebRetriever : AbstractWebRetriever
     private List<QuestionModel> questions = new List<QuestionModel>();
     private List<ResultModel> results;
     private bool isLoading;
+    private string auth_token = "";
+    private int level = 1;
 
     [SerializeField] public string apiBaseUrl;
 
 
     void Start()
     {
-      int level = GameManager.instance.getLevel();
+      GameManager.instance?.SetUpWebRetriever();
+    }
+
+    public override void SetUp(string auth_token, int level)
+    {
+      this.level = level;
+      this.auth_token = auth_token;
       StartCoroutine(GetQuestionRequest(apiBaseUrl + "/questions/?level=" + level));
     }
 
@@ -33,6 +41,7 @@ public class WebRetriever : AbstractWebRetriever
       UnityWebRequest webRequest = UnityWebRequest.Get(uri);
       webRequest.timeout = TIMEOUT;
       webRequest.SetRequestHeader("Content-Type", "application/json");
+      webRequest.SetRequestHeader("Authorization", "Token " + auth_token);
       yield return webRequest.SendWebRequest();
       if (webRequest.isNetworkError || webRequest.isHttpError)
       {
@@ -70,6 +79,7 @@ public class WebRetriever : AbstractWebRetriever
          webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
          webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
          webRequest.SetRequestHeader("Content-Type", "application/json");
+         webRequest.SetRequestHeader("Authorization", "Token " + auth_token);
          webRequest.timeout = TIMEOUT;
 
          yield return webRequest.SendWebRequest();
@@ -91,13 +101,13 @@ public class WebRetriever : AbstractWebRetriever
        return results;
      }
 
-     public override void FetchResults(int level, string auth_token)
+     public override void FetchResults()
      {
         string url = apiBaseUrl + "/levels/" + level + "/results/?page=%1";
-        StartCoroutine(GetResultRequest(url, auth_token));
+        StartCoroutine(GetResultRequest(url));
      }
 
-     IEnumerator GetResultRequest(string uri, string auth_token)
+     IEnumerator GetResultRequest(string uri)
      {
        isLoading = true;
        UnityWebRequest webRequest = UnityWebRequest.Get(uri);

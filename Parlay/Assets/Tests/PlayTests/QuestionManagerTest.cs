@@ -19,6 +19,7 @@ namespace Tests
         private const string WrongChoice = "choice1";
         private const int RightChoiceIndex = 0;
         private const int WrongChoiceIndex = 1;
+        private const int levelID = 1;
 
         private GameObject _uiGameObject;
         private QuestionManager _questionManager;
@@ -41,6 +42,10 @@ namespace Tests
 
         public class MockWebRetriever : AbstractWebRetriever
         {
+            private int level;
+            public override void SetUp(string auth_token, int level){
+              this.level = levelID;
+            }
             public override List<QuestionModel> GetQuestions()
             {
                 return new List<QuestionModel>
@@ -56,7 +61,7 @@ namespace Tests
             public override string GetMostRecentPostRequestResult() {
               return "";
             }
-            public override void FetchResults(int level, string auth_token) {
+            public override void FetchResults() {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return new List<ResultModel>();
@@ -69,6 +74,8 @@ namespace Tests
 
         public class TimeoutWebRetriever : AbstractWebRetriever
         {
+            public override void SetUp(string auth_token, int level){
+            }
             public override List<QuestionModel> GetQuestions()
             {
                 throw new TimeoutException();
@@ -80,7 +87,7 @@ namespace Tests
             public override string GetMostRecentPostRequestResult() {
               return "";
             }
-            public override void FetchResults(int level, string auth_token) {
+            public override void FetchResults() {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return new List<ResultModel>();
@@ -108,6 +115,7 @@ namespace Tests
             SetUpGameManager(webRetriever);
 
             gameManager.setGameTime(30f);
+            _questionManager.Start();
         }
 
         private void SetUpErrorMessage()
@@ -142,9 +150,8 @@ namespace Tests
           gameManagerObj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
           gameManager = gameManagerObj.GetComponent<GameManager>();
           gameManager.webRetriever = webRetriever;
-          gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+          gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever, levelID);
           _questionManager.gameManager = gameManager;
-          gameManager.setGameTime(30f);
         }
 
         private void SetUpPanels()
@@ -223,28 +230,32 @@ namespace Tests
             Assert.AreNotEqual(questionTextBefore, _questionManager.questionText.text);
         }
 
+        [Retry(3)]
         [UnityTest, Order(6)]
         public IEnumerator UserSelectIncorrectDisplaysAsRed()
         {
             Color colorBefore = choicePanels[WrongChoiceIndex].color;
             _questionManager.UserSelect(WrongChoiceIndex);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.23f);
+            Color resultColor = choicePanels[WrongChoiceIndex].color;
             Color red = _questionManager.red;
-            Assert.AreNotEqual(colorBefore, choicePanels[WrongChoiceIndex].color);
+            Assert.AreNotEqual(colorBefore, resultColor);
             Assert.AreEqual(colorBefore, choicePanels[RightChoiceIndex].color);
-            Assert.AreEqual(red, choicePanels[WrongChoiceIndex].color);
+            Assert.AreEqual(red, resultColor);
         }
 
+        [Retry(3)]
         [UnityTest, Order(7)]
         public IEnumerator UserSelectCorrectDisplaysAsGreen()
         {
             Color colorBefore = choicePanels[RightChoiceIndex].color;
             _questionManager.UserSelect(RightChoiceIndex);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.23f);
+            Color resultColor = choicePanels[RightChoiceIndex].color;
             Color green = _questionManager.green;
-            Assert.AreNotEqual(colorBefore, choicePanels[RightChoiceIndex].color);
+            Assert.AreNotEqual(colorBefore, resultColor);
             Assert.AreEqual(colorBefore, choicePanels[WrongChoiceIndex].color);
-            Assert.AreEqual(green, choicePanels[RightChoiceIndex].color);
+            Assert.AreEqual(green, resultColor);
         }
     }
 }

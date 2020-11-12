@@ -29,6 +29,11 @@ namespace Tests
         public class MockWebRetriever : AbstractWebRetriever
         {
             private List<ResultModel> results;
+            private int level;
+
+            public override void SetUp(string auth_token, int level){
+              this.level = level;
+            }
 
             public override List<QuestionModel> GetQuestions()
             {
@@ -42,7 +47,7 @@ namespace Tests
               return "";
             }
 
-            public override void FetchResults(int level, string auth_token) {
+            public override void FetchResults() {
               results = new List<ResultModel>  {
                     new ResultModel(level, distance1,0, player_name1),
                     new ResultModel(level, distance2,1, player_name2)
@@ -61,6 +66,9 @@ namespace Tests
         {
             private List<ResultModel> results;
 
+            public override void SetUp(string auth_token, int level){
+            }
+
             public override List<QuestionModel> GetQuestions()
             {
               return new List<QuestionModel>();
@@ -72,7 +80,7 @@ namespace Tests
             public override string GetMostRecentPostRequestResult() {
               return "";
             }
-            public override void FetchResults(int level, string auth_token) {
+            public override void FetchResults() {
             }
             public override List<ResultModel> GetMostRecentResults() {
               return results;
@@ -95,11 +103,11 @@ namespace Tests
           var playerAuth = leaderboardObj.AddComponent<PlayerAuth>();
           playerAuth.SetPlayer(new PlayerModel(1, player_name3, 30.0f));
           leaderboard.SetPlayer(playerAuth);
-          _gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever);
-          _gameEndRequestHelper.postGameEndResults(distance3, level, 1, 
+          _gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever, level);
+          _gameEndRequestHelper.postGameEndResults(distance3, 1,
               new List<AnsweredQuestion>());
           leaderboard.SetGameEndRequestHelper(_gameEndRequestHelper);
-          mockWebRetriever.FetchResults(level, "");
+          mockWebRetriever.FetchResults();
           leaderboardObj.gameObject.SetActive(true);
           gameManager.GetComponent<GameManager>().setGameTime(20f);
         }
@@ -121,12 +129,13 @@ namespace Tests
             GameObject entry0 = entries[0];
             GameObject entry1 = entries[1];
             GameObject entry2 = entries[2];
-            Assert.AreEqual(entry0.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name1);
+            // in order from highest distance to lowest distance
+            Assert.AreEqual(entry0.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name3);
             Assert.AreEqual(entry1.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name2);
-            Assert.AreEqual(entry2.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name3);
-            Assert.AreEqual(entry0.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance1 + "m");
+            Assert.AreEqual(entry2.transform.Find("Name").GetComponent<TextMeshProUGUI>().text, player_name1);
+            Assert.AreEqual(entry0.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance3 + "m");
             Assert.AreEqual(entry1.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance2 + "m");
-            Assert.AreEqual(entry2.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance3 + "m");
+            Assert.AreEqual(entry2.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance1 + "m");
             yield return null;
         }
 
@@ -138,7 +147,7 @@ namespace Tests
             var errorMessageBefore = leaderboard.errorDisplaySource.errorMessage.text;
             TimeoutWebRetriever mockWebRetriever = new GameObject().AddComponent<TimeoutWebRetriever>();
             leaderboard.webRetriever = mockWebRetriever;
-            mockWebRetriever.FetchResults(level, "");
+            mockWebRetriever.FetchResults();
             leaderboard.Start();
             Assert.AreNotEqual(errorMessageBefore,
                 leaderboard.errorDisplaySource.errorMessage.text);

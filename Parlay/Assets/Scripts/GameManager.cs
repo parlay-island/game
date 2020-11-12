@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject gameOverImage;
     [SerializeField] public Timer timerManager;
     [SerializeField] public GameObject player;
-    [SerializeField] public GameObject ground;
     [SerializeField] public Text distanceText;
     [SerializeField] public Text finalDistanceText;
     [SerializeField] public AbstractWebRetriever webRetriever;
@@ -22,7 +21,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject resetButton;
     [SerializeField] public GameObject exitButton;
     [SerializeField] public LevelGenerator levelGenerator;
-    [SerializeField] private GameObject mode_selector;
     [SerializeField] public Text powerUpText;
 
     public static GameManager instance = null;
@@ -30,10 +28,7 @@ public class GameManager : MonoBehaviour
     public bool canRetry = false;
 
     public float playerDistance = 0f;
-    private int level = 1;
     public float bonusDistance = 0f;
-    private int playerID = 1;
-    private string player_auth_token = "";
     private string postEndResultContent;
     private bool sentRequest = false;
     public ArrayList retries = new ArrayList();
@@ -50,18 +45,22 @@ public class GameManager : MonoBehaviour
     		Destroy(gameObject);
     	}
     	DontDestroyOnLoad(gameObject);
-      GameObject levelObj = GameObject.Find("LevelObj");
-      level = levelObj != null ? levelObj.GetComponent<Level>().GetId() : 1;
       try
       {
-          _playerAuth = GameObject.Find("PlayerInfo").GetComponent<PlayerAuth>();
-          playerID = _playerAuth != null ? _playerAuth.GetId() : 1;
-          player_auth_token = _playerAuth != null ? _playerAuth.GetAuthToken() : "";
+          _playerAuth = GameObject.Find("PlayerInfo")?.GetComponent<PlayerAuth>();
       }
       catch (NullReferenceException e)
       {
           Debug.Log("Encountered null error when finding player info");
       }
+    }
+
+    public void SetUpWebRetriever()
+    {
+      int level = GetLevel();
+      string player_auth_token = _playerAuth?.GetAuthToken() ?? "";
+      webRetriever.gameObject.SetActive(true);
+      webRetriever.SetUp(player_auth_token, level);
     }
 
     public void exitGame()
@@ -84,12 +83,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void initGame(float gameTime) {
-
         hideGameEndElements();
         enemySpawner.SetActive(true);
         timerManager.initTimer(gameTime);
         distanceText.gameObject.SetActive(true);
-        gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+        gameEndRequestHelper = new GameEndRequestHelper(webRetriever, GetLevel());
         leaderBoard.GetComponent<Leaderboard>().SetGameEndRequestHelper(gameEndRequestHelper);
         leaderBoard.GetComponent<Leaderboard>().SetPlayer(_playerAuth);
         enabled = true;
@@ -133,10 +131,6 @@ public class GameManager : MonoBehaviour
         sendPostRequestWithGameEndResults();
     }
 
-    public int getLevel() {
-        return level;
-    }
-
     private void showGameOverUIElements() {
         endGameScreen.SetActive(true);
         gameOverImage.SetActive(true);
@@ -155,7 +149,13 @@ public class GameManager : MonoBehaviour
     }
 
     private void sendPostRequestWithGameEndResults() {
-      gameEndRequestHelper.postGameEndResults(playerDistance, level, playerID, _answeredQuestions);
+      int playerID = _playerAuth?.GetId() ?? 1;
+      gameEndRequestHelper.postGameEndResults(playerDistance, playerID, _answeredQuestions);
+    }
+
+    private int GetLevel()
+    {
+      return GameObject.Find("LevelObj")?.GetComponent<Level>()?.GetId() ?? 1;
     }
 
     void Update()
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         if (timerManager.isTimeUp() || playerFallen) {
           if(!sentRequest)
           {
-            webRetriever.FetchResults(level, player_auth_token);
+            webRetriever.FetchResults();
             sentRequest = true;
           }
           if(!webRetriever.IsLoading())

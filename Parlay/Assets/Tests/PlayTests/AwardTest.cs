@@ -48,7 +48,7 @@ namespace Tests
             gameManager = gameManagerObj.GetComponent<GameManager>();
             QuestionManagerTest.MockWebRetriever webRetriever = AddComponent<QuestionManagerTest.MockWebRetriever>();
             gameManager.webRetriever = webRetriever;
-            gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever);
+            gameManager.gameEndRequestHelper = new GameEndRequestHelper(webRetriever, 1);
             gameManager.setGameTime(30f);
             _questionManager.gameManager = gameManager;
         }

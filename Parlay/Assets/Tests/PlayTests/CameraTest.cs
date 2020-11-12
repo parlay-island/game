@@ -41,7 +41,7 @@ namespace Tests
         {
             float initialXPos = camera.transform.position.x;
             characterController.Move(distanceToTravelRight, false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(1f);
             Assert.Greater(camera.transform.position.x, initialXPos);
         }
 
@@ -51,7 +51,7 @@ namespace Tests
         {
             float initialXPos = camera.transform.position.x;
             characterController.Move(distanceToTravelLeft, false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(1f);
             Assert.Less(camera.transform.position.x, initialXPos);
         }
     }

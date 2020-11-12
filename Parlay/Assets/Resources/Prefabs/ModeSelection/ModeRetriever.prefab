@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327aa4bd2709b4bfb976673170fb8031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiUrl: http://parlay-island-server-prod.eba-kq6isupz.us-east-2.elasticbeanstalk.com/levels/
+  apiUrl: http://parlay-island-server-dev.eba-kq6isupz.us-east-2.elasticbeanstalk.com/levels/
