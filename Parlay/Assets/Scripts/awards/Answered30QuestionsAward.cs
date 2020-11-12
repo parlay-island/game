@@ -21,6 +21,12 @@ public class Answered30QuestionsAward : Award
         DisplayChosenAward(medal);
     }
 
+    public override void hideAward()
+    {
+        medal.SetActive(false);
+        text.text = "";
+    }
+
     public override string GetAwardMessage()
     {
         return "Answered " + questionManager.GetAnsweredQuestions().Count + " Questions in 1 Game";
