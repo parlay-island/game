@@ -45,6 +45,18 @@ public class QuestionManager : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+            UserSelect(0);
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+            UserSelect(1);
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+            UserSelect(2);
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+            UserSelect(3);
+    }
+
     public void ClearQuestions()
     {
       _unansweredQuestions = null;
@@ -83,6 +95,7 @@ public class QuestionManager : MonoBehaviour
 
     public void UserSelect(int userChoice)
     {
+        Debug.Log("Question selected");
       if(userChoice != 4)
       {
         Image choicePanel = choicePanels[userChoice];
