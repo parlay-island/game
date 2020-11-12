@@ -26,6 +26,8 @@ namespace Tests
         private GameObject gameManager;
         private GameObject mockWebRetrieverObj;
         private GameEndRequestHelper _gameEndRequestHelper;
+        private GameObject awardObject;
+        private AwardManager awardManager;
 
         public class MockWebRetriever : AbstractWebRetriever
         {
@@ -48,7 +50,8 @@ namespace Tests
                 top_award = new List<string>();
                 results = new List<ResultModel>  {
                     new ResultModel(level, distance1,0, top_award, player_name1),
-                    new ResultModel(level, distance2,1, top_award, player_name2)
+                    new ResultModel(level, distance2,1, top_award, player_name2),
+                    new ResultModel(level, distance3,2, top_award, player_name3)
                 };
             }
             public override List<ResultModel> GetMostRecentResults() {
@@ -98,9 +101,14 @@ namespace Tests
           var playerAuth = leaderboardObj.AddComponent<PlayerAuth>();
           playerAuth.SetPlayer(new PlayerModel(1, player_name3, 30.0f));
           leaderboard.SetPlayer(playerAuth);
-          _gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever);
+            _gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever);
+          awardObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Award Prefabs/AwardManager"));
+          awardManager = awardObject.GetComponent<AwardManager>();
+          awardManager.award_list = new List<Award>();
+          awardManager.top_award = new List<string>();
+            leaderboard.awardManager = awardManager;
           _gameEndRequestHelper.postGameEndResults(distance3, level, 1, 
-              new List<AnsweredQuestion>());
+            new List<AnsweredQuestion>(), awardManager.top_award);
           leaderboard.SetGameEndRequestHelper(_gameEndRequestHelper);
           mockWebRetriever.FetchResults(level, "");
           leaderboardObj.gameObject.SetActive(true);
@@ -121,6 +129,7 @@ namespace Tests
         public IEnumerator LeaderboardShowsResultsCorrectly()
         {
             GameObject[] entries = GameObject.FindGameObjectsWithTag("LeaderboardEntry");
+            Debug.Log(entries);
             GameObject entry0 = entries[0];
             GameObject entry1 = entries[1];
             GameObject entry2 = entries[2];

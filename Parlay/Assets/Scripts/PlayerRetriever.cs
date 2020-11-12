@@ -85,7 +85,7 @@ public class PlayerRetriever : AbstractPlayerRetriever
           var webRequest = new UnityWebRequest(url, "GET");
           webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
           webRequest.SetRequestHeader("Content-Type", "application/json");
-          webRequest.SetRequestHeader("Authorization", "Token " + "c1ee5b88354ead063b351d71aeea7e2bbb477667");
+          webRequest.SetRequestHeader("Authorization", "Token " + playerAuth.GetAuthToken());
           webRequest.timeout = TIMEOUT;
           yield return webRequest.SendWebRequest();
 

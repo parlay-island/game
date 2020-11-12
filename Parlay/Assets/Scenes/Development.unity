@@ -1932,6 +1932,10 @@ PrefabInstance:
       propertyPath: errorDisplaySource
       value: 
       objectReference: {fileID: 1559777278}
+    - target: {fileID: 5997029386608963313, guid: 78abcce63cf6e41beb927e442ad548e5, type: 3}
+      propertyPath: awardManager
+      value: 
+      objectReference: {fileID: 190159652}
     - target: {fileID: 6098491911383369992, guid: 78abcce63cf6e41beb927e442ad548e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2500,7 +2504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8896740532187672127, guid: 97beb3691dd5b4de1b70dc9972a39bf7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 14.9999695
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8896740532252683283, guid: 97beb3691dd5b4de1b70dc9972a39bf7, type: 3}
       propertyPath: m_Camera

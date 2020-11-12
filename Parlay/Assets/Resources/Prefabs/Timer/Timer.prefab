@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6813613100092239012, guid: fbb8a6563c676492880e1d7ccd01b2f0, type: 3}
       propertyPath: m_Value
-      value: 19.70036
+      value: 19.633781
       objectReference: {fileID: 0}
     - target: {fileID: 6813613100092239012, guid: fbb8a6563c676492880e1d7ccd01b2f0, type: 3}
       propertyPath: m_MaxValue
@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6813613100092239014, guid: fbb8a6563c676492880e1d7ccd01b2f0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6813613100092239015, guid: fbb8a6563c676492880e1d7ccd01b2f0, type: 3}
       propertyPath: m_LocalPosition.x

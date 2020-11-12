@@ -9,6 +9,7 @@ public class Leaderboard : MonoBehaviour
 {
     [SerializeField] public AbstractWebRetriever webRetriever;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
+    [SerializeField] public AwardManager awardManager;
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<Transform> resultEntryTransformList;
@@ -16,6 +17,7 @@ public class Leaderboard : MonoBehaviour
     public GameObject medal;
     private GameEndRequestHelper _gameEndRequestHelper;
     private PlayerAuth _playerAuth;
+
 
     public void Start()
     {
@@ -54,7 +56,7 @@ public class Leaderboard : MonoBehaviour
         {
             results = webRetriever.GetMostRecentResults();
             EndResult endResult = _gameEndRequestHelper.getMostRecentEndResult();
-            results.Add(new ResultModel(endResult.level, endResult.distance, _playerAuth.GetId(), _playerAuth.GetName()));
+            results.Add(new ResultModel(endResult.level, endResult.distance, _playerAuth.GetId(), awardManager.top_award, _playerAuth.GetName()));
             results.Sort((model1, model2) => model1.distance.CompareTo(model2.distance));
         }
     }
@@ -95,14 +97,15 @@ public class Leaderboard : MonoBehaviour
         List<string> awards = resultEntry.award_list;
         if (awards != null && awards.Count == 1)
         {
-            medal.SetActive(true);
-            Sprite temp = Resources.Load<Sprite>("Resources/Prefabs/Award Prefabs/" + awards[0]);
+            Debug.Log("Adding recorded award");
+            Sprite temp = Resources.Load<Sprite>("Prefabs/Award Prefabs/" + awards[0]);
             //If sprite is null then sprite shows empty which is desired functionality
-            medal.GetComponent<SpriteRenderer>().sprite = temp;
+            entryTransform.Find("Award").GetComponent<SpriteRenderer>().sprite = temp;
         }
         else
         {
-            medal.SetActive(false);
+            Debug.Log("Removing reference to award");
+            entryTransform.Find("Award").GetComponent<SpriteRenderer>().sprite = null;
         }
 
 
