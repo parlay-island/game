@@ -27,6 +27,7 @@ public class Leaderboard : MonoBehaviour
             errorDisplaySource.DisplayNewError("Cannot load leaderboard", "An error occurred while loading "
                             + "results. Please try again later.");
             gameObject.SetActive(false);
+            Debug.Log(exception);
         }
     }
 
@@ -75,9 +76,9 @@ public class Leaderboard : MonoBehaviour
 
         string user = resultEntry.player_name;
         entryTransform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(user);
-
+        
         List<string> awards = resultEntry.award_list;
-        if (awards.Count == 1)
+        if (awards != null && awards.Count == 1)
         {
             medal.SetActive(true);
             Sprite temp = Resources.Load<Sprite>("Resources/Prefabs/Award Prefabs/" + awards[0]);

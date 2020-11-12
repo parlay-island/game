@@ -671,7 +671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
       propertyPath: apiBaseUrl
-      value: http://parlay-island-server-prod.eba-kq6isupz.us-east-2.elasticbeanstalk.com
+      value: http://parlay-island-server-dev.eba-kq6isupz.us-east-2.elasticbeanstalk.com
       objectReference: {fileID: 0}
     - target: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
       propertyPath: leaderboard
@@ -1687,6 +1687,22 @@ PrefabInstance:
     - target: {fileID: 891222358099367918, guid: 78abcce63cf6e41beb927e442ad548e5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.01999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 898811958296187674, guid: 78abcce63cf6e41beb927e442ad548e5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 898811958296187674, guid: 78abcce63cf6e41beb927e442ad548e5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 898811958296187674, guid: 78abcce63cf6e41beb927e442ad548e5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -250
+      objectReference: {fileID: 0}
+    - target: {fileID: 898811958296187674, guid: 78abcce63cf6e41beb927e442ad548e5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 1094442053835041295, guid: 78abcce63cf6e41beb927e442ad548e5, type: 3}
       propertyPath: m_AnchoredPosition.x

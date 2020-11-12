@@ -15,7 +15,7 @@ public class ResultModel
 	[JsonProperty("distance")] public float distance;
 	[JsonProperty("player_id")] public int player_id;
 	[JsonProperty("player_name")] public string player_name;
-    [JsonProperty("award")] public List<string> award_list;
+    [JsonProperty("award_list")] public List<string> award_list;
 
     public ResultModel(int level, float distance, int player_id, List<string> award_list, string player_name = "") {
 		this.level = level;
