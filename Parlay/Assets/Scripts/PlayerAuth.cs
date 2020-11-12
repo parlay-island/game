@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-public class Player : MonoBehaviour
+public class PlayerAuth : MonoBehaviour
 {
   private PlayerModel player;
   private string auth_token;

@@ -14,6 +14,8 @@ public class Leaderboard : MonoBehaviour
     private List<Transform> resultEntryTransformList;
     private List<ResultModel> results = new List<ResultModel>();
     public GameObject medal;
+    private GameEndRequestHelper _gameEndRequestHelper;
+    private PlayerAuth _playerAuth;
 
     public void Start()
     {
@@ -36,11 +38,24 @@ public class Leaderboard : MonoBehaviour
       results = new List<ResultModel>();
     }
 
+    public void SetPlayer(PlayerAuth playerAuth)
+    {
+        _playerAuth = playerAuth;
+    }
+
+    public void SetGameEndRequestHelper(GameEndRequestHelper gameEndRequestHelper)
+    {
+        _gameEndRequestHelper = gameEndRequestHelper;
+    }
+
     private void RetrieveResultsIfNotAlreadySet()
     {
         if (results == null || results.Count == 0)
         {
             results = webRetriever.GetMostRecentResults();
+            EndResult endResult = _gameEndRequestHelper.getMostRecentEndResult();
+            results.Add(new ResultModel(endResult.level, endResult.distance, _playerAuth.GetId(), _playerAuth.GetName()));
+            results.Sort((model1, model2) => model1.distance.CompareTo(model2.distance));
         }
     }
 
