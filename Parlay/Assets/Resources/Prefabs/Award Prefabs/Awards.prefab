@@ -203,6 +203,10 @@ PrefabInstance:
       propertyPath: medal
       value: 
       objectReference: {fileID: 7532912486024552446}
+    - target: {fileID: 8261958962615032391, guid: efc8199ddf9e4445386d3f24ac9db4bb, type: 3}
+      propertyPath: questionManager
+      value: 
+      objectReference: {fileID: 7111293579745112631, guid: 496cb7156d2cf43238d21c52f5d0c9fe, type: 3}
     - target: {fileID: 8660180102530987342, guid: efc8199ddf9e4445386d3f24ac9db4bb, type: 3}
       propertyPath: m_Name
       value: GoldMedalAward
@@ -300,6 +304,10 @@ PrefabInstance:
       propertyPath: medal
       value: 
       objectReference: {fileID: 2031002262086686375}
+    - target: {fileID: 4345065116884723985, guid: 344df9ccc1daa4985bb9eabfec4f9e63, type: 3}
+      propertyPath: questionManager
+      value: 
+      objectReference: {fileID: 7111293579745112631, guid: 496cb7156d2cf43238d21c52f5d0c9fe, type: 3}
     - target: {fileID: 6478402318810355565, guid: 344df9ccc1daa4985bb9eabfec4f9e63, type: 3}
       propertyPath: m_Name
       value: SilverMedalAward
@@ -415,7 +423,7 @@ PrefabInstance:
     - target: {fileID: -3746157272482175229, guid: c9fafd38932ba41d29273e27334486b8, type: 3}
       propertyPath: questionManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7111293579745112631, guid: 496cb7156d2cf43238d21c52f5d0c9fe, type: 3}
     - target: {fileID: -3746157272482175229, guid: c9fafd38932ba41d29273e27334486b8, type: 3}
       propertyPath: text
       value: 

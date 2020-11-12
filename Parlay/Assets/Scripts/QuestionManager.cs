@@ -100,12 +100,14 @@ public class QuestionManager : MonoBehaviour
             choicePanel.color = red;
             GameManager.instance.retries.RemoveAt(0);
             addQuestionToAnsweredQuestions(userChoice);
+            awardManager.DisplayAward();
             Invoke("ResetPanelColors", 0.25f);
         } else
         {
             choicePanel.color = red;
             _answeredQuestions.Add(_currentQuestion);
             addQuestionToAnsweredQuestions(userChoice);
+            awardManager.DisplayAward();
             Invoke("HideQuestion", 0.25f);
         }
       } else {

@@ -80,7 +80,9 @@ public class Leaderboard : MonoBehaviour
         if (awards.Count == 1)
         {
             medal.SetActive(true);
-            medal.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Resources/Prefabs/Award Prefabs/" + awards[0]);
+            Sprite temp = Resources.Load<Sprite>("Resources/Prefabs/Award Prefabs/" + awards[0]);
+            //If sprite is null then sprite shows empty which is desired functionality
+            medal.GetComponent<SpriteRenderer>().sprite = temp;
         }
         else
         {
