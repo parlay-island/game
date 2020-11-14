@@ -1,6 +1,14 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/**
+ * This file manages all of teh result objects
+ * These objects are used to store data that is sent and recieved through
+ * api requests
+ * 
+ * @author: Holly Ansel, Jessica Su
+ */
+
 [JsonObject]
 public class ResultList
 {

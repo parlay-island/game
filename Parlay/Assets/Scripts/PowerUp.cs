@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This file manages the business logic for powerups
+ * There are three types of powerups: time boost, distance boost, and retry addition
+ * The actual type of the powerup as well as the extent of the boost is all randomized
+ * 
+ * @author: Andres Montoya
+ */
+
 public class PowerUp : MonoBehaviour
 {
     [SerializeField] public float m_TimeBoost;

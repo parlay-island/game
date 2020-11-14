@@ -7,6 +7,13 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.Serialization;
 
+/**
+ * Manages the login screen and authentication into the server
+ * On succesful login directs user to mode selection screen
+ * 
+ * @author: Holly Ansel
+ */
+
 public class LoginManager : MonoBehaviour
 {
     [SerializeField] public TMP_InputField usernameInput;

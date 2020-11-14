@@ -8,8 +8,9 @@ using UnityEngine;
 * the control the animator transitions
 * This code was inspired from a Brackey's tutorial
 * https://www.youtube.com/watch?v=dwcT-Dch0bA
+* 
+* @author: Holly Ansel
 */
-
 
 public class PlayerMovement : MonoBehaviour {
 

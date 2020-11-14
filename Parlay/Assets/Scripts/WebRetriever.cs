@@ -6,6 +6,14 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/**
+ * This file contains the business logic that runs the api requests to fetch question data
+ * from the backend servers. Question data, upload, and retrieval functionality
+ * can all be referenced and executed here.
+ * 
+ * @author: Holly Ansel, Jake Derry
+ */
+
 public class WebRetriever : AbstractWebRetriever
 {
     private const int TIMEOUT = 5000;

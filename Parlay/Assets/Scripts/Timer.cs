@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * This file manages teh business logic for the in game timer
+ * All UI modifications and helper functions can be modfied here
+ * 
+ * @author: Jessica Su
+ */
+
 public class Timer : MonoBehaviour
 {
 		private const float timeForColorChanges = 1.5f;

@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
+/**
+ * This file holds the authentication objects (PlayerAuth, LoginModel, LoginResponseModel, CreateAccountModel)
+ * These objects are used to store, retrieve, and send authentication information
+ * 
+ * @author: Jake Derry
+ */
+
 public class PlayerAuth : MonoBehaviour
 {
   private PlayerModel player;

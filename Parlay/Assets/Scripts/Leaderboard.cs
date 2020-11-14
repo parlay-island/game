@@ -5,6 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/**
+ * This file holds the business logic for the leaderboard. Each leaderboard
+ * entry is populated with data from the backend to display each run's ranking
+ * within the class. All UI modifications to the leaderboard can be done here.
+ * 
+ * @author: Holly Ansel, Andres Montoya
+ */
+
 public class Leaderboard : MonoBehaviour
 {
     [SerializeField] public AbstractWebRetriever webRetriever;

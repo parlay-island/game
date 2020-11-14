@@ -6,6 +6,14 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using TMPro;
 
+/**
+ * This file manages all of the business logic behind the question UI
+ * The question panels, the text in the answer choices, and the effects of 
+ * pressing a question can all be modified here
+ * 
+ * @author: Holly Ansel, Jake Derry, Andres Montoya
+ */
+
 public class QuestionManager : MonoBehaviour
 {
     public GameObject questionUI;

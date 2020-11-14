@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/**
+ * This file manages the transition between the rules and mode scenes 
+ * 
+ * @author: Jessica Su
+ */
+
 public class Rules : MonoBehaviour
 {
     public bool isTest = false;
