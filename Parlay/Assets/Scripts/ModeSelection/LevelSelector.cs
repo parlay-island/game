@@ -5,7 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// tutorial follow: https://www.youtube.com/watch?v=tCr_i5CVv_w
+/**
+* This contains the level selector. The level selector 
+* 
+* Tutorial used: https://www.youtube.com/watch?v=tCr_i5CVv_w
+* 
+* @author: Holly Ansel
+*/
+
+// 
 
 public class LevelSelector : MonoBehaviour
 {

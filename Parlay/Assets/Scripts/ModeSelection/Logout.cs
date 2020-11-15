@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+/**
+* This file contains the business logic to log out of the game. It references
+* the player retriever to log out the current user and destroys all redundent 
+* objects (playerObj and levelInfo). It then manages navigation back to the start
+* screen.
+* 
+* @author: Andres
+*/
+
 public class Logout : MonoBehaviour
 {
     [SerializeField] public AbstractPlayerRetriever playerRetriever;

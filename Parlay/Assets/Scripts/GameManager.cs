@@ -6,11 +6,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 /**
- * This file contains the business logic that runs the api requests to fetch question data
- * from the backend servers. Question data, upload, and retrieval functionality
- * can all be referenced and executed here.
+ * This file contains the business logic for the Game Manager.
+ * Holds business logic to start game by loading up all necessary objects.
+ * Holds business logic to reset game by resetting all necessary objects.
+ * Ends game when timer runs out of time.
+ * Tracks or holds references to global data such as distance traveled,
+ * time, questions asnwered, number of retries, etc.
  * 
- * @author: Holly Ansel, Jake Derry
+ * @author: Holly Ansel, Jake Derry, Jessica Su, Andres Montoya
  */
 
 public class GameManager : MonoBehaviour

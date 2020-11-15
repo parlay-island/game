@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This file contains the business logic for the Enemy Spawner.
+ * This file Instantiates enemy objects at random intervals on top of the enemy spawner.
+ * 
+ * @author: Holly Ansel
+ */
+
 public class EnemySpawner : MonoBehaviour
 {
     private const float MULTIPLIER = 100f;

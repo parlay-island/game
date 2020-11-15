@@ -4,6 +4,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+* This file contains the business logic to change the color of the retry button
+* when it is clicked and then hide it when it is not active.
+* When button is active and selected: Green
+* When button is active and not selected: White
+* When button is not active: Clear
+* 
+* @author: Andres Montoya
+*/
+
 public class ChangeColor : MonoBehaviour
 {
     public Button button;

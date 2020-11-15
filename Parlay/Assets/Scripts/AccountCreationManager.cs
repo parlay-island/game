@@ -6,6 +6,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using TMPro;
 
+/**
+* This file holds the AccountCreationManager.
+* The manager takes in data from the registration input fields and calls
+* the player retriever to register the user in the server with the data.
+* 
+* @author: Holly Ansel
+*/
+
 public class AccountCreationManager : MonoBehaviour
 {
     [SerializeField] public TMP_InputField usernameInput;

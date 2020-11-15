@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/**
+* This file manages the transitions between the start screen to the login screen
+* and sign up screen.
+* 
+* @author: Holly Ansel
+*/
+
+
 public class StartScreenManager : MonoBehaviour
 {
     public void LoadLogin()
