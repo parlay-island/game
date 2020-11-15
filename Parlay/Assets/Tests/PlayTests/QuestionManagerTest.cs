@@ -33,6 +33,8 @@ namespace Tests
         private GameManager gameManager;
         private GameObject gameManagerObj;
         private List<Image> choicePanels;
+        private GameObject awardObject;
+        private AwardManager awardManager;
         private static QuestionModel firstQuestion = new QuestionModel(QuestionText, new List<ChoiceModel>
             {
                 new ChoiceModel(RightChoice),
@@ -119,8 +121,13 @@ namespace Tests
             SetUpText();
             SetUpPanels();
             SetUpGameManager(webRetriever);
+            awardObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Award Prefabs/AwardManager"));
+            awardManager = awardObject.GetComponent<AwardManager>();
+            awardManager.award_list = new List<Award>();
+            _questionManager.awardManager = awardManager;
 
             gameManager.setGameTime(30f);
+            gameManager.awardManager = awardManager;
             _questionManager.Start();
         }
 

@@ -17,12 +17,15 @@ public class Leaderboard : MonoBehaviour
 {
     [SerializeField] public AbstractWebRetriever webRetriever;
     [SerializeField] public ErrorDisplaySource errorDisplaySource;
+    [SerializeField] public AwardManager awardManager;
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<Transform> resultEntryTransformList;
     private List<ResultModel> results = new List<ResultModel>();
+    public GameObject medal;
     private GameEndRequestHelper _gameEndRequestHelper;
     private PlayerAuth _playerAuth;
+
 
     public void Start()
     {
@@ -36,6 +39,7 @@ public class Leaderboard : MonoBehaviour
             errorDisplaySource.DisplayNewError("Cannot load leaderboard", "An error occurred while loading "
                             + "results. Please try again later.");
             gameObject.SetActive(false);
+            Debug.Log(exception);
         }
     }
 
@@ -60,9 +64,8 @@ public class Leaderboard : MonoBehaviour
         {
             results = webRetriever.GetMostRecentResults();
             EndResult endResult = _gameEndRequestHelper.getMostRecentEndResult();
-            results.Add(new ResultModel(endResult.level, endResult.distance, _playerAuth.GetId(), _playerAuth.GetName()));
+            results.Add(new ResultModel(endResult.level, endResult.distance, _playerAuth.GetId(), awardManager.top_award, _playerAuth.GetName()));
             results.Sort((model1, model2) => model2.distance.CompareTo(model1.distance));
-
         }
     }
 
@@ -99,6 +102,21 @@ public class Leaderboard : MonoBehaviour
 
         string user = resultEntry.player_name;
         entryTransform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(user);
+        
+        List<string> awards = resultEntry.award_list;
+        if (awards != null && awards.Count == 1)
+        {
+            Debug.Log("Adding recorded award");
+            Sprite temp = Resources.Load<Sprite>("Prefabs/Award Prefabs/" + awards[0]);
+            //If sprite is null then sprite shows empty which is desired functionality
+            entryTransform.Find("Award").GetComponent<SpriteRenderer>().sprite = temp;
+        }
+        else
+        {
+            Debug.Log("Removing reference to award");
+            entryTransform.Find("Award").GetComponent<SpriteRenderer>().sprite = null;
+        }
+
 
         transformList.Add(entryTransform);
     }

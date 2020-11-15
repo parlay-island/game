@@ -28,4 +28,10 @@ public class Loader : MonoBehaviour
         GameManager.instance.Reset(gameTime);
         print("Resetting game");
     }
+
+    public void Exit()
+    {
+        GameManager.instance.exitGame();
+        print("Exiting game");
+    }
 }

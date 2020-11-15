@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,7 +55,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         //Move Player
-        player.position = new Vector2(-6, 6);
+        player.position = new Vector2(-6, 14);
         player.MovePosition(new Vector2(-6, 14));
     }
 
