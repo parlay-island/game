@@ -19,7 +19,7 @@ public class AwardManager : MonoBehaviour
 {
     public List<Award> award_list;
     public List<string> award_ranking;
-    private List<Award> awards_won;
+    public List<Award> awards_won;
     public List<string> top_award;
 
     void Start()
@@ -46,7 +46,6 @@ public class AwardManager : MonoBehaviour
 
     private void calculateTopAward()
     {
-        print("Calculating award");
         award_ranking.Clear();
         foreach (Award award in award_list)
         {

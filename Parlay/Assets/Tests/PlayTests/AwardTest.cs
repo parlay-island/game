@@ -82,6 +82,9 @@ namespace Tests
             awardManager.award_list = new List<Award>();
             _questionManager.awardManager = awardManager;
 
+            awardManager.award_list.Add(award);
+            awardManager.award_list.Add(award20);
+            awardManager.award_list.Add(award30);
         }
 
         private T AddComponent<T>() where T : Component
@@ -112,6 +115,7 @@ namespace Tests
             yield return null;
             Assert.True(award.enabled);
             Assert.AreEqual(award.text.text, awardText.text);
+            Assert.True(awardManager.awards_won.Count >= 1);
         }
 
         [Retry(2)]
@@ -126,6 +130,7 @@ namespace Tests
             yield return null;
             Assert.True(award20.enabled);
             Assert.AreEqual(award20.text.text, awardText.text);
+            Assert.True(awardManager.awards_won.Count >= 1);
         }
 
         [Retry(2)]
@@ -140,23 +145,6 @@ namespace Tests
             yield return null;
             Assert.True(award30.enabled);
             Assert.AreEqual(award30.text.text, awardText.text);
-        }
-
-        [Retry(2)]
-        [UnityTest, Order(4)]
-        public IEnumerator TopAwardCalculation()
-        {
-            awardManager.award_list.Clear();
-            awardManager.award_list.Add(award);
-            awardManager.award_list.Add(award20);
-            awardManager.award_list.Add(award30);
-            for (int i = 0; i < 30; i++)
-            {
-                _questionManager.UserSelect(1);
-            }
-
-            yield return null;
-            Assert.True(awardManager.top_award.Count >= 1);
         }
     }
 }
