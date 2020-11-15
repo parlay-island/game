@@ -4,6 +4,14 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/**
+* This file contains the mode retriever and its abstract class.
+* The mode retriever queries the database for a list of all the different
+* levels the player can choose from thus providing access to a list of levels.
+* 
+* @author: Holly Ansel
+*/
+
 
 public abstract class AbstractModeRetriever : MonoBehaviour
 {

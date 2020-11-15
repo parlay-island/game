@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/**
+* This file holds the abstract class for an award object.
+* Holds business logic to display specified award.
+* 
+* @author: Andres Montoya, Jake Derry
+*/
+
 public abstract class Award : MonoBehaviour
 {
     [SerializeField] public GameObject awardUI;

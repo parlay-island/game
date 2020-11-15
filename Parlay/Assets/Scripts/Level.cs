@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-// used to pass the level selected across scenes so it can be accessed in the game
+/**
+ * This file contains the declaration for the Level object
+ * The level object is used to determine the mode selected to be accessed within the game
+ * This determines what kinds of questions are viewed by the user
+ * 
+ * @author: Holly Ansel
+ */
+
 public class Level : MonoBehaviour
 {
   private LevelModel level;

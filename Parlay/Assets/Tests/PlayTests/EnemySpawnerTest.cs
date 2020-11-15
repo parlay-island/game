@@ -4,6 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+/**
+* This file tests the enemy spawner
+* 
+* @author: Holly Ansel
+*/
+
 namespace Tests
 {
   public class EnemySpawnerTest

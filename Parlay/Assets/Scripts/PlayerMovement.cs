@@ -8,8 +8,9 @@ using UnityEngine;
 * the control the animator transitions
 * This code was inspired from a Brackey's tutorial
 * https://www.youtube.com/watch?v=dwcT-Dch0bA
+* 
+* @author: Holly Ansel
 */
-
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -17,12 +18,10 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField] public GameObject questionUI;
     public CharacterController2D controller;
-	  public Animator animator;
-
-	  public float runSpeed = 40f;
-
-	  float horizontalMove = 0f;
-	  bool jump = false;
+    public Animator animator;
+    public float runSpeed = 40f;
+    float horizontalMove = 0f;
+    bool jump = false;
     float distanceTravelled = 0;
     float lastPosition;
     private float hitTimer;
@@ -34,19 +33,19 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 	void Update () {
-    if(isHit)
-    {
-      hitTimer -= Time.deltaTime;
-      if(hitTimer <= 0f)
-      {
-        isHit = false;
-        gameObject.GetComponent<SpriteRenderer>().enabled = true;
-      }
-    }
-    bool movementAllowed = !questionUI.activeSelf;
-    float moveSpeed = movementAllowed  ? runSpeed : 0f;
-		horizontalMove = Input.GetAxisRaw("Horizontal") * moveSpeed;
-		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+        if(isHit)
+        {
+          hitTimer -= Time.deltaTime;
+          if(hitTimer <= 0f)
+          {
+            isHit = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+          }
+        }
+        bool movementAllowed = !questionUI.activeSelf;
+        float moveSpeed = movementAllowed  ? runSpeed : 0f;
+    	horizontalMove = Input.GetAxisRaw("Horizontal") * moveSpeed;
+    	animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
         if (Input.GetButtonDown("Jump") && controller.CanJump() && movementAllowed)
         {
             jump = true;

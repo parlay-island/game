@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.TestTools;
 
+/**
+* This file tests the distance power up
+* 
+* @author: Andres Montoya
+*/
+
 namespace Tests
 {
 

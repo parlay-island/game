@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+* This file attaches the camera to the player object so that it follows the 
+* player around as they traverse the terrain. It only changes its x direction
+* along with the player as changing the y direction would disorient the user
+* each time the player jumps.
+* 
+* @author: Andres Montoya
+*/
+
 [RequireComponent(typeof(Camera))]
 public class CameraFollow : MonoBehaviour
 {

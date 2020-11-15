@@ -4,6 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+/**
+* This file tests distance tracking
+* 
+* @author: Jessica Su
+*/
+
 namespace Tests
 {
     public class DistanceIntegrationTest
@@ -12,7 +18,6 @@ namespace Tests
         private GameObject testPlayer;
 
         private GameManager gameManager;
-        private GameObject player;
         private CharacterController2D characterController;
         private PlayerMovement playerMovement;
         private Rigidbody2D rigidbody;

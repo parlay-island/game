@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This file holds helper functions to retrieve data from the end of the game and
+ * send them to be uploaded to the server.
+ * 
+ * @author: Holly Ansel, Jessica Su
+ */
+
 public class GameEndRequestHelper
 {
 	private AbstractWebRetriever webRetriever;

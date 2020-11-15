@@ -4,6 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+/**
+* This file tests the parallax effect
+* 
+* @author: Andres Montoya
+*/
+
 namespace Tests
 {
     public class ParallaxTests
@@ -49,9 +55,6 @@ namespace Tests
         [UnityTest, Order(2)]
         public IEnumerator ParallaxTest()
         {
-            float cloud_x = cloudsObj.transform.position.x;
-            float mountain_x = mountainsObj.transform.position.x;
-            float trees_x = treesObj.transform.position.x;
             testPlayer.transform.position += new Vector3(20, 0);
             yield return new WaitForSeconds(0.5f);
             Assert.IsTrue(cloudsObj.transform.position.x > mountainsObj.transform.position.x);

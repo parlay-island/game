@@ -1,14 +1,21 @@
 using System.Linq;
 using UnityEngine;
 
+/**
+* This file holds the abstracted award object for answering 20 questions
+* 
+* @author: Andres Montoya
+*/
+
 public class Answered20QuestionsAward : Award
 {
     [SerializeField] public QuestionManager questionManager;
     [SerializeField] public GameObject medal;
+    private const string MEDAL_NAME = "silver medal";
 
     private void Start()
     {
-        awardName = "silver medal";
+        awardName = MEDAL_NAME;
     }
 
     public override bool WinsAward()

@@ -4,6 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+/**
+* This file tests the enemy object & logic
+* 
+* @author: Holly Ansel
+*/
+
 namespace Tests
 {
 
@@ -42,7 +48,6 @@ namespace Tests
       [TearDown]
       public void Teardown()
       {
-        GameObject.Destroy(characterController);
         foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
           GameObject.Destroy(obj);
         }

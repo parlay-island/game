@@ -9,6 +9,12 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using TMPro;
 
+/**
+* This file tests the leaderboard
+* 
+* @author: Holly Ansel
+*/
+
 namespace Tests
 {
     public class LeaderboardTest
