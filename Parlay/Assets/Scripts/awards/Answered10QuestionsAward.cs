@@ -1,6 +1,12 @@
 using System.Linq;
 using UnityEngine;
 
+/**
+* This file holds the abstracted award object for answering 10 questions
+* 
+* @author: Andres Montoya, Jake Derry
+*/
+
 public class Answered10QuestionsAward : Award
 {
     [SerializeField] public QuestionManager questionManager;

@@ -11,7 +11,7 @@ using TMPro;
 /**
 * This file tests awards
 * 
-* @author: Jake Derry
+* @author: Jake Derry, Andres Montoya
 */
 namespace Tests
 {
@@ -20,8 +20,11 @@ namespace Tests
         private QuestionManager _questionManager;
         private GameObject questionManagerGameObject;
         private GameObject awardUI;
+        private GameObject medal;
         private TextMeshProUGUI awardText;
         private Answered10QuestionsAward award;
+        private Answered20QuestionsAward award20;
+        private Answered30QuestionsAward award30;
         private GameManager gameManager;
         private GameObject gameManagerObj;
         private GameObject awardObject;
@@ -35,12 +38,28 @@ namespace Tests
             questionManagerGameObject =
                 MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Questions/QuestionManager"));
             _questionManager = questionManagerGameObject.GetComponent<QuestionManager>();
-            award = questionManagerGameObject.AddComponent<Answered10QuestionsAward>();
             awardText = questionManagerGameObject.AddComponent<TextMeshProUGUI>();
             awardUI = new GameObject();
+            medal = new GameObject();
+
+            award = questionManagerGameObject.AddComponent<Answered10QuestionsAward>();
             award.awardUI = awardUI;
+            award.medal = medal;
             award.text = awardText;
             award.questionManager = _questionManager;
+
+            award20 = questionManagerGameObject.AddComponent<Answered20QuestionsAward>();
+            award20.awardUI = awardUI;
+            award20.medal = medal;
+            award20.text = awardText;
+            award20.questionManager = _questionManager;
+
+            award30 = questionManagerGameObject.AddComponent<Answered30QuestionsAward>();
+            award30.awardUI = awardUI;
+            award30.medal = medal;
+            award30.text = awardText;
+            award30.questionManager = _questionManager; 
+
             _questionManager.webRetriever = questionManagerGameObject.AddComponent<QuestionManagerTest.MockWebRetriever>();
             _questionManager.timer = null;
             _questionManager.questionUI = awardUI;
@@ -82,7 +101,7 @@ namespace Tests
         }
 
         [Retry (2)]
-        [UnityTest]
+        [UnityTest, Order(1)]
         public IEnumerator Answered10QuestionsAwardWinsAwardWhen10QuestionsAnswered()
         {
             for (int i = 0; i < 10; i++)
@@ -93,6 +112,51 @@ namespace Tests
             yield return null;
             Assert.True(award.enabled);
             Assert.AreEqual(award.text.text, awardText.text);
+        }
+
+        [Retry(2)]
+        [UnityTest, Order(2)]
+        public IEnumerator Answered20QuestionsAwardWinsAwardWhen20QuestionsAnswered()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                _questionManager.UserSelect(1);
+            }
+
+            yield return null;
+            Assert.True(award20.enabled);
+            Assert.AreEqual(award20.text.text, awardText.text);
+        }
+
+        [Retry(2)]
+        [UnityTest, Order(3)]
+        public IEnumerator Answered30QuestionsAwardWinsAwardWhen30QuestionsAnswered()
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                _questionManager.UserSelect(1);
+            }
+
+            yield return null;
+            Assert.True(award30.enabled);
+            Assert.AreEqual(award30.text.text, awardText.text);
+        }
+
+        [Retry(2)]
+        [UnityTest, Order(4)]
+        public IEnumerator TopAwardCalculation()
+        {
+            awardManager.award_list.Clear();
+            awardManager.award_list.Add(award);
+            awardManager.award_list.Add(award20);
+            awardManager.award_list.Add(award30);
+            for (int i = 0; i < 30; i++)
+            {
+                _questionManager.UserSelect(1);
+            }
+
+            yield return null;
+            Assert.True(awardManager.top_award.Count >= 1);
         }
     }
 }
