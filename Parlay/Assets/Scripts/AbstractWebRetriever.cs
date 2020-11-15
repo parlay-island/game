@@ -6,7 +6,7 @@ using UnityEngine;
 * The web retriever runs the api requests to fetch and upload question data
 * from the backend servers.
 * 
-* @author: Jake Derry
+* @author: Jake Derry, Holly Ansel, Jessica Su
 */
 
 public abstract class AbstractWebRetriever : MonoBehaviour

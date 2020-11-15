@@ -11,10 +11,11 @@ public class Answered20QuestionsAward : Award
 {
     [SerializeField] public QuestionManager questionManager;
     [SerializeField] public GameObject medal;
+    private const string MEDAL_NAME = "silver medal";
 
     private void Start()
     {
-        awardName = "silver medal";
+        awardName = MEDAL_NAME;
     }
 
     public override bool WinsAward()

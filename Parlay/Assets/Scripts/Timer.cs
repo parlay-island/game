@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /**
- * This file manages teh business logic for the in game timer
- * All UI modifications and helper functions can be modfied here
+ * This file manages the business logic for the in game timer.
+ * Timer UI and helper functions can be modfied here.
  * 
- * @author: Jessica Su
+ * @author: Jessica Su, Holly Ansel
  */
 
 public class Timer : MonoBehaviour

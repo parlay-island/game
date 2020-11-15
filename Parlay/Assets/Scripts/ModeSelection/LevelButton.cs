@@ -20,6 +20,7 @@ public class LevelButton : MonoBehaviour
     private GameObject levelObj;
     // when automated tests testing that level is set don't want to load the actual scene
     public bool isTest = false;
+    private const string GAME_SCENE_NAME = "Development";
 
     void Start()
     {
@@ -49,9 +50,8 @@ public class LevelButton : MonoBehaviour
     IEnumerator Load()
     {
       Scene currentScene = SceneManager.GetActiveScene();
-      string game_scene_name = "Development";
 
-      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(game_scene_name, LoadSceneMode.Single);
+      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(GAME_SCENE_NAME, LoadSceneMode.Single);
       while (!asyncLoad.isDone)
       {
           yield return null;

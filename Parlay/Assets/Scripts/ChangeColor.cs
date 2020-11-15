@@ -31,33 +31,25 @@ public class ChangeColor : MonoBehaviour
 
     public void Update()
     {
+        Color selectedColor;
         if (GameManager.instance.retries.Count == 0)
         {
             text.text = "";
-            ColorBlock colorvar = button.colors;
-            colorvar.normalColor = Color.clear;
-            colorvar.highlightedColor = Color.clear;
-            colorvar.pressedColor = Color.clear;
-            button.colors = colorvar;
-            image.color = Color.clear;
+            selectedColor = Color.clear;
         } else if (GameManager.instance.canRetry)
         {
             text.text = "Retry";
-            ColorBlock colorvar = button.colors;
-            colorvar.normalColor = Color.green;
-            colorvar.highlightedColor = Color.green;
-            colorvar.pressedColor = Color.green;
-            image.color = Color.green;
-            button.colors = colorvar;
+            selectedColor = Color.green;
         } else
         {
             text.text = "Retry";
-            ColorBlock colorvar = button.colors;
-            colorvar.normalColor = Color.white;
-            colorvar.highlightedColor = Color.white;
-            colorvar.pressedColor = Color.white;
-            image.color = Color.white;
-            button.colors = colorvar;
+            selectedColor = Color.white;
         }
+        ColorBlock colorvar = button.colors;
+        colorvar.normalColor = selectedColor;
+        colorvar.highlightedColor = selectedColor;
+        colorvar.pressedColor = selectedColor;
+        button.colors = colorvar;
+        image.color = selectedColor;
     }
 }

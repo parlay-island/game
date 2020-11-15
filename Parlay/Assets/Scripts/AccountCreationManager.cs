@@ -22,6 +22,8 @@ public class AccountCreationManager : MonoBehaviour
     [SerializeField] private TMP_InputField classCodeInput;
     [SerializeField] public LoginManager loginManager;
     [SerializeField] public AbstractPlayerRetriever playerRetriever;
+    private const string PASS_MATCH_ERROR = "Your passwords don't match";
+    private const string PASS_LENGTH_ERROR = "Your password needs to be at least 8 characters";
 
     public void CreateAccount()
     {
@@ -31,10 +33,10 @@ public class AccountCreationManager : MonoBehaviour
       string classCode = classCodeInput.text;
       if(password != passwordConfirmation)
       {
-        DisplayError("Your passwords don't match");
+        DisplayError(PASS_MATCH_ERROR);
       } else if (password.Length < 8)
       {
-        DisplayError("Your password needs to be at least 8 characters");
+        DisplayError(PASS_LENGTH_ERROR);
       } else
       {
         CreateAccountModel createAccountModel = new CreateAccountModel(username, password, classCode);

@@ -19,6 +19,7 @@ public class Logout : MonoBehaviour
     private GameObject playerObj;
     [FormerlySerializedAs("player")] public PlayerAuth playerAuth;
     public bool isTest = false;
+    private const string START_SCREEN_NAME = "StartScreen";
 
     public void Awake()
     {
@@ -47,9 +48,8 @@ public class Logout : MonoBehaviour
     IEnumerator LoadStartScreen()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        string start_scene_name = "StartScreen";
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(start_scene_name, LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(START_SCREEN_NAME, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
             yield return null;
@@ -57,6 +57,6 @@ public class Logout : MonoBehaviour
         if (!isTest)
             yield return SceneManager.UnloadSceneAsync(currentScene);
         else
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(start_scene_name));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(START_SCREEN_NAME));
     }
 }

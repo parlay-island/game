@@ -14,6 +14,9 @@ using UnityEngine.SceneManagement;
 
 public class StartScreenManager : MonoBehaviour
 {
+    public const string LOGIN_SCREEN_NAME = "LoginScreen";
+    public const string SIGNUP_SCREEN_NAME = "SignUpScreen";
+
     public void LoadLogin()
     {
       StartCoroutine(LoadLoginScene());
@@ -21,9 +24,7 @@ public class StartScreenManager : MonoBehaviour
 
     IEnumerator LoadLoginScene()
     {
-      string login_scene_name = "LoginScreen";
-
-      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(login_scene_name, LoadSceneMode.Single);
+      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(LOGIN_SCREEN_NAME, LoadSceneMode.Single);
       while (!asyncLoad.isDone)
       {
           yield return null;
@@ -38,9 +39,7 @@ public class StartScreenManager : MonoBehaviour
 
     IEnumerator LoadSignUpScene()
     {
-      string sign_up_scene_name = "SignUpScreen";
-
-      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sign_up_scene_name, LoadSceneMode.Single);
+      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SIGNUP_SCREEN_NAME, LoadSceneMode.Single);
       while (!asyncLoad.isDone)
       {
           yield return null;
