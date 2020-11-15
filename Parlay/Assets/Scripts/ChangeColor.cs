@@ -60,9 +60,4 @@ public class ChangeColor : MonoBehaviour
             button.colors = colorvar;
         }
     }
-
-    public void changeColor()
-    {
-
-    }
 }

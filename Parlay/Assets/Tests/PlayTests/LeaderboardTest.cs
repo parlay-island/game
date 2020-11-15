@@ -111,7 +111,7 @@ namespace Tests
           leaderboard.SetPlayer(playerAuth);
           _gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever, level);
           _gameEndRequestHelper.postGameEndResults(distance3, 1,
-              new List<AnsweredQuestion>());
+             new List<AnsweredQuestion>());
           leaderboard.SetGameEndRequestHelper(_gameEndRequestHelper);
           mockWebRetriever.FetchResults();
           leaderboardObj.gameObject.SetActive(true);

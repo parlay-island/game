@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
 
     public float playerDistance = 0f;
     public float bonusDistance = 0f;
-    private string postEndResultContent;
     private bool sentRequest = false;
     public ArrayList retries = new ArrayList();
     public bool playerFallen = false;

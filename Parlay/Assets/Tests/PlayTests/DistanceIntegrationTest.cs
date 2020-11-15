@@ -18,7 +18,6 @@ namespace Tests
         private GameObject testPlayer;
 
         private GameManager gameManager;
-        private GameObject player;
         private CharacterController2D characterController;
         private PlayerMovement playerMovement;
         private Rigidbody2D rigidbody;

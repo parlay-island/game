@@ -73,9 +73,9 @@ namespace Tests
             powerUp.GetComponent<PowerUp>().type = 1;
             CollideWithPowerUp();
             float waitTime = 3f;
-             yield return new WaitForSeconds(waitTime);
-             //Test if time was increased
-             Assert.True(gameManager.timerManager.getCurrTime() - initialTime - waitTime >= 0);
+            yield return new WaitForSeconds(waitTime);
+            //Test if time was increased
+            Assert.True(gameManager.timerManager.getCurrTime() - initialTime - waitTime >= 0);
          }
 
     }
