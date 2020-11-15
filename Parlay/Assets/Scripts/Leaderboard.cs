@@ -9,7 +9,7 @@ using TMPro;
  * This file holds the business logic for the leaderboard. Each leaderboard
  * entry is populated with data from the backend to display each run's ranking
  * within the class. All UI modifications to the leaderboard can be done here.
- * 
+ *
  * @author: Holly Ansel, Andres Montoya
  */
 
@@ -92,7 +92,7 @@ public class Leaderboard : MonoBehaviour
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(-0f, initialPos + (-templateHeight * transformList.Count));
         entryTransform.gameObject.SetActive(true);
-       
+
         addElementsToEntryTransform(resultEntry, entryTransform, transformList);
 
         transformList.Add(entryTransform);
@@ -113,14 +113,12 @@ public class Leaderboard : MonoBehaviour
         List<string> awards = resultEntry.award_list;
         if (awards != null && awards.Count == 1)
         {
-            Debug.Log("Adding recorded award");
             Sprite temp = Resources.Load<Sprite>("Prefabs/Award Prefabs/" + awards[0]);
             //If sprite is null then sprite shows empty which is desired functionality
             entryTransform.Find("Award").GetComponent<SpriteRenderer>().sprite = temp;
         }
         else
         {
-            Debug.Log("Removing reference to award");
             entryTransform.Find("Award").GetComponent<SpriteRenderer>().sprite = null;
         }
     }
