@@ -2,8 +2,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /**
+* This file contains the business logic for player charactercontroller.
+* It prevents the player from jumping if it is not touching the ground.
+* It flips the player sprite when it changes direction.
+* It moves the characters x position when requested to move and y position
+* when requested to jump.
+* 
 * This code was inspired from a Brackey's tutorial
 * https://www.youtube.com/watch?v=dwcT-Dch0bA
+* 
+* @author: Holly Ansel
 */
 
 public class CharacterController2D : MonoBehaviour

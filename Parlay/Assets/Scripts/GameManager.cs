@@ -5,6 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/**
+ * This file contains the business logic for the Game Manager.
+ * Holds business logic to start game by loading up all necessary objects.
+ * Holds business logic to reset game by resetting all necessary objects.
+ * Ends game when timer runs out of time.
+ * Tracks or holds references to global data such as distance traveled,
+ * time, questions asnwered, number of retries, etc.
+ * 
+ * @author: Holly Ansel, Jake Derry, Jessica Su, Andres Montoya
+ */
+
 public class GameManager : MonoBehaviour
 {
 
@@ -30,7 +41,6 @@ public class GameManager : MonoBehaviour
 
     public float playerDistance = 0f;
     public float bonusDistance = 0f;
-    private string postEndResultContent;
     private bool sentRequest = false;
     public ArrayList retries = new ArrayList();
     public bool playerFallen = false;

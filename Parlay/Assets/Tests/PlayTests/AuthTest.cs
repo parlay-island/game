@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using TMPro;
 
+/**
+* This file tests authentication
+* 
+* @author: Holly Ansel
+*/
 namespace Tests
 {
     public class AuthTest

@@ -7,6 +7,13 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.Serialization;
 
+/**
+ * Manages the login screen and authentication into the server
+ * On succesful login directs user to mode selection screen
+ * 
+ * @author: Holly Ansel
+ */
+
 public class LoginManager : MonoBehaviour
 {
     [SerializeField] public TMP_InputField usernameInput;
@@ -14,6 +21,8 @@ public class LoginManager : MonoBehaviour
     [SerializeField] public AbstractPlayerRetriever playerRetriever;
     [SerializeField] public TextMeshProUGUI errorMessage;
     [FormerlySerializedAs("player")] [SerializeField] public PlayerAuth playerAuth;
+    private const string START_SCREEN_NAME = "StartScreen";
+    private const string MODE_SCREEN_NAME = "ModeSelection";
 
     public bool isTest = false;
 
@@ -30,9 +39,8 @@ public class LoginManager : MonoBehaviour
     IEnumerator LoadStartScreen()
     {
       Scene currentScene = SceneManager.GetActiveScene();
-      string start_scene_name = "StartScreen";
 
-      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(start_scene_name, LoadSceneMode.Additive);
+      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(START_SCREEN_NAME, LoadSceneMode.Additive);
       while (!asyncLoad.isDone)
       {
           yield return null;
@@ -40,7 +48,7 @@ public class LoginManager : MonoBehaviour
       if(!isTest)
         yield return SceneManager.UnloadSceneAsync(currentScene);
       else
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(start_scene_name));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(START_SCREEN_NAME));
     }
 
     public void Login()
@@ -67,9 +75,8 @@ public class LoginManager : MonoBehaviour
     {
       DontDestroyOnLoad(playerAuth);
       Scene currentScene = SceneManager.GetActiveScene();
-      string mode_scene_name = "ModeSelection";
 
-      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(mode_scene_name, LoadSceneMode.Additive);
+      AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(MODE_SCREEN_NAME, LoadSceneMode.Additive);
       while (!asyncLoad.isDone)
       {
           yield return null;
@@ -77,6 +84,6 @@ public class LoginManager : MonoBehaviour
       if(!isTest)
         yield return SceneManager.UnloadSceneAsync(currentScene);
       else
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(mode_scene_name));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(MODE_SCREEN_NAME));
     }
 }

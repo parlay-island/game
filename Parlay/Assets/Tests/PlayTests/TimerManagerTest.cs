@@ -4,6 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+/**
+* This file tests the time manager
+* 
+* @author: Jessica Su
+*/
+
 namespace Tests
 {
     public class TimerManagerTest

@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This file contains the business logic for the Enemy object.
+ * This has the enemy move randomly in a direction as long as there is ground beneath it.
+ * If the enemy makes contact with the player object it has the Game Manager reduce the total time.
+ * 
+ * @author: Holly Ansel
+ */
+
 public class Enemy : MonoBehaviour
 {
     [Range(-30f, -1f)][SerializeField] private float m_TimeReduction = -2f;

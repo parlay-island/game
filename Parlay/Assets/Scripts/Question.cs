@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/**
+ * This file is used to hold Question and Choice objects.
+ * These are used to store question data as well as choice data.
+ * 
+ * @author: Jake Derry
+ */
+
 [JsonObject]
 public class QuestionList
 {

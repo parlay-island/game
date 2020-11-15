@@ -6,6 +6,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using TMPro;
 
+/**
+* This file holds the AccountCreationManager.
+* The manager takes in data from the registration input fields and calls
+* the player retriever to register the user in the server with the data.
+* 
+* @author: Holly Ansel
+*/
+
 public class AccountCreationManager : MonoBehaviour
 {
     [SerializeField] public TMP_InputField usernameInput;
@@ -14,6 +22,8 @@ public class AccountCreationManager : MonoBehaviour
     [SerializeField] private TMP_InputField classCodeInput;
     [SerializeField] public LoginManager loginManager;
     [SerializeField] public AbstractPlayerRetriever playerRetriever;
+    private const string PASS_MATCH_ERROR = "Your passwords don't match";
+    private const string PASS_LENGTH_ERROR = "Your password needs to be at least 8 characters";
 
     public void CreateAccount()
     {
@@ -23,10 +33,10 @@ public class AccountCreationManager : MonoBehaviour
       string classCode = classCodeInput.text;
       if(password != passwordConfirmation)
       {
-        DisplayError("Your passwords don't match");
+        DisplayError(PASS_MATCH_ERROR);
       } else if (password.Length < 8)
       {
-        DisplayError("Your password needs to be at least 8 characters");
+        DisplayError(PASS_LENGTH_ERROR);
       } else
       {
         CreateAccountModel createAccountModel = new CreateAccountModel(username, password, classCode);

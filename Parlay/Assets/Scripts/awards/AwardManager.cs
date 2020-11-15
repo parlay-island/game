@@ -5,11 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/**
+* This file has the business logic for the award manager.
+* The award manager checks all of the different Award objects to see if their 
+* requirements have been met by the user when a question is answered. If it has 
+* been met then an instance of that award is stored locally and then the top
+* award the user has recieved is recalculated for future use.
+* 
+* @author: Andres Montoya
+*/
+
 public class AwardManager : MonoBehaviour
 {
     public List<Award> award_list;
     public List<string> award_ranking;
-    private List<Award> awards_won;
+    public List<Award> awards_won;
     public List<string> top_award;
 
     void Start()
@@ -36,7 +46,6 @@ public class AwardManager : MonoBehaviour
 
     private void calculateTopAward()
     {
-        print("Calculating award");
         award_ranking.Clear();
         foreach (Award award in award_list)
         {

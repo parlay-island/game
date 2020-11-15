@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This file loads the game manager at the start of the game
+ * It also contains a helper function to reset the game 
+ * 
+ * @author: Holly Ansel, Jessica Su, Andres Montoya
+ */
+
 public class Loader : MonoBehaviour
 {
 	public GameObject gameManager;

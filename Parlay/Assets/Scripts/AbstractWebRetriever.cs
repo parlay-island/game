@@ -1,6 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+* This file contains the abstract class for the web retriever.
+* The web retriever runs the api requests to fetch and upload question data
+* from the backend servers.
+* 
+* @author: Jake Derry, Holly Ansel, Jessica Su
+*/
+
 public abstract class AbstractWebRetriever : MonoBehaviour
 {
     public abstract void SetUp(string auth_token, int level);

@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This file sets up the level generator
+ * The level generator randomly loads all the chunks into the game
+ * Chunks are premade level components which contain tilessets, this is the terrain for the game
+ * This file also has the functionality to reset the level
+ * 
+ * @author: Andres Montoya
+ */
+
 public class LevelGenerator : MonoBehaviour
 {
     private const float PLAYER_DISTANCE_CHUNCK_SPAWN = 20f;

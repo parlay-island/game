@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This file sets up the parallax background effect
+ * This effect makes the background appear to be moving as the player is progressing along the level
+ * This is done by applying this script to each layer of the background to different degrees
+ * 
+ * @author: Andres Montoya
+ */
+
 public class ParallaxBackground : MonoBehaviour
 {
     [SerializeField] private Vector2 parallaxEffectMultiplier;

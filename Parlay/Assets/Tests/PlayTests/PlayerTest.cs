@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+
 /**
 * This class tests the player prefab (which contains the characterController
 * and playerMovement scripts)
@@ -10,6 +11,8 @@ using UnityEngine.TestTools;
 * Therefore this class is testing that the animator and the CharacterController2D
 * respond appropriately with the input that would be given to them if
 * the keys were pressed
+* 
+* @author: Holly Ansel
 */
 
 namespace Tests

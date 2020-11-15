@@ -5,13 +5,20 @@ using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 
+/**
+ * This file contains the business logic that runs the api requests to fetch player data
+ * from the backend servers. Logout, login, and data retrieval functionality
+ * can all be referenced and executed here.
+ * 
+ * @author: Holly Ansel, Jake Derry
+ */
+
 public abstract class AbstractPlayerRetriever : MonoBehaviour
 {
   public abstract void LoginPlayer(LoginModel loginModel, System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth);
   public abstract void CreateAccount(CreateAccountModel createAccountModel, System.Action successCallback, System.Action<string> errorCallback);
   public abstract void LogoutPlayer(System.Action successCallback, System.Action<string> errorCallback, PlayerAuth playerAuth);
 }
-
 
 public class PlayerRetriever : AbstractPlayerRetriever
 {

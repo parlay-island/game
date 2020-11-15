@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+
 /**
-* This class tests camera movement
+* This file tests camera movement
+* 
+* @author: Andres Montoya
 */
 
 namespace Tests

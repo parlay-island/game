@@ -5,6 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/**
+ * This file holds the business logic for the leaderboard. Each leaderboard
+ * entry is populated with data from the backend to display each run's ranking
+ * within the class. All UI modifications to the leaderboard can be done here.
+ * 
+ * @author: Holly Ansel, Andres Montoya
+ */
+
 public class Leaderboard : MonoBehaviour
 {
     [SerializeField] public AbstractWebRetriever webRetriever;
@@ -84,7 +92,14 @@ public class Leaderboard : MonoBehaviour
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(-0f, initialPos + (-templateHeight * transformList.Count));
         entryTransform.gameObject.SetActive(true);
+       
+        addElementsToEntryTransform(resultEntry, entryTransform, transformList);
 
+        transformList.Add(entryTransform);
+    }
+
+    private void addElementsToEntryTransform(ResultModel resultEntry, Transform entryTransform, List<Transform> transformList)
+    {
         int rank = transformList.Count + 1;
         string rankString = GetRankNumber(rank);
         entryTransform.Find("Rank").GetComponent<TextMeshProUGUI>().SetText(rankString);
@@ -94,7 +109,7 @@ public class Leaderboard : MonoBehaviour
 
         string user = resultEntry.player_name;
         entryTransform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(user);
-        
+
         List<string> awards = resultEntry.award_list;
         if (awards != null && awards.Count == 1)
         {
@@ -108,9 +123,6 @@ public class Leaderboard : MonoBehaviour
             Debug.Log("Removing reference to award");
             entryTransform.Find("Award").GetComponent<SpriteRenderer>().sprite = null;
         }
-
-
-        transformList.Add(entryTransform);
     }
 
     private string GetRankNumber(int rank)
