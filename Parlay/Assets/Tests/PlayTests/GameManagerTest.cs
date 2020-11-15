@@ -7,6 +7,12 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 
+/**
+* This file tests the Game Manager
+* 
+* @author: Holly Ansel, Jessica Su
+*/
+
 namespace Tests
 {
     public class GameManagerTest

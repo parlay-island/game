@@ -8,6 +8,12 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using TMPro;
 
+/**
+* This file tests the retry power up
+* 
+* @author: Andres Montoya
+*/
+
 namespace Tests
 {
 

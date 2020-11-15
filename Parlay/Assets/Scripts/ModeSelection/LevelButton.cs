@@ -5,6 +5,15 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+/**
+* This contains the business logic for the level button. When a panel is 
+* selected from the levelSelector this script is activated using the selected
+* levelModel to load the game in the developmenet scene. The levelObj is also 
+* populated with the selected level.
+* 
+* @author: Holly Ansel
+*/
+
 public class LevelButton : MonoBehaviour
 {
     private List<LevelModel> levels = new List<LevelModel>();

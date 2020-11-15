@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 
+/**
+* This file tests the time power up
+* 
+* @author: Andres Montoya
+*/
+
 namespace Tests
 {
 

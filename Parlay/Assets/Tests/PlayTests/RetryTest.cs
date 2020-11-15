@@ -4,6 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+/**
+* This file tests retry functionality (resetting the game)
+* 
+* @author: Andres Montoya
+*/
+
 namespace Tests
 {
     public class RetryTest

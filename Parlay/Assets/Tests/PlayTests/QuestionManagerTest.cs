@@ -8,6 +8,12 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using TMPro;
 
+/**
+* This file tests the question manager
+* 
+* @author: Jake Derry
+*/
+
 namespace Tests
 {
     public class QuestionManagerTest

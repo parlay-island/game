@@ -5,6 +5,13 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 
+/**
+* This file tests scene transitions to, from, and within the rules scene 
+* to make sure it loads and unloads properly
+* 
+* @author: Jessica Su
+*/
+
 namespace Tests
 {
     public class RulesTest

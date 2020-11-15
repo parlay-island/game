@@ -4,6 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+/**
+* This file tests the parallax effect
+* 
+* @author: Andres Montoya
+*/
+
 namespace Tests
 {
     public class ParallaxTests

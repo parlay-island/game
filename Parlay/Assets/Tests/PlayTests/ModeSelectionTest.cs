@@ -7,6 +7,12 @@ using UnityEngine.UI;
 using UnityEngine.TestTools;
 using TMPro;
 
+/**
+* This file tests mode selection
+* 
+* @author: Holly Ansel
+*/
+
 namespace Tests
 {
     public class ModeSelectionTest
