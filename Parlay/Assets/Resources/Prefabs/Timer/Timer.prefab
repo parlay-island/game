@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6813613100092239012, guid: fbb8a6563c676492880e1d7ccd01b2f0, type: 3}
       propertyPath: m_Value
-      value: 29.841873
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6813613100092239012, guid: fbb8a6563c676492880e1d7ccd01b2f0, type: 3}
       propertyPath: m_MaxValue
-      value: 30
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6813613100092239014, guid: fbb8a6563c676492880e1d7ccd01b2f0, type: 3}
       propertyPath: m_Name

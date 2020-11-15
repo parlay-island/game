@@ -4,8 +4,8 @@ using UnityEngine;
 
 /**
  * This file loads the game manager at the start of the game
- * It also contains a helper function to reset the game 
- * 
+ * It also contains a helper function to reset the game
+ *
  * @author: Holly Ansel, Jessica Su, Andres Montoya
  */
 
@@ -19,19 +19,17 @@ public class Loader : MonoBehaviour
     {
         if (GameManager.instance == null) {
     		Instantiate (gameManager);
-    	} 
+    	}
     	GameManager.instance.setGameTime(gameTime);
     }
 
     public void Reset()
     {
         GameManager.instance.Reset(gameTime);
-        print("Resetting game");
     }
 
     public void Exit()
     {
         GameManager.instance.exitGame();
-        print("Exiting game");
     }
 }
