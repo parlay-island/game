@@ -32,7 +32,7 @@ public class LevelButton : MonoBehaviour
       levelObj.GetComponent<Level>().SetLevel(level_selected);
         if (!isTest)
         {
-            GameObject.Destroy(GameObject.Find("GameManager"));
+            GameObject.Destroy(GameManager.instance);
             StartCoroutine(Load());
         }
     }

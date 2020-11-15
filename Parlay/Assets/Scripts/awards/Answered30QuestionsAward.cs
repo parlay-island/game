@@ -1,19 +1,19 @@
 using System.Linq;
 using UnityEngine;
 
-public class Answered10QuestionsAward : Award
+public class Answered30QuestionsAward : Award
 {
     [SerializeField] public QuestionManager questionManager;
     [SerializeField] public GameObject medal;
 
     private void Start()
     {
-        awardName = "bronze medal";
+        awardName = "gold medal";
     }
 
     public override bool WinsAward()
     {
-        return questionManager.GetAnsweredQuestions().Count == 10;
+        return questionManager.GetAnsweredQuestions().Count == 30;
     }
 
     public override void DisplayAward()

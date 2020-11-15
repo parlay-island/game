@@ -103,6 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   webRetriever: {fileID: 1265517507513601523, guid: 90c4ffd201b494ea28b522d0af2256bd, type: 3}
   errorDisplaySource: {fileID: 8878849883676834197, guid: 135476448a55b4137ab03a9f9135da8b, type: 3}
+  awardManager: {fileID: 0}
+  medal: {fileID: 6115572138867574648}
 --- !u!1001 &7422579837581749817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -215,5 +217,10 @@ PrefabInstance:
 --- !u!224 &5006599155846036627 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2484102907330319018, guid: f71ca9bcdb69f45cb8d7ee88ee267d5c, type: 3}
+  m_PrefabInstance: {fileID: 7422579837581749817}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6115572138867574648 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3737052540231166273, guid: f71ca9bcdb69f45cb8d7ee88ee267d5c, type: 3}
   m_PrefabInstance: {fileID: 7422579837581749817}
   m_PrefabAsset: {fileID: 0}

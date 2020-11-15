@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -25,10 +26,13 @@ namespace Tests
         private GameObject gameManager;
         private GameObject mockWebRetrieverObj;
         private GameEndRequestHelper _gameEndRequestHelper;
+        private GameObject awardObject;
+        private AwardManager awardManager;
 
         public class MockWebRetriever : AbstractWebRetriever
         {
             private List<ResultModel> results;
+            private List<string> top_award;
             private int level;
 
             public override void SetUp(string auth_token, int level){
@@ -48,9 +52,10 @@ namespace Tests
             }
 
             public override void FetchResults() {
-              results = new List<ResultModel>  {
-                    new ResultModel(level, distance1,0, player_name1),
-                    new ResultModel(level, distance2,1, player_name2)
+                top_award = new List<string>();
+                results = new List<ResultModel>  {
+                    new ResultModel(level, distance1,0, top_award, player_name1),
+                    new ResultModel(level, distance2,1, top_award, player_name2),
                 };
             }
             public override List<ResultModel> GetMostRecentResults() {
@@ -103,9 +108,14 @@ namespace Tests
           var playerAuth = leaderboardObj.AddComponent<PlayerAuth>();
           playerAuth.SetPlayer(new PlayerModel(1, player_name3, 30.0f));
           leaderboard.SetPlayer(playerAuth);
-          _gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever, level);
-          _gameEndRequestHelper.postGameEndResults(distance3, 1,
-              new List<AnsweredQuestion>());
+            _gameEndRequestHelper = new GameEndRequestHelper(mockWebRetriever, level);
+          awardObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Award Prefabs/AwardManager"));
+          awardManager = awardObject.GetComponent<AwardManager>();
+          awardManager.award_list = new List<Award>();
+          awardManager.top_award = new List<string>();
+            leaderboard.awardManager = awardManager;
+          _gameEndRequestHelper.postGameEndResults(distance3, level, 1, 
+            new List<AnsweredQuestion>(), awardManager.top_award);
           leaderboard.SetGameEndRequestHelper(_gameEndRequestHelper);
           mockWebRetriever.FetchResults();
           leaderboardObj.gameObject.SetActive(true);
@@ -136,6 +146,7 @@ namespace Tests
             Assert.AreEqual(entry0.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance3 + "m");
             Assert.AreEqual(entry1.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance2 + "m");
             Assert.AreEqual(entry2.transform.Find("Distance").GetComponent<TextMeshProUGUI>().text, distance1 + "m");
+
             yield return null;
         }
 

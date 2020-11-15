@@ -15,12 +15,14 @@ public class ResultModel
 	[JsonProperty("distance")] public float distance;
 	[JsonProperty("player_id")] public int player_id;
 	[JsonProperty("player_name")] public string player_name;
+    [JsonProperty("award_list")] public List<string> award_list;
 
-	public ResultModel(int level, float distance, int player_id, string player_name = "") {
+    public ResultModel(int level, float distance, int player_id, List<string> award_list, string player_name = "") {
 		this.level = level;
 		this.distance = distance;
 		this.player_name = player_name;
 		this.player_id = player_id;
+        this.award_list = award_list;
 	}
 }
 
@@ -30,12 +32,14 @@ public class EndResult
 	[JsonProperty("level")] public int level;
 	[JsonProperty("distance")] public float distance;
 	[JsonProperty("questions")] public List<AnsweredQuestion> questions;
+    [JsonProperty("award_list")] public List<string> award_list;
 
-	public EndResult(int level, float distance, List<AnsweredQuestion> questions)
+    public EndResult(int level, float distance, List<AnsweredQuestion> questions, List<string> award_list)
 	{
 		this.level = level;
 		this.distance = distance;
 		this.questions = questions;
+        this.award_list = award_list;
 	}
 }
 
