@@ -17,6 +17,8 @@ namespace Tests
         private PlayerMovement playerMovement;
         private Rigidbody2D rigidbody;
         private GameObject mockWebRetrieverObj;
+        private GameObject awardObject;
+        private AwardManager awardManager;
 
         private const int directionReversal = -1;
         private const float deltaDistance = 0.2f;
@@ -66,6 +68,11 @@ namespace Tests
             gameManager.setGameTime(10f);
             gameManager.player = testPlayer;
 
+            awardObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Award Prefabs/AwardManager"));
+            awardManager = awardObject.GetComponent<AwardManager>();
+            awardManager.award_list = new List<Award>();
+            gameManager.awardManager = awardManager;
+
 
             playerMovement = testPlayer.GetComponent<PlayerMovement>();
             characterController = testPlayer.GetComponent<CharacterController2D>();
@@ -80,6 +87,7 @@ namespace Tests
         public void Teardown()
         {
             playerMovement.questionUI.gameObject.SetActive(false);
+            GameObject.Destroy(awardObject);
             foreach(GameObject obj in GameObject.FindObjectsOfType<GameObject>()) {
               GameObject.Destroy(obj);
             }

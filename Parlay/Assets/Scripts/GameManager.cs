@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject exitButton;
     [SerializeField] public LevelGenerator levelGenerator;
     [SerializeField] public Text powerUpText;
+    [SerializeField] public AwardManager awardManager;
 
     public static GameManager instance = null;
     public GameEndRequestHelper gameEndRequestHelper;
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     public bool playerFallen = false;
     private List<AnsweredQuestion> _answeredQuestions;
     private PlayerAuth _playerAuth;
+
 
     void Awake()
     {
@@ -65,6 +67,7 @@ public class GameManager : MonoBehaviour
 
     public void exitGame()
     {
+        hideGameEndElements();
         GameObject.Destroy(GameObject.Find("LevelObj"));
         StartCoroutine(loadStartScreen());
     }
@@ -142,6 +145,9 @@ public class GameManager : MonoBehaviour
     }
 
     private void hideUIElementsWhenGameOver() {
+        Rigidbody2D player_rigidbody = player.GetComponent<Rigidbody2D>();
+        player_rigidbody.position = new Vector2(-6, 5);
+        player_rigidbody.MovePosition(new Vector2(-6, 5));
         enemySpawner.SetActive(false);
         distanceText.gameObject.SetActive(false);
         questionUI.SetActive(false);
@@ -150,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     private void sendPostRequestWithGameEndResults() {
       int playerID = _playerAuth?.GetId() ?? 1;
-      gameEndRequestHelper.postGameEndResults(playerDistance, playerID, _answeredQuestions);
+      gameEndRequestHelper.postGameEndResults(playerDistance, GetLevel(), playerID, _answeredQuestions, awardManager.top_award);
     }
 
     private int GetLevel()

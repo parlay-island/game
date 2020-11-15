@@ -8,28 +8,18 @@ public abstract class Award : MonoBehaviour
 {
     [SerializeField] public GameObject awardUI;
     [SerializeField] public TextMeshProUGUI text;
+    public string awardName;
 
-    void Start()
+    public void DisplayChosenAward(GameObject award)
     {
-        awardUI.SetActive(false);
-        StartCoroutine(DisplayAward());
+        text.text = GetAwardMessage();
+        awardUI.SetActive(true);
+        award.SetActive(true);
+        Invoke("hideAward", 5);
     }
 
-    IEnumerator DisplayAward()
-    {
-        while (true)
-        {
-            if (WinsAward())
-            {
-                text.text = GetAwardMessage();
-                awardUI.SetActive(true);
-                yield return new WaitForSeconds(5);
-                awardUI.SetActive(false);
-            }
-            yield return null;
-        }
-    }
-
+    public abstract void hideAward();
+    public abstract void DisplayAward();
     public abstract bool WinsAward();
     public abstract string GetAwardMessage();
 }
