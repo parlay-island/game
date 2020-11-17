@@ -1,0 +1,75 @@
+Release Notes for Parlay Island Game
+
+Curent Functionality
+- Has login, create account, and logout
+    - accounts have a username, password, and class code
+- Mode Selection
+    - Contains a rules page so users can see how to play the game
+    - Pulls levels from backend based on class logged in user belongs to
+    - Level selected filters questions for the game to only be questions from that level for the class the user is in
+    - Supports a dynamic number of levels to accomodate as many units a teacher adds
+- Game
+    - Time based -> game continues until time runs out or player falls off platform
+        - Have timer at the top of the screen with a label to show how much time is remaining
+    - Have a parallaxed background to add another dimension to the game and induce the feeling of movement
+    - Have randomly generated map with ~15 different chunks
+        - To make the terrain more complex this is easily extensible by just creating new chunks
+    - Character can run and jump and interact with environment
+    - Enemies are randomly spawned based on time such that a new enemy is currently set to spawn every 1.5 - 4.5 seconds. Getting hit by an enemy will reduce the players time
+        - The player is invincible for 1.5 seconds after being hit by an enemy which is indicated by the character blinking
+    - Power-ups appear in chests and are random within a given chest. If collect a power-up its name is displayed at the top of the screen. The current power-ups we have are:
+        - Time - gives a random amount of additional time
+        - Score - gives a random amount of additional distance
+        - Retry - gives the user the ability when a question appears to select that if they get this question wrong they want to retry the question
+    - Have visual indicators of feedback
+        - If get question correct answer selected turns green
+        - If get question wrong answer selected turns red
+        - When gain time (answer question correct or get time power-up) timer turns green
+        - When lose time (hit by enemy) timer turns red
+    - The players distance (in meters) and the questions they have answered (along with the choice they selected) are tracked throughout game play and upon completion of a round are sent to the backend so they can be stored
+        - The distance is displayed at the top of the screen so it is visible to the player
+    - Have awards for answering a certain number of questions. The player is notified of these awards while playing the game and they also appear on the leaderboard. Current awards:
+        - Bronze medal = answered 10 questions
+        - Silver medal = answered 20 questions
+        - Gold medal = answered 30 questions
+- Leaderboard/Endgame Screen
+    - Shows the top 10 results on this level in the logged in user's class
+    - Each entry shows the rank, name, distance, and if they player got an award
+    - From the leaderboard have the ability to:
+        - Retry the level just player
+        - Go back to the menu/mode selection screen to play with a different level
+
+## Known Bugs
+- When clicking the retry button, the question count that determines the awards is not reset
+    - ex: If a user answers 10 questions and gets a bronze award, then clicks retry and answers 10 questions they will get a silver medal
+    - without the retry button the feature works as expected
+- We were unable to replicate it because we think it is due to a hardware issue, but on particular computers there may be an issue with the sizing of the game components (very large) if not in full screen mode
+    - going into full screen should fix this
+    - we only encountered this once and this is a known issue with Unity WebGL sometimes and is due to the resolution on the user's computer
+- Player’s collision logic isn’t perfect 
+    ex: sometimes gets stuck to wall and need to release keys to allow player to fall
+
+Assumptions
+- That the game will be used as a web application
+    - It should be relatively straightforward to convert to another format, however the current implementation has been configured and tested as a web app
+- That only users whose teacher has an account in the teacher monitoring platform can use the game
+- Students mainly only need to be tested one unit at a time
+- The game will use an external API for the backend
+    - This can easily be exchanged to use one other than the one we have set-up, but the current code is configured to use a backend API rather than have all that functionality be handled within Unity itself
+
+Limitations
+- The WebGL format/ CORS does not interact well with ad blockers
+    - ad blockers must be turned off to successfully login and play the game
+- WebGL also limits how features are implemented
+    - Coroutines need to be used instead of using packages like System.Net 
+    - Also the backend API that is being used in the game must have settings that are configured for CORS
+
+Platforms Tested On
+- Browsers:
+    - chrome
+    - safari
+    - firefox
+- Computers:
+    - Macs
+    - PCs
+
